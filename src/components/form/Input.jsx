@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import "../../styles/components/form/input.scss";
 
-export default ({ type, placeholder, onChange }) => {
-    const id = Math.random().toString(36);
+export default ({ type, placeholder, onChange, prefix = "" }) => {
     const [error, setError] = useState("");
 
     const validate = ({ target: { value } }) => {
@@ -25,13 +24,15 @@ export default ({ type, placeholder, onChange }) => {
     return (
         <div className="input-container">
             <input
-            id={id}
+            id={`${prefix}-input`}
             type={type}
             className={`input-container__input ${inputClass}`}
             onChange={validate}
             placeholder={placeholder}/>
 
-            <label className={`input-container__label mt-2 ${labelClass}`} htmlFor={id}>
+            <label
+            className={`input-container__label mt-2 ${labelClass}`}
+            htmlFor={`${prefix}-input`}>
                 <i className="fas fa-info-circle mr-1" aria-hidden="true"></i>
 
                 { error }
