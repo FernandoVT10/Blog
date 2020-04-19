@@ -1,0 +1,37 @@
+@use "variables";
+@use "layout";
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --title: 25px;
+    --subtitle: 20px;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: variables.$body-bg;
+}
+
+.container-fluid {
+    padding: 0 30px;
+}
+
+.title {
+    font-size: var(--title);
+    color: white;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    :root {
+        --title: 20px;
+        --subtitle: 16px;
+    }
+
+    .container-fluid {
+        padding: 0;
+    }
+}

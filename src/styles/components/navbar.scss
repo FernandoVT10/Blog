@@ -1,0 +1,26 @@
+@use "../variables";
+
+.navbar {
+    padding: 0 30px;
+    background: variables.$primary;
+
+    &__brand {
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        font-family: 'Pacifico', cursive;
+        font-size: var(--subtitle);
+        margin: 0;
+        margin-left: 10px;
+    }
+
+    &__items {
+        justify-content: flex-end;
+    }
+
+    &__link {
+        font-size: 14px;
+    }
+}

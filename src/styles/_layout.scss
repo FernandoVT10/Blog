@@ -1,0 +1,11 @@
+@use "variables";
+
+.submit-button {
+    border: none;
+    background: variables.$secondary;
+    padding: 10px 40px;
+    color: variables.$primary;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 5px;
+}

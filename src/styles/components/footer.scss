@@ -1,0 +1,53 @@
+@use "../variables";
+
+.main-footer {
+    background: variables.$primary;
+    padding: 30px;
+
+    &__brand {
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    &__title {
+        font-family: 'Pacifico', cursive;
+        font-size: var(--subtitle);
+        margin: 0;
+        margin-left: 10px;
+        color: white;
+    }
+
+    &__subtitle {
+        color: variables.$secondary;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    &__icon {
+        color: variables.$secondary;
+    }
+
+    &__text {
+        color: white;
+        margin-left: 10px;
+        font-weight: bold;
+    }
+
+    &__description {
+        color: white;
+        font-weight: bold;
+    }
+
+    @media screen and (max-width: 576px) {
+        &__subtitle {
+            color: variables.$secondary;
+            margin-top: 1.5rem;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+}

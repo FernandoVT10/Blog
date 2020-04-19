@@ -1,0 +1,21 @@
+.carousel {
+    &__image {
+        object-fit: cover;
+        width: 100%;
+        height: 500px;
+    }
+
+    &__control-button {
+        background: rgba($color: #000000, $alpha: .6);
+        top: calc(50% - 40px);
+        margin: 0 30px;
+        height: 75px;
+        width: 40px;
+        opacity: 1;
+        transition: .3s;
+
+        &:hover {
+            background: black;
+        }
+    }
+}
