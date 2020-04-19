@@ -12,6 +12,16 @@ export default () => {
 
         if(email.valid) {
             alert("holu");
+
+            fetch("http://localhost:3000/api/suscribe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: "ASds"
+                })
+            }).then(res => res.text()).then(val => console.log(val));
         }
     };
 
