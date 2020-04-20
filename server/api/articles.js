@@ -1,11 +1,16 @@
+import Article from "../models/Article";
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/test/", (req, res) => {
-    res.json({
-        hola: "Hola mundo"
-    });
+router.get("/getRecent/:limit", async (req, res) => {
+    const limit = parseInt(req.params.limit);
+
+    const articles = await Article.find()
+    .sort({ createdAt: "desc" })
+    .limit(limit);
+
+    res.json(articles);
 });
 
 export default router;

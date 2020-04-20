@@ -3,27 +3,30 @@ import Navbar from "../components/Navbar";
 import MainCarousel from "../components/MainCarousel";
 import ArticleCard from "../components/ArticleCard";
 import Footer from "../components/Footer";
+import Api from "../ApiController";
 
-const mockArticles = [
-    {
-        id: 10,
-        cover: "cover-1.jpg",
-        title: "This is a test title",
-        description: `Lorem   ipsum   dolor   sit   amet,   consectetur   adipiscing   elit,   sed   do  eiusmod  tempor  
-        incididunt    ut    labore    et    dolore    magna    aliqua.    A    condimentum    vitae    sapien    pellentesque.
-        `
-    },
-    {
-        id: 12,
-        cover: "cover-2.jpg",
-        title: "This is a test title",
-        description: `Lorem   ipsum   dolor   sit   amet,   consectetur   adipiscing   elit,   sed   do  eiusmod  tempor  
-        incididunt    ut    labore    et    dolore    magna    aliqua.    A    condimentum    vitae    sapien    pellentesque.
-        `
+function Index({ articles }) {
+    const getArticles = () => {
+        if(articles.length) {
+            return articles.map(article => {
+                return (
+                    <div className="col-12 col-lg-6 mt-4" key={article._id}>
+                        <ArticleCard article={article}/>
+                    </div>
+                );
+            });
+        } else {
+            return (
+                <div className="col-12 mt-4 d-flex align-items-center justify-content-center"
+                style={{height: 100}}>
+                    <h4 className="text-light m-0">
+                        There is not available articles
+                    </h4>
+                </div>
+            );
+        }
     }
-];
 
-export default () => {
     return (
         <Layout>
             <Navbar />
@@ -34,13 +37,7 @@ export default () => {
                 <h2 className="title mt-4">Recent Articles</h2>
 
                 <div className="row">
-                    {mockArticles.map(article => {
-                        return (
-                            <div className="col-12 col-lg-6 mt-4" key={article.id}>
-                                <ArticleCard article={article}/>
-                            </div>
-                        );
-                    })}
+                    { getArticles() }
                 </div>
             </div>
 
@@ -48,3 +45,11 @@ export default () => {
         </Layout>
     );
 }
+
+Index.getInitialProps = async () => {
+    const articles = await Api.get("articles/getRecent/4");
+
+    return { articles };
+}
+
+export default Index;
