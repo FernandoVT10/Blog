@@ -11,6 +11,10 @@ const sucribe = new Schema({
             message: "The email is not valid."
         },
         required: true
+    },
+    active: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -1,32 +1,36 @@
 import Link from "next/link";
 import Input from "./form/Input";
+import FullScreenLoader from "./FullScreenLoader";
+import Api from "../ApiController";
 import { useState } from "react";
 
 import "../styles/components/footer.scss";
-
 export default () => {
     const [email, setEmail] = useState({value: "", valid: false});
+    const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const suscribe = e => {
         e.preventDefault();
 
-        if(email.valid) {
-            alert("holu");
+        setLoading(true);
 
-            fetch("http://localhost:3000/api/suscribe", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: "ASds"
-                })
-            }).then(res => res.text()).then(val => console.log(val));
+        if(email.valid) {
+            Api.post("suscribe", { email: email.value })
+            .then(data => {
+                if(data.status) {
+                    setSuccess(data.message);
+                }
+
+                setLoading(false);
+            });
         }
     };
 
     return (
         <footer className="main-footer container-fluid mt-4">
+            <FullScreenLoader loading={loading}/>
+
             <div className="row">
                 <div className="col-12 col-sm-6 col-xl-3">
                     <Link href="/">
@@ -54,7 +58,7 @@ export default () => {
                             aria-hidden="true"></i>
 
                             <span className="main-footer__text">
-                                mailexample@gmail.com
+                                vacatamayo321@gmail.com
                             </span>
                         </p>
                     </div>
@@ -106,6 +110,10 @@ export default () => {
                     </h3>
 
                     <form onSubmit={suscribe}>
+                        <p className="main-footer__success-message">
+                            { success }
+                        </p>
+
                         <Input
                         type="email"
                         placeholder="Enter your email"

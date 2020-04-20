@@ -1,0 +1,29 @@
+.full-screen-loader {
+    z-index: 1020;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000000, $alpha: .8);
+
+    &--active {
+        display: flex;
+    }
+
+    &__spinner {
+        width: 80px;
+        height: 80px;
+    }
+
+    &__text {
+        color: white;
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+}

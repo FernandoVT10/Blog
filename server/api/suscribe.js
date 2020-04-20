@@ -10,21 +10,44 @@ router.post("/suscribe/", async (req, res) => {
 
     if(validate.email(email)) {
         if(!await Suscribe.exists({ email })) {
-            await Suscribe.create({ email });
+            const suscription = await Suscribe.create({ email });
 
             await transporter.sendMail({
                 from: "example@gmail.com",
                 to: email,
-                subject: "You have suscribed to Fernando Vaca Tamayo Blog",
-                html: "<h1>Holi</h1>"
+                subject: "Confirm your suscription to Fernando Vaca Tamayo Blog",
+                html: `
+                <a href="http://localhost:3000/confirm-suscription/${suscription._id}">
+                    Holi
+                </a>
+                `
             });
 
             transporter.close();
         }
 
-        res.json({ status: true, message: "You have successfully subscribed" });
+        res.json({ status: true, message: "An email was just sent to confirm your subscription" });
     } else {
         res.json({ status: false, message: "The email is invalid" });
+    }
+});
+
+router.post("/suscribe/confirm/", async (req, res) => {
+    const { suscriptionId } = req.body;
+
+    if(suscriptionId) {
+        const suscription = await Suscribe.findById(suscriptionId);
+
+        if(suscription) {
+            suscription.active = true;
+            suscription.save();
+
+            res.json({ status: true, message: "You have successfully subscribed" });
+        } else {
+            res.json({ status: false, message: "The suscription doesn't exists" });
+        }
+    } else {
+        res.json({ status: false, message: "The suscriptionId paramater is required" });
     }
 });
 
