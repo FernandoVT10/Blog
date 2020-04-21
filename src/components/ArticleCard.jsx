@@ -15,7 +15,7 @@ export default ({ article }) => {
 
                 <p className="article-card__description">{ article.description }</p>
 
-                <Link href="/article/[id]" as={`/article/${article.id}`}>
+                <Link href="/article/[id]" as={`/article/${article._id}`}>
                     <a className="article-card__link">
                         Continue Reading
 
