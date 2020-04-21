@@ -2,13 +2,34 @@ import Link from "next/link";
 import Input from "./form/Input";
 import FullScreenLoader from "./FullScreenLoader";
 import Api from "../ApiController";
-import { useState } from "react";
+import Modal from "./Modal";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 
 import "../styles/components/footer.scss";
 export default () => {
     const [email, setEmail] = useState({value: "", valid: false});
     const [success, setSuccess] = useState("");
+    const [modalMessage, setModalMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        // we check if there is a parameter called subscriptionId
+        const { subscriptionId } = router.query;
+
+        if(subscriptionId) {
+            setLoading(true);
+
+            // we send the subscription id to the server fto confirm the subscription
+            Api.post("suscribe/confirm/", { subscriptionId })
+            .then(data => {
+                setModalMessage(data.message);
+
+                setLoading(false);
+            });
+        }
+    }, [router.query]);
 
     const suscribe = e => {
         e.preventDefault();
@@ -27,9 +48,37 @@ export default () => {
         }
     };
 
+    const getSuscribeForm = () => {
+        if(!success) {
+            return (
+                <form onSubmit={suscribe}>
+                    <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    onChange={setEmail} />
+
+                    <button className="submit-button">
+                        Suscribe
+                    </button>
+                </form>
+            );
+        }
+
+        return (
+            <p className="main-footer__text m-0">
+                { success }
+            </p>
+        );
+    };
+
     return (
         <footer className="main-footer container-fluid mt-4">
             <FullScreenLoader loading={loading}/>
+            <Modal
+            title="Suscription confirm status"
+            active={modalMessage.length > 0}>
+                <p>{ modalMessage }</p>
+            </Modal>
 
             <div className="row">
                 <div className="col-12 col-sm-6 col-xl-3">
@@ -109,20 +158,7 @@ export default () => {
                         Suscribe to my blog
                     </h3>
 
-                    <form onSubmit={suscribe}>
-                        <p className="main-footer__success-message">
-                            { success }
-                        </p>
-
-                        <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        onChange={setEmail} />
-
-                        <button className="submit-button">
-                            Suscribe
-                        </button>
-                    </form>
+                    { getSuscribeForm() }
                 </div>
             </div>
         </footer>

@@ -1,0 +1,30 @@
+@use "../variables";
+
+.modal {
+    &__content {
+        background: variables.$primary;
+        color: white;
+        border-color: variables.$black;
+    }
+
+    &__header {
+        border: none;
+    }
+
+    &__title {
+        font-weight: bold;
+    }
+
+    &__button {
+        color: white;
+        transition: .3s;
+
+        &:hover {
+            color: white;
+        }
+    }
+
+    &__footer {
+        border: none;
+    }
+}

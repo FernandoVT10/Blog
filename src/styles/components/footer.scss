@@ -42,10 +42,6 @@
         font-weight: bold;
     }
 
-    &__success-message {
-        color: variables.$success;
-    }
-
     @media screen and (max-width: 576px) {
         &__subtitle {
             color: variables.$secondary;

@@ -2,6 +2,7 @@ import { Router } from "express";
 import Suscribe from "../models/Suscribe";
 import validate from "../utils/validate";
 import transporter from "../config/mail";
+import { isValidObjectId } from "mongoose";
 
 const router = Router();
 
@@ -33,21 +34,25 @@ router.post("/suscribe/", async (req, res) => {
 });
 
 router.post("/suscribe/confirm/", async (req, res) => {
-    const { suscriptionId } = req.body;
+    const { subscriptionId } = req.body;
 
-    if(suscriptionId) {
-        const suscription = await Suscribe.findById(suscriptionId);
+    if(subscriptionId) {
+        if(isValidObjectId(subscriptionId)) {
+            const suscription = await Suscribe.findById(subscriptionId);
 
-        if(suscription) {
-            suscription.active = true;
-            suscription.save();
+            if(suscription) {
+                suscription.active = true;
+                suscription.save();
 
-            res.json({ status: true, message: "You have successfully subscribed" });
+                res.json({ status: true, message: "You have successfully subscribed" });
+            } else {
+                res.json({ status: false, message: "The suscription doesn't exists" });
+            }
         } else {
             res.json({ status: false, message: "The suscription doesn't exists" });
         }
     } else {
-        res.json({ status: false, message: "The suscriptionId paramater is required" });
+        res.json({ status: false, message: "The subscriptionId paramater is required" });
     }
 });
 
