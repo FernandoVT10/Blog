@@ -85,7 +85,7 @@ export default () => {
                     <Link href="/">
                         <a className="main-footer__brand">
                             <img
-                            src="favicon.ico"
+                            src="/favicon.ico"
                             width="50"
                             height="50"
                             className="d-inline-block align-top rounded-circle"
