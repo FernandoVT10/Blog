@@ -6,7 +6,7 @@ export default ({ children, title = "Fernando Vaca Tamayo Blog" }) => {
         <div>
             <Head>
                 <title>{ title }</title>
-                <link rel="shortcut icon" href="favicon.ico"/>
+                <link rel="shortcut icon" href="/favicon.ico"/>
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"></link>
             </Head>
 
