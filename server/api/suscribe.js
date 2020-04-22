@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Suscribe from "../models/Suscribe";
+import Subscription from "../models/Subscription";
 import validate from "../utils/validate";
 import transporter from "../config/mail";
 import { isValidObjectId } from "mongoose";
@@ -10,15 +10,15 @@ router.post("/suscribe/", async (req, res) => {
     const { email } = req.body;
 
     if(validate.email(email)) {
-        if(!await Suscribe.exists({ email })) {
-            const suscription = await Suscribe.create({ email });
+        if(!await Subscription.exists({ email })) {
+            const subscription = await Subscription.create({ email });
 
             await transporter.sendMail({
                 from: "example@gmail.com",
                 to: email,
-                subject: "Confirm your suscription to Fernando Vaca Tamayo Blog",
+                subject: "Confirm your subscription to Fernando Vaca Tamayo Blog",
                 html: `
-                <a href="http://localhost:3000/confirm-suscription/${suscription._id}">
+                <a href="http://localhost:3000?subscriptionId=${subscription._id}">
                     Holi
                 </a>
                 `
@@ -38,18 +38,18 @@ router.post("/suscribe/confirm/", async (req, res) => {
 
     if(subscriptionId) {
         if(isValidObjectId(subscriptionId)) {
-            const suscription = await Suscribe.findById(subscriptionId);
+            const subscription = await Subscription.findById(subscriptionId);
 
-            if(suscription) {
-                suscription.active = true;
-                suscription.save();
+            if(subscription) {
+                subscription.active = true;
+                subscription.save();
 
                 res.json({ status: true, message: "You have successfully subscribed" });
             } else {
-                res.json({ status: false, message: "The suscription doesn't exists" });
+                res.json({ status: false, message: "The subscription doesn't exists" });
             }
         } else {
-            res.json({ status: false, message: "The suscription doesn't exists" });
+            res.json({ status: false, message: "The subscription doesn't exists" });
         }
     } else {
         res.json({ status: false, message: "The subscriptionId paramater is required" });

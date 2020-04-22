@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const sucribe = new Schema({
+const suscription = new Schema({
     email: {
         type: String,
         maxlength: 100,
@@ -18,4 +18,4 @@ const sucribe = new Schema({
     }
 });
 
-export default mongoose.model("suscriptions", sucribe);
+export default mongoose.model("subscriptions", suscription);
