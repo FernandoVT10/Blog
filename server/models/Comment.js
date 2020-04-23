@@ -2,8 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const comment = new Schema({
     articleId: {
-        type: mongoose.Types.ObjectId,
-        ref: "articles"
+        type: mongoose.Types.ObjectId
     },
     name: {
         type: String,
@@ -17,4 +16,4 @@ const comment = new Schema({
     }
 }, { timestamps: true });
 
-export default mongoose.model("comments", comment)
+export default mongoose.model("comments", comment);

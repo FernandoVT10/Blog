@@ -1,0 +1,13 @@
+@use "../../variables";
+
+.textarea {
+    outline: 0;
+    resize: none;
+    width: 100%;
+    padding: 15px;
+    color: white;
+    font-weight: 600;
+    border: none;
+    background: variables.$black;
+    border-radius: 10px;
+}

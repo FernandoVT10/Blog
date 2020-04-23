@@ -1,6 +1,7 @@
 @use "variables";
 
 .submit-button {
+    outline: 0 !important;
     border: none;
     background: variables.$secondary;
     padding: 10px 40px;
@@ -8,4 +9,10 @@
     font-weight: 600;
     font-size: 14px;
     border-radius: 5px;
+    transition: .3s;
+
+    &:hover {
+        background: variables.$black;
+        color: variables.$secondary;
+    }
 }

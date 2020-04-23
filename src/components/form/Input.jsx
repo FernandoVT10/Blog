@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import "../../styles/components/form/input.scss";
 
-export default ({ type, placeholder, onChange, prefix = "" }) => {
+export default ({ type, placeholder, onChange, maxLength="100", prefix="" }) => {
     const [error, setError] = useState("");
 
     const validate = ({ target: { value } }) => {
@@ -28,7 +28,10 @@ export default ({ type, placeholder, onChange, prefix = "" }) => {
             type={type}
             className={`input-container__input ${inputClass}`}
             onChange={validate}
-            placeholder={placeholder}/>
+            placeholder={placeholder}
+            autoComplete={type}
+            maxLength={maxLength}
+            required/>
 
             <label
             className={`input-container__label mt-2 ${labelClass}`}
