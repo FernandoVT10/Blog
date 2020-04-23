@@ -1,15 +1,13 @@
 import { Router } from "express";
 import Subscription from "../models/Subscription";
-import validate from "../utils/validate";
 import transporter from "../config/mail";
-import { isValidObjectId } from "mongoose";
 
 const router = Router();
 
 router.post("/suscribe/", async (req, res) => {
     const { email } = req.body;
-
-    if(validate.email(email)) {
+    
+    try {
         if(!await Subscription.exists({ email })) {
             const subscription = await Subscription.create({ email });
 
@@ -28,31 +26,29 @@ router.post("/suscribe/", async (req, res) => {
         }
 
         res.json({ status: true, message: "An email was just sent to confirm your subscription" });
-    } else {
-        res.json({ status: false, message: "The email is invalid" });
+    } catch (error) {
+        res.json({ status: false, error });
     }
 });
 
 router.post("/suscribe/confirm/", async (req, res) => {
     const { subscriptionId } = req.body;
 
-    if(subscriptionId) {
-        if(isValidObjectId(subscriptionId)) {
-            const subscription = await Subscription.findById(subscriptionId);
+    try {
+        const subscription = await Subscription.findById(subscriptionId);
 
-            if(subscription) {
-                subscription.active = true;
-                subscription.save();
+        if(subscription) {
+            subscription.active = true;
+            subscription.save();
 
-                res.json({ status: true, message: "You have successfully subscribed" });
-            } else {
-                res.json({ status: false, message: "The subscription doesn't exists" });
-            }
+            res.json({ status: true, message: "You have successfully subscribed" });
         } else {
-            res.json({ status: false, message: "The subscription doesn't exists" });
+            res.json({ status: false, error: {
+                message: "The subscription doesn't exists"
+            } });
         }
-    } else {
-        res.json({ status: false, message: "The subscriptionId paramater is required" });
+    } catch (error) {
+        res.json({ status: false, error });
     }
 });
 
