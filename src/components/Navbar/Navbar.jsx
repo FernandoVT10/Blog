@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import "../styles/components/navbar.scss";
+import "./Navbar.scss";
 
 export default () => {
     return (

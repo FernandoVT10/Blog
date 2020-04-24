@@ -1,8 +1,8 @@
-import Layout from "../../components/Layout";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import Comment from "../../components/Comment";
-import FullScreenLoader from "../../components/FullScreenLoader";
+import Layout from "../../components/Layout/";
+import Navbar from "../../components/Navbar/";
+import Footer from "../../components/Footer/";
+import Comment from "../../components/Comment/";
+import FullScreenLoader from "../../components/FullScreenLoader/";
 import Api from "../../ApiController";
 
 import { useState, useEffect } from "react";

@@ -1,0 +1,8 @@
+@use "../variables";
+
+.articles-container {
+    &__header {
+        padding: 15px;
+        background: variables.$primary;
+    }
+}

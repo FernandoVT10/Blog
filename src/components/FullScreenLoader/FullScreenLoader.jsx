@@ -1,4 +1,4 @@
-import "../styles/components/fullscreenloader.scss";
+import "./FullScreenLoader.scss";
 
 export default ({ loading, text = "Loading..." }) => {
     const fullScreenLoaderClass = loading ? "full-screen-loader--active" : "";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import "../styles/components/articlecard.scss";
+import "./ArticleCard.scss";
 
 export default ({ article }) => {
     return (

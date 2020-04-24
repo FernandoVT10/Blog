@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import "../styles/components/modal.scss";
+import "./Modal.scss";
 
 export default ({ children, title, active = false, prefix = "" }) => {
     useEffect(() => {

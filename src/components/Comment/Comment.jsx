@@ -1,4 +1,4 @@
-import "../styles/components/comment.scss";
+import "./Comment.scss";
 
 export default ({ comment }) => {
     return (

@@ -1,4 +1,4 @@
-import "../styles/components/maincarousel.scss";
+import "./MainCarousel.scss";
 
 export default () => {
     return (

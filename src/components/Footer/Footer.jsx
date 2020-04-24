@@ -1,12 +1,13 @@
 import Link from "next/link";
-import ValidationInput from "./form/ValidationInput";
-import FullScreenLoader from "./FullScreenLoader";
-import Api from "../ApiController";
-import Modal from "./Modal";
+import ValidationInput from "../form/ValidationInput";
+import FullScreenLoader from "../FullScreenLoader/";
+import Api from "../../ApiController";
+import Modal from "../Modal/";
+
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
-import "../styles/components/footer.scss";
+import "./Footer.scss";
 export default () => {
     const [email, setEmail] = useState({value: "", valid: false});
     const [success, setSuccess] = useState("");
