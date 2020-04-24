@@ -138,7 +138,7 @@ function Article({ article }) {
     }
 
     return (
-        <Layout>
+        <Layout title={`${article.title} - Fernando Blog`}>
             <Navbar/>
 
             <div className="container-fluid">
