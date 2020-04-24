@@ -39,17 +39,17 @@ export default () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/articles/">
+                            <Link href="articles">
                                 <a className="nav-link navbar__link">Articles</a>
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/projects/">
+                            <Link href="projects">
                                 <a className="nav-link navbar__link">Projects</a>
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/contact-me/">
+                            <Link href="contact-me">
                                 <a className="nav-link navbar__link">Contact me</a>
                             </Link>
                         </li>
