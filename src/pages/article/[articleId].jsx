@@ -1,8 +1,6 @@
 import Layout from "../../components/Layout";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import Input from "../../components/form/Input";
-import Textarea from "../../components/form/Textarea";
 import Comment from "../../components/Comment";
 import FullScreenLoader from "../../components/FullScreenLoader";
 import Api from "../../ApiController";
@@ -72,15 +70,21 @@ function Comments({ articleId }) {
                 </div>
                 <div className="col-12 col-lg-8">
                     <form onSubmit={addComment}>
-                        <Input
+                        <input
                         type="text"
+                        className="formulary__input mb-2"
+                        maxLength="30"
                         placeholder="Enter your Name"
-                        onChange={({ value }) => setName(value)}
-                        maxLength="30" />
+                        onChange={({ target: { value } }) => setName(value)}
+                        required/>
 
-                        <Textarea
+                        <textarea
                         placeholder="Enter your Message"
-                        onChange={setComment}/>
+                        className="formulary__textarea"
+                        onChange={({ target: { value } }) => setComment(value)}
+                        maxLength="500"
+                        rows="6"
+                        required></textarea>
 
                         <button type="submit" className="submit-button mt-3">
                             Add Comment

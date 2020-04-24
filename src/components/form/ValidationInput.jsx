@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import "../../styles/components/form/input.scss";
-
 export default ({ type, placeholder, onChange, maxLength="100", prefix="" }) => {
     const [error, setError] = useState("");
 
@@ -18,15 +16,15 @@ export default ({ type, placeholder, onChange, maxLength="100", prefix="" }) => 
         setError("");
     };
 
-    const inputClass = error ? "input-container__input--error" : "";
-    const labelClass = error ? "input-container__label--error" : "";
+    const inputClass = error ? "formulary__input--error" : "";
+    const labelClass = error ? "formulary__error-label--error" : "";
 
     return (
-        <div className="input-container">
+        <div className="formulary__input-container">
             <input
             id={`${prefix}-input`}
             type={type}
-            className={`input-container__input ${inputClass}`}
+            className={`formulary__input ${inputClass}`}
             onChange={validate}
             placeholder={placeholder}
             autoComplete={type}
@@ -34,7 +32,7 @@ export default ({ type, placeholder, onChange, maxLength="100", prefix="" }) => 
             required/>
 
             <label
-            className={`input-container__label mt-2 ${labelClass}`}
+            className={`formulary__error-label mt-2 ${labelClass}`}
             htmlFor={`${prefix}-input`}>
                 <i className="fas fa-info-circle mr-1" aria-hidden="true"></i>
 

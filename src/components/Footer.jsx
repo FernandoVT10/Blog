@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Input from "./form/Input";
+import ValidationInput from "./form/ValidationInput";
 import FullScreenLoader from "./FullScreenLoader";
 import Api from "../ApiController";
 import Modal from "./Modal";
@@ -52,7 +52,7 @@ export default () => {
         if(!success) {
             return (
                 <form onSubmit={suscribe}>
-                    <Input
+                    <ValidationInput
                     type="email"
                     placeholder="Enter your email"
                     onChange={setEmail} />
