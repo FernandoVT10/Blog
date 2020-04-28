@@ -1,0 +1,45 @@
+@use "../../styles/variables";
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    width: 100%;
+    background: variables.$primary;
+
+    &__arrow {
+        color: white;
+        margin: 10px;
+        transition: .3s;
+
+        &:hover {
+            color: variables.$secondary;
+        }
+
+        &--disabled,
+        &--disabled:hover {
+            color: #aaaaaa;
+        }
+    }
+
+    &__number-container {
+        margin: 0;
+        padding: 0;
+    }
+
+    &__number-item {
+        display: inline-block;
+        padding: 10px;
+    }
+
+    &__number {
+        color: white;
+        font-weight: bold;
+        transition: .3s;
+
+        &:hover,
+        &--active {
+            color: variables.$secondary;
+        }
+    }
+}

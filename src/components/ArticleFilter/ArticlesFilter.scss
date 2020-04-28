@@ -1,22 +1,11 @@
-@use "../variables";
+@use "../../styles/variables";
 
 .articles-filter {
     &__search-container {
+        position: relative;
         display: inline-block;
         width: calc(100% - 30px);
         position: relative;
-    }
-
-    &__search-input {
-        outline: 0;
-        width: 100%;
-        height: 50px;
-        padding: 15px;
-        color: white;
-        font-weight: 600;
-        border: none;
-        background: variables.$black;
-        border-radius: 10px;
     }
 
     &__search-button {
@@ -41,6 +30,106 @@
         &:hover,
         &--active {
             color: variables.$secondary;
+        }
+    }
+    
+    &__filter {
+        position: absolute;
+        display: none;
+        z-index: 1000;
+        right: 0;
+        top: 50px;
+        width: 90vw;
+        max-width: 600px;
+        background: variables.$black;
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__filter-search {
+        display: none;
+    }
+
+    &__categories-container {
+        padding: 15px;
+    }
+
+    &__categories-title {
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    &__category {
+        margin-right: 10px;
+        display: inline;
+    }
+
+    &__checkbox {
+        display: none;
+    }
+
+    &__label {
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        color: white;
+        transition: .3s;
+
+        &:hover {
+            color: #cccccc;
+        }
+    }
+
+    &__label-checkbox {
+        position: relative;
+        top: 3px;
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border: solid 3px variables.$secondary;
+        margin-right: 5px;
+    }
+
+    &__checkbox:checked ~ &__label {
+        & .articles-filter__label-checkbox {
+            background: variables.$secondary;
+
+            &:after {
+                content: "";
+                position: absolute;
+                top: -2px;
+                left: 3px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    &__set-categories-button {
+        display: block;
+        margin-top: 10px;
+        float: right;
+    }
+
+    @media screen and (max-width: 576px) {
+        &__search-container {
+            display: none;
+        }
+
+        &__filter-search {
+            display: block;
+        }
+
+        &__filter-button {
+            float: right;
         }
     }
 }
