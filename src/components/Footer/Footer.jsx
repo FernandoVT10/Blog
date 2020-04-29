@@ -58,7 +58,7 @@ export default () => {
                     placeholder="Enter your email"
                     onChange={setEmail} />
 
-                    <button className="submit-button">
+                    <button className="submit-button mt-3">
                         Suscribe
                     </button>
                 </form>

@@ -34,6 +34,10 @@ body {
     font-weight: bold;
 }
 
+.color-secondary {
+    color: variables.$secondary;
+}
+
 @media screen and (max-width: 768px) {
     :root {
         --title: 20px;

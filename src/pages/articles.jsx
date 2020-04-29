@@ -4,24 +4,27 @@ import Footer from "../components/Footer/";
 import ArticlesFilter from "../components/ArticleFilter/";
 import ArticleCard from "../components/ArticleCard/";
 import Pagination from "../components/Pagination/";
+import FullScreenLoader from "../components/FullScreenLoader";
 import Api from "../ApiController";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import "../styles/pages/articles.scss";
-
 export default () => {
     const [articles, setArticles] = useState([]);
     const [pagination, setPagination] = useState({});
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
+        setLoading(true)
         Api.get(`articles/getFilteredArticles${location.search}`)
         .then(data => {
             setArticles(data.articles);
-
             setPagination(data.pagination);
+
+            setLoading(false);
         });
     }, [router.query]);
 
@@ -36,10 +39,9 @@ export default () => {
             });
         } else {
             return (
-                <div className="col-12 mt-4 d-flex align-items-center justify-content-center"
-                style={{height: 100}}>
-                    <h4 className="text-light m-0">
-                        There is not available articles
+                <div className="col-12 mt-4 d-flex justify-content-center">
+                    <h4 className="font-weight-bold m-0 color-secondary">
+                        No Articles Found
                     </h4>
                 </div>
             );
@@ -54,6 +56,7 @@ export default () => {
 
     return (
         <Layout title="Articles - Fernando Blog">
+            <FullScreenLoader loading={loading}/>
             <Navbar/>
 
             <div className="body">

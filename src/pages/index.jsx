@@ -17,9 +17,8 @@ function Index({ articles }) {
             });
         } else {
             return (
-                <div className="col-12 mt-4 d-flex align-items-center justify-content-center"
-                style={{height: 100}}>
-                    <h4 className="text-light m-0">
+                <div className="col-12 mt-4">
+                    <h4 className="m-0 font-weight-bold color-secondary">
                         There is not available articles
                     </h4>
                 </div>
@@ -34,7 +33,11 @@ function Index({ articles }) {
             <MainCarousel />
 
             <div className="container-fluid">
-                <h2 className="title mt-4">Recent Articles</h2>
+                <div className="row">
+                    <div className="col-12">
+                        <h2 className="title mt-4">Recent Articles</h2>
+                    </div>
+                </div>
 
                 <div className="row">
                     { getArticles() }
