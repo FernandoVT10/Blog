@@ -1,5 +1,6 @@
 import Head from "next/head";
 import "../../styles/global.scss";
+import { useEffect } from "react";
 
 export default ({ children, title = "Fernando Vaca Tamayo Blog" }) => {
     return (

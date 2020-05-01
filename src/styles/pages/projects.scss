@@ -1,0 +1,6 @@
+@use "../variables";
+
+.projects-container {
+    background: variables.$primary;
+    padding: 10px 0;
+}

@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import "./Modal.scss";
 
-export default ({ children, title, active = false, prefix = "" }) => {
+export default ({ children, title, active = false, onClose, modalSize = "", prefix = "" }) => {
+    useEffect(() => {
+        $(`#${prefix}-modal`).on("hidden.bs.modal", () => {
+            onClose();
+        });
+    }, []);
+    
     useEffect(() => {
         if(active) {
             $(`#${prefix}-modal`).modal('show');
@@ -13,7 +19,7 @@ export default ({ children, title, active = false, prefix = "" }) => {
     
     return (
         <div className="modal fade" tabIndex="-1" role="dialog" id={`${prefix}-modal`}>
-            <div className="modal-dialog" role="document">
+            <div className={`modal-dialog ${modalSize}`} role="document">
                 <div className="modal-content modal__content">
                     <div className="modal-header modal__header">
                         <h5 className="modal__title">{ title }</h5>
