@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check if <ArticleCard/> renders correctly 1`] = `
+<div
+  className="article-card"
+>
+  <img
+    alt="Test title"
+    className="article-card__cover"
+    src="/img/articles/test-image.jpg"
+  />
+  <div
+    className="article-card__details"
+  >
+    <h3
+      className="article-card__title"
+    >
+      Test title
+    </h3>
+    <p
+      className="article-card__description"
+    >
+      Test description
+    </p>
+    <a
+      className="article-card__link"
+      href="/article/95"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      Continue Reading
+      <i
+        aria-hidden="true"
+        className="fas fa-arrow-right ml-1"
+      />
+    </a>
+  </div>
+</div>
+`;

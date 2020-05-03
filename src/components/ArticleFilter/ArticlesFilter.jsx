@@ -4,7 +4,7 @@ import Api from "../../ApiController";
 
 import "./ArticlesFilter.scss";
 
-function ArticlesFilter(a) {
+function ArticlesFilter() {
     const [filterActive, setFilterActive] = useState(false);
     const [search, setSearch] = useState("");
     const [categories, setCategories] = useState([]);
@@ -23,19 +23,17 @@ function ArticlesFilter(a) {
     }
 
     useEffect(() => {
-        if(router.query.search) {
-            setSearch(router.query.search);
-        }
-
         // we use the URLSearchParams with window.location.search, 
         // because the router.query is undefined in the first call
         const queryCategories = new URLSearchParams(location.search).getAll("categories");
 
-        if(!categories.length) {
-            Api.get("categories/getAllCategories/")
-            .then(categories => setCategoriesStatus(categories, queryCategories));
-        } else {
-            setCategoriesStatus(categories, queryCategories);
+        Api.get("categories/getAllCategories/")
+        .then(categories => setCategoriesStatus(categories, queryCategories));
+    }, []);
+
+    useEffect(() => {
+        if(router.query.search) {
+            setSearch(router.query.search);
         }
     }, [router]);
 
