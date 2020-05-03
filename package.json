@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server --exec babel-node"
+    "dev": "nodemon server --exec babel-node",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": "",
@@ -29,8 +31,16 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "babel-node": "0.0.1-security",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.3",
+    "jest-fetch-mock": "^3.0.3",
     "nodemon": "^2.0.3",
     "react-test-renderer": "^16.13.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(scss)$": "identity-obj-proxy"
+    },
+    "setupFiles": ["./src/setupJest.js"]
   }
 }
