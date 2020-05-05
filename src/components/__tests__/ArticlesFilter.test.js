@@ -1,6 +1,6 @@
 import { act, Simulate } from "react-dom/test-utils";
 import { render } from "react-dom";
-import ArticlesFilter from "../ArticleFilter/";
+import ArticlesFilter from "../ArticlesFilter/";
 import { useRouter } from "next/router";
 
 const CATEGORIES_MOCK = [
