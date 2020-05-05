@@ -19,7 +19,7 @@ export default () => {
         // we check if there is a parameter called subscriptionId
         const { subscriptionId } = router.query;
 
-        if(subscriptionId) {
+        if(subscriptionId && !loading && !modalMessage.length) {
             setLoading(true);
 
             // we send the subscription id to the server fto confirm the subscription
@@ -46,6 +46,8 @@ export default () => {
 
                 setLoading(false);
             });
+        } else {
+            setLoading(false);
         }
     };
 
@@ -64,7 +66,7 @@ export default () => {
                 </form>
             );
         }
-
+        
         return (
             <p className="main-footer__text m-0">
                 { success }
