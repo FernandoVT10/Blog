@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check if <MainCarousel/> renders correctly 1`] = `
+<div
+  className="carousel slide"
+  data-ride="carousel"
+  id="MainCarousel"
+>
+  <ol
+    className="carousel-indicators"
+  >
+    <li
+      className="active"
+      data-slide-to="0"
+      data-target="#MainCarousel"
+    />
+    <li
+      data-slide-to="1"
+      data-target="#MainCarousel"
+    />
+  </ol>
+  <div
+    className="carousel-inner"
+  >
+    <div
+      className="carousel-item carousel__item active"
+    >
+      <img
+        alt="Carousel image"
+        className="carousel__image"
+        src="/img/carousel/carousel-1.jpg"
+      />
+    </div>
+    <div
+      className="carousel-item"
+    >
+      <img
+        alt="Carousel image"
+        className="carousel__image"
+        src="/img/carousel/carousel-2.jpg"
+      />
+    </div>
+  </div>
+  <a
+    className="carousel-control-prev carousel__control-button"
+    data-slide="prev"
+    href="#MainCarousel"
+    role="button"
+  >
+    <span
+      aria-hidden="true"
+      className="carousel-control-prev-icon"
+    />
+    <span
+      className="sr-only"
+    >
+      Previous
+    </span>
+  </a>
+  <a
+    className="carousel-control-next carousel__control-button"
+    data-slide="next"
+    href="#MainCarousel"
+    ole="button"
+  >
+    <span
+      aria-hidden="true"
+      className="carousel-control-next-icon"
+    />
+    <span
+      className="sr-only"
+    >
+      Next
+    </span>
+  </a>
+</div>
+`;
