@@ -18,11 +18,11 @@ export default {
             body: JSON.stringify(data)
         })
         .then(res => res.json())
-        .catch(() => ({ result: false, message: "An error has occurred" }));
+        .catch(() => ({ status: false, message: "An error has occurred" }));
     },
     get(url, secure = false) {
         return fetch(`http://localhost:3000/api/${url}`)
         .then(res => res.json())
-        .catch(() => ({ result: false, message: "An error has occurred" }));
+        .catch(() => ({ status: false, message: "An error has occurred" }));
     }
 };
