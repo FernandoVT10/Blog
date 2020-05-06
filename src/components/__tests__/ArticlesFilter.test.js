@@ -40,12 +40,32 @@ describe('<ArticleFilter/> Component', () => {
         document.body.removeChild(container);
         container = null;
     });
+
     it('Check if renders correctly', async () => {
         await act(async () => {
             render(<ArticlesFilter/>, container);
         });
 
         expect(container).toMatchSnapshot();
+    });
+
+    it('It should active and desactive category', async () => {
+        await act(async () => {
+            render(<ArticlesFilter/>, container);
+        });
+
+        const checkbox = container.querySelector("#category-Technology");
+
+        act(() => {
+            Simulate.change(checkbox);
+        });
+
+        expect(checkbox.checked).toBeTruthy();
+
+        act(() => {
+            Simulate.change(checkbox);
+        });
+        expect(checkbox.checked).toBeFalsy();
     });
 
     it('It should change the search inputs value with query search value', async () => {
@@ -112,5 +132,28 @@ describe('<ArticleFilter/> Component', () => {
                 search: "Test value"
             }
         });
-    })
+    });
+
+    it('It should active and desactive the filter', async () => {
+        await act(async () => {
+            render(<ArticlesFilter/>, container);
+        });
+
+        const button = container.querySelector(".articles-filter__filter-button");
+        const filter = container.querySelector(".articles-filter__filter");
+
+        act(() => {
+            Simulate.click(button);
+        });
+
+        expect(filter.classList.contains("articles-filter__filter--active")).toBeTruthy();
+        expect(button.classList.contains("articles-filter__filter-button--active")).toBeTruthy();
+
+        act(() => {
+            Simulate.click(button);
+        });
+
+        expect(filter.classList.contains("articles-filter__filter--active")).toBeFalsy();
+        expect(button.classList.contains("articles-filter__filter-button--active")).toBeFalsy();
+    });
 });

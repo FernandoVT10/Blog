@@ -1,6 +1,7 @@
 import ProjectCard from "../ProjectCard/";
-import { act } from "react-dom/test-utils";
+import { act, Simulate } from "react-dom/test-utils";
 import { render } from "react-dom";
+import { useRouter } from "next/router";
 
 const PROJECT_MOCK = {
     _id: 123,
@@ -48,5 +49,30 @@ describe("<ProjectCard/> component", () => {
 
         expect(images[0].classList.contains("project__image--active")).toBeFalsy();
         expect(images[1].classList.contains("project__image--active")).toBeTruthy();
+    });
+
+    it("It should call router.push", async () => {
+        const routerPush = jest.fn();
+
+        useRouter.mockImplementation(() => ({
+            query: { },
+            pathname: "/",
+            push: routerPush
+        }));
+
+        await act(async () => {
+            render(<ProjectCard project={PROJECT_MOCK} />, container);
+        });
+
+        const div = container.querySelector("div");
+
+        act(() => {
+            Simulate.click(div);
+        });
+
+        expect(routerPush).toHaveBeenCalledWith({
+            pathname: "/",
+            query: { project:  123 }
+        });
     });
 });
