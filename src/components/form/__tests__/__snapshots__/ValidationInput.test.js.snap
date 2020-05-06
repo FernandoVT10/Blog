@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ValidationInput/> component Check if renders correctly 1`] = `
+<div>
+  <div
+    class="formulary__input-container"
+  >
+    <input
+      autocomplete="email"
+      class="formulary__input "
+      id="-input"
+      maxlength="100"
+      placeholder="Test input"
+      required=""
+      type="email"
+    />
+    <label
+      class="formulary__error-label mt-2 "
+      for="-input"
+    >
+      <i
+        aria-hidden="true"
+        class="fas fa-info-circle mr-1"
+      />
+      
+    </label>
+  </div>
+</div>
+`;

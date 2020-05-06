@@ -19,7 +19,7 @@ export default () => {
 
     const activeModal = () => {
         setModalActive(true);
-            setLoading(false);
+        setLoading(false);
 
         // add z-index to the project modal
         document.getElementById("project-modal").style.zIndex = 1060;
@@ -70,12 +70,11 @@ export default () => {
     };
 
     const getProject = () => {
-        if(loading) {
+        if(loading || !project.skills) {
             return (
                 <Loader active={true} />
             );
         }
-        
 
         return (
             <div className="col-12">
