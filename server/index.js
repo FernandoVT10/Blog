@@ -1,8 +1,6 @@
-import express from "express";
 import next from "next";
-import routes from "./routes";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import app from "./app";
 
 mongoose.connect("mongodb://localhost/fernandoblog", {
     useNewUrlParser: true,
@@ -15,13 +13,6 @@ const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
 nextApp.prepare().then(() => {
-    const app = express();
-    
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
-
-    routes(app);
-
     app.get("*", (req, res) => {
         return handle(req, res);
     });
