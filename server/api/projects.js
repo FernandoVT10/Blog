@@ -20,9 +20,9 @@ router.get("/getProjectsBySkillName/:name", async (req, res) => {
     }
 });
 
-router.get("/getProjectById/:productId", async (req, res) => {
+router.get("/getProjectById/:projectId", async (req, res) => {
     try {
-        const project = await Project.findById(req.params.productId).populate("skills");
+        const project = await Project.findById(req.params.projectId).populate("skills");
 
         res.json(project);
     } catch (error) {
