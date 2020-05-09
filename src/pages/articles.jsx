@@ -13,12 +13,15 @@ import { useRouter } from "next/router";
 import "../styles/pages/articles.scss";
 export default () => {
     const [articles, setArticles] = useState([]);
+    const [query, setQuery] = useState("");
     const [pagination, setPagination] = useState({});
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
-    useEffect(() => {
-        setLoading(true)
+    const getFilteredArticles = () => {
+        setLoading(true);
+        setQuery(location.search);
+
         Api.get(`articles/getFilteredArticles${location.search}`)
         .then(data => {
             setArticles(data.articles);
@@ -26,6 +29,16 @@ export default () => {
 
             setLoading(false);
         });
+    };
+
+    useEffect(() => {
+        getFilteredArticles();
+    }, []);
+
+    useEffect(() => {
+        if(query !== location.search && !loading) {
+            getFilteredArticles();
+        }
     }, [router.query]);
 
     const getArticles = () => {
