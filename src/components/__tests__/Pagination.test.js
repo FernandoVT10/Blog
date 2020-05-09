@@ -18,10 +18,6 @@ const PAGIANATION_MOCK = {
     ]
 };
 
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(() => ({ })),
-}));
-
 describe("<Pagination/> Component", () => {
     it("Check if renders correctly", () => {
         const component = create(<Pagination pagination={PAGIANATION_MOCK}/>);

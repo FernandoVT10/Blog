@@ -20,10 +20,6 @@ const CATEGORIES_MOCK = [
 
 let container;
 
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(() => ({ query: {} })),
-}));
-
 describe('<ArticleFilter/> Component', () => {
     beforeEach(() => {
         fetchMock.doMock();

@@ -4,12 +4,6 @@ import { render } from "react-dom";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-window.$ = () => ({ on: jest.fn(), modal: jest.fn() })
-
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(() => ({ query: {} })),
-}));
-
 let container;
 
 function T() {

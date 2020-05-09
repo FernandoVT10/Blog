@@ -1,6 +1,7 @@
 import ProjectsModal from "../ProjectsModal/";
-import { act, Simulate } from "react-dom/test-utils";
+import { act } from "react-dom/test-utils";
 import { render } from "react-dom";
+import { useRouter } from "next/router";
 
 const PROJECTS_MOCK = [
     {
@@ -20,11 +21,7 @@ const PROJECTS_MOCK = [
     }
 ];
 
-window.$ = () => ({ modal: jest.fn(), on: jest.fn() });
-
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(() => ({ query: { skill: "React JS" } })),
-}));
+useRouter.mockImplementation(jest.fn(() => ({ query: { skill: "React JS" } })));
 
 let container;
 

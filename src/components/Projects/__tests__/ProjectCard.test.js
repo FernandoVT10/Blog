@@ -11,10 +11,6 @@ const PROJECT_MOCK = {
 
 let container;
 
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(() => ({ query: {} })),
-}));
-
 describe("<ProjectCard/> component", () => {
     beforeEach(() => {
         container = document.createElement('div');

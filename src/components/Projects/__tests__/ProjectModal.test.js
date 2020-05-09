@@ -1,6 +1,7 @@
 import ProjectModal from "../ProjectModal/";
-import { act, Simulate } from "react-dom/test-utils";
+import { act } from "react-dom/test-utils";
 import { render } from "react-dom";
+import { useRouter } from "next/router";
 
 const PROJECT_MOCK = {
     _id: 123,
@@ -19,11 +20,7 @@ const PROJECT_MOCK = {
     images: ["test-image-1.jpg", "test-image-2.jpg", "test-image-3.jpg"]
 };
 
-window.$ = () => ({ modal: jest.fn(), on: jest.fn() });
-
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(() => ({ query: { project: "123wqsa" } })),
-}));
+useRouter.mockImplementation(jest.fn(() => ({ query: { project: "123wqsa" } })));
 
 let container;
 
