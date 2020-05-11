@@ -25,7 +25,11 @@ export default () => {
             // we send the subscription id to the server fto confirm the subscription
             Api.post("suscribe/confirm/", { subscriptionId })
             .then(data => {
-                setModalMessage(data.message);
+                if(data.status) {
+                    setModalMessage(data.message);
+                } else {
+                    setModalMessage("The subscription is invalid.");
+                }
 
                 setLoading(false);
             });
@@ -79,7 +83,8 @@ export default () => {
             <FullScreenLoader loading={loading}/>
             <Modal
             title="Suscription confirm status"
-            active={modalMessage.length > 0}>
+            active={modalMessage.length > 0}
+            onClose={() => {}}>
                 <p>{ modalMessage }</p>
             </Modal>
 
