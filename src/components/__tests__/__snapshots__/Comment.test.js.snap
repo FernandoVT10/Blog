@@ -11,6 +11,8 @@ exports[`Check if <Comments/> renders correctly 1`] = `
   </p>
   <p
     className="comment__content"
-  />
+  >
+    This is a test
+  </p>
 </div>
 `;
