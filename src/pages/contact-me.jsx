@@ -36,7 +36,7 @@ export default () => {
     };
 
     return (
-        <Layout>
+        <Layout title="Contact Me - Fernando Blog">
             <Navbar/>
             <FullScreenLoader loading={loading}/>
             <Modal

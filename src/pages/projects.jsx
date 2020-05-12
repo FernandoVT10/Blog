@@ -32,7 +32,7 @@ function Projects({ skills }) {
     };
 
     return (
-        <Layout>
+        <Layout title="Projects - Fernando Blog">
             <Navbar/>
 
             <ProjectsModal />
