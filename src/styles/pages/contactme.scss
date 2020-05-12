@@ -1,0 +1,21 @@
+@use "../variables";
+
+.contact-me {
+    &__who-is {
+        padding: 25px;
+        background: variables.$primary;
+    }
+
+    &__description {
+        color: white;
+        font-size: 18px;
+        line-height: 2;
+        margin-top: 25px;
+        margin-bottom: 0;
+    }
+
+    &__form {
+        padding: 20px 10px;
+        background: variables.$primary;
+    }
+}
