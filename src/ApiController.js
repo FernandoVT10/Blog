@@ -21,7 +21,17 @@ export default {
         .catch(() => ({ status: false, message: "An error has occurred" }));
     },
     get(url, secure = false) {
-        return fetch(`http://localhost:3000/api/${url}`)
+        const headers = {};
+
+        if(secure) {
+            Object.assign(headers, {
+                "Authorization": "Bearer " + window.localStorage.token
+            });
+        }
+
+        return fetch(`http://localhost:3000/api/${url}`, {
+            headers
+        })
         .then(res => res.json())
         .catch(() => ({ status: false, message: "An error has occurred" }));
     }
