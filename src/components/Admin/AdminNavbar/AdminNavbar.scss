@@ -1,0 +1,132 @@
+@use "../../../styles/variables";
+
+.admin-navbar {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background: variables.$primary;
+    width: 50px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: .3s;
+
+    &--active {
+        width: 220px;
+    }
+
+    &__items-container {
+        display: block;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__item-header {
+        position: relative;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__item {
+        cursor: pointer;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        transition: .3s;
+
+        &:hover {
+            background: variables.$secondary;
+        }
+    }
+
+    &__item-icon {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        color: white;
+        transition: .3s;
+
+        &:hover {
+            background: variables.$secondary;
+        }
+    }
+
+    &__item-title {
+        position: absolute;
+        white-space: nowrap;
+        top: 13px;
+        left: 65px;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    &__item-text {
+        position: absolute;
+        top: 15px;
+        white-space: nowrap;
+        left: 65px;
+        font-size: 14px;
+        color: darken($color: #ffffff, $amount: 20);
+        font-weight: bold;
+        transition: .3s;
+    }
+
+    &__item:hover &__item-text {
+        color: white;
+    }
+
+    &__item-badge {
+        position: absolute;
+        top: 8px;
+        left: 25px;
+        display: flex;
+        justify-content: center;
+        color: black;
+        font-size: 14px;
+        font-weight: bold;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: variables.$secondary;
+    }
+
+    @media screen and (max-width: 768px) {
+        top: auto;
+        width: 100%;
+        height: 50px;
+        bottom: 0;
+
+        &__items-container {
+            display: flex;
+        }
+
+        &__item-header {
+            display: none;
+        }
+
+        &__item {
+            width: 100%;
+        }
+
+        &__item-icon {
+            width: 100%;
+        }
+
+        &__item-text,
+        &__item-title {
+            display: none;
+        }
+
+        &__item-badge {
+            left: 50%;
+            right: 0;
+        }
+    }
+}
