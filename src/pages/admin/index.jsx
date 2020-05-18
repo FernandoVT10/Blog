@@ -2,6 +2,7 @@ import AdminLayout from "../../components/Admin/AdminLayout";
 import Views from "../../components/Admin/Statistics/Views/";
 import FullScreenLoader from "../../components/FullScreenLoader/";
 import AdminLogin from "../../components/Admin/AdminLogin/";
+import Articles from "../../components/Admin/Statistics/Articles/";
 import Api from "../../ApiController";
 
 import { useEffect, useState } from "react";
@@ -38,6 +39,9 @@ function Index() {
             <div className="row">
                 <div className="col-12">
                     <Views/>
+                </div>
+                <div className="col-12 mt-5">
+                    <Articles/>
                 </div>
             </div>
         </AdminLayout>

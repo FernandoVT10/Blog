@@ -1,5 +1,9 @@
-import "./Views.scss";
+import Chart from "../Chart/Chart";
+import Api from "../../../../ApiController";
+
 import { useEffect, useState } from "react";
+
+import "./Views.scss";
 
 function Views() {
     const [views, setViews] = useState({
@@ -7,38 +11,32 @@ function Views() {
         month: "- -",
         day: "- -" 
     });
-    const [chart, setChart] = useState(null);
+    const [chartType, setChartType] = useState("month");
 
     useEffect(() => {
-        const ctx = document.getElementById("totalViewsChart").getContext("2d");
+        Api.get("views/getTotalViews/", true)
+        .then(data => {
+            if(data.month) {
+                // add spaces in the number that separates the thousands
 
-        Chart.defaults.global.elements.point.borderWidth = 8;
-        Chart.defaults.global.defaultFontSize = 18;
-        Chart.defaults.global.defaultFontColor = "white";
-        Chart.defaults.global.legend.display = false;
+                const total = data.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                const month = data.month.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                const day = data.day.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-        const newChart = new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: ["January", "February", "March", "April", "May"],
-                datasets: [
-                    { 
-                        data: [0, 0, 0, 0, 0],
-                        label: "Views",
-                        borderColor: "#8BD1FF",
-                        fill: false
-                    }
-                ]
+                setViews({ total, month, day });
             }
         });
-
-        setChart(newChart);
     }, []);
+
+    const totalViewsItemClass = chartType === "month" ? "active" : "";
+    const monthViewsItemClass = chartType === "day" ? "active" : ""; 
 
     return (
         <div className="statistics-views">
             <div className="statistics-views__total-views">
-                <div className="statistics-views__total-views-item">
+                <div
+                className={`statistics-views__total-views-item ${totalViewsItemClass}`}
+                onClick={() => setChartType("month")}>
                     <span className="statistics-views__total-views-label">
                         Total Views
                     </span>
@@ -46,7 +44,9 @@ function Views() {
                         { views.total }
                     </span>
                 </div>
-                <div className="statistics-views__total-views-item">
+                <div
+                className={`statistics-views__total-views-item ${monthViewsItemClass}`}
+                onClick={() => setChartType("day")}>
                     <span className="statistics-views__total-views-label">
                         Month Views
                     </span>
@@ -65,11 +65,7 @@ function Views() {
             </div>
 
             <div className="statistics-views__charts-container">
-                <canvas
-                id="totalViewsChart"
-                className="statistics-views__chart"
-                width="2400"
-                height="400"></canvas>
+                <Chart type={chartType}/>
             </div>
         </div>
     );
