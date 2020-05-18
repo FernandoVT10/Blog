@@ -567,6 +567,9 @@ exports[`Project page It check if renders correctly 1`] = `
     </div>
   </footer>
   <script
+    src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
+  />
+  <script
     src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   />
   <script
