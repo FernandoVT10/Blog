@@ -46,6 +46,40 @@ router.get("/getViewsHistory/:type/:limit", jwtAuthentication, async (req, res) 
 
         res.json([]);
     }
-})
+});
+
+router.get("/getMostViewedArticles/:type/:limit", jwtAuthentication, async (req, res) => {
+    const limit = parseInt(req.params.limit) || 1;
+    const type = req.params.type;
+
+    try {
+        // with Look Up we get the article and with project we structure the response
+        const views = await ArticleViews.aggregate([
+            { $match: { type } },
+            {
+                $lookup: {
+                    from: "articles",
+                    localField: "articleId",
+                    foreignField: "_id",
+                    as: "article"
+                }
+            },
+            {
+                $project: {
+                    _id: "$article._id",
+                    cover: { $arrayElemAt: ["$article.cover", 0] },
+                    title: { $arrayElemAt: ["$article.title", 0] },
+                    views: "$views"
+                }
+            }
+        ]).sort({ views: "desc" }).limit(limit);
+
+        res.json(views);
+    } catch (error) {
+        console.log(error);
+        
+        res.json([]);
+    }
+});
 
 export default router;
