@@ -62,7 +62,11 @@ describe("ApiController tests", () => {
 
             const api = await Api.get("getTests");
 
-            expect(fetchMock).toHaveBeenCalledWith("http://localhost:3000/api/getTests");
+            expect(fetchMock).toHaveBeenCalledWith(
+                "http://localhost:3000/api/getTests",
+                {headers: {}}
+            );
+            
             expect(api).toEqual({ status: false, message: "An error has occurred" });
         });
 
@@ -71,8 +75,30 @@ describe("ApiController tests", () => {
 
             const api = await Api.get("getTests");
 
-            expect(fetchMock).toHaveBeenCalledWith("http://localhost:3000/api/getTests");
+            expect(fetchMock).toHaveBeenCalledWith(
+                "http://localhost:3000/api/getTests",
+                {headers: {}}
+            );
             expect(api).toEqual([]);
+        });
+
+        it("It should call fetch with authorization header", async () => {
+            fetch.mockOnce(JSON.stringify({ status: true }));
+
+            window.localStorage.setItem("token", "tokenmock");
+
+            const api = await Api.get("getTests", true);
+
+            expect(fetchMock).toHaveBeenCalledWith(
+                "http://localhost:3000/api/getTests",
+                {
+                    headers: {
+                        "Authorization": "Bearer tokenmock"
+                    }
+                }
+            );
+
+            expect(api).toEqual({ status: true });
         });
    });
 });

@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check if <AdminLayout/> renders correctly 1`] = `
+<div>
+  <div
+    className="admin-layout"
+  >
+    <nav
+      className="admin-navbar "
+    >
+      <ul
+        className="admin-navbar__items-container"
+      >
+        <li
+          className="admin-navbar__item-header"
+        >
+          <span
+            className="admin-navbar__item-icon"
+            onClick={[Function]}
+          >
+            <i
+              aria-hidden="true"
+              className="fas fa-bars"
+            />
+          </span>
+          <h4
+            className="admin-navbar__item-title"
+          >
+            Admin Blog
+          </h4>
+        </li>
+        <li
+          className="admin-navbar__item"
+        >
+          <a
+            href="/"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <span
+              className="admin-navbar__item-icon"
+            >
+              <i
+                aria-hidden="true"
+                className="fas fa-globe-americas"
+              />
+            </span>
+            <span
+              className="admin-navbar__item-text"
+            >
+              Back to Website
+            </span>
+          </a>
+        </li>
+        <li
+          className="admin-navbar__item"
+        >
+          <a
+            href="/admin"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <span
+              className="admin-navbar__item-icon"
+            >
+              <i
+                aria-hidden="true"
+                className="fas fa-th-large"
+              />
+            </span>
+            <span
+              className="admin-navbar__item-text"
+            >
+              Dashboard
+            </span>
+          </a>
+        </li>
+        <li
+          className="admin-navbar__item"
+        >
+          <a
+            href="/admin/articles"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <span
+              className="admin-navbar__item-icon"
+            >
+              <i
+                aria-hidden="true"
+                className="fas fa-images"
+              />
+            </span>
+            <span
+              className="admin-navbar__item-text"
+            >
+              Articles
+            </span>
+          </a>
+        </li>
+        <li
+          className="admin-navbar__item"
+        >
+          <a
+            href="/admin/projects"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <span
+              className="admin-navbar__item-icon"
+            >
+              <i
+                aria-hidden="true"
+                className="fas fa-folder-open"
+              />
+            </span>
+            <span
+              className="admin-navbar__item-text"
+            >
+              Projects
+            </span>
+          </a>
+        </li>
+        <li
+          className="admin-navbar__item"
+        >
+          <a
+            href="/admin/messages"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <span
+              className="admin-navbar__item-icon"
+            >
+              <i
+                aria-hidden="true"
+                className="fas fa-envelope"
+              />
+              <span
+                className="admin-navbar__item-badge"
+              >
+                0
+              </span>
+            </span>
+            <span
+              className="admin-navbar__item-text"
+            >
+              Messages
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div
+      className="container-fluid admin-layout__wrapper"
+    />
+  </div>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
+  />
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  />
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+  />
+  <script
+    src="https://kit.fontawesome.com/63ef8f1397.js"
+  />
+</div>
+`;

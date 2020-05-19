@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Chart/> Component Check if renders correctly 1`] = `
+<div>
+  <canvas
+    class="statistics-views__chart"
+    height="400"
+    id="viewsChart"
+    width="2400"
+  />
+</div>
+`;
