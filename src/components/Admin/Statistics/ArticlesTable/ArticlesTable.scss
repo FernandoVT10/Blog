@@ -1,0 +1,200 @@
+@use "../../../../styles/variables";
+
+.statistics-articles-table {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        background: variables.$primary;
+
+        &-back-button {
+            outline: none !important;
+            color: white;
+            padding: 10px;
+            margin-right: 5px;
+            background: transparent;
+            font-size: 14px;
+            border: none;
+            transition: .3s;
+
+            &:hover {
+                color: variables.$secondary;
+            }
+        }
+
+        &-title {
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+
+    &__body {
+        background: variables.$primary;
+    }
+
+    &__row {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        &:nth-child(1) {
+            padding: 15px 0;
+        }
+
+        &:nth-child(2n) {
+            background: variables.$black;
+        }
+
+        &-article {
+            width: calc(100% - 360px);
+        }
+
+        &-views-data {
+            text-align: center;
+            width: 120px;
+        }
+
+        &-label {
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        &-sort-label {
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            transition: .3s;
+
+            &--active,
+            &:hover {
+                color: variables.$secondary;
+            }
+        }
+
+        &-hidden-label {
+            display: none;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+
+        &-cover {
+            width: 90px;
+            height: 60px;
+            object-fit: cover;
+        }
+
+        &-title {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        &-views {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        &-toggle-button {
+            outline: 0 !important;
+            position: absolute;
+            display: none;
+            top: 15px;
+            right: 10px;
+            color: white;
+            font-size: 20px;
+            background: transparent;
+            border: none;
+            transition: .3s;
+
+            &:hover {
+                color: variables.$secondary;
+            }
+        }
+    }
+
+    &__articles-not-found {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        font-size: 25px;
+        font-weight: bold;
+        color: variables.$secondary;
+        background: variables.$primary;
+        background: linear-gradient(variables.$primary, variables.$black);
+    }
+
+    &__footer .pagination {
+        background: variables.$black;
+    }
+
+    /*<--------------->*/
+        /*MEDIA QUERIES*/
+    /*<--------------->*/
+
+    @media screen and (max-width: 792px) {
+        &__row {
+            padding: 25px 0;
+
+            &:nth-child(1) {
+                padding: 15px 0;
+            }
+
+            &-cover {
+                display: none;
+            }
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        &__row {
+            flex-direction: column;
+            height: 60px;
+            padding: 0;
+            overflow: hidden;
+            transition: .3s;
+
+            &--active {
+                height: 222px;
+
+                &-toggle-button {
+                    top: 12px;
+                }
+            }
+
+            &:nth-child(1) {
+                display: none;
+            }
+
+            &-article {
+                width: 100%;
+            }
+
+            &-views-data {
+                text-align: left;
+                padding: 15px;
+                width: 100%;
+            }
+
+            &-hidden-label {
+                display: inline;
+            }
+
+            &-cover {
+                display: inline-block;
+            }
+
+            &-toggle-button {
+                display: block;
+            }
+        }
+    }
+}

@@ -3,12 +3,14 @@ import Views from "../../components/Admin/Statistics/Views/";
 import FullScreenLoader from "../../components/FullScreenLoader/";
 import AdminLogin from "../../components/Admin/AdminLogin/";
 import Articles from "../../components/Admin/Statistics/Articles/";
+import ArticlesTable from "../../components/Admin/Statistics/ArticlesTable/";
 import Api from "../../ApiController";
 
 import { useEffect, useState } from "react";
 
 function Index() {
     const [authenticationStatus, setAuthenticationStatus] = useState(false);
+    const [showArticlesTable, setShowArticlesTable] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -34,16 +36,32 @@ function Index() {
         );
     }
 
-    return (
-        <AdminLayout>
+    const getPage = () => {
+        if(showArticlesTable) {
+            return (
+                <div className="row">
+                    <div className="col-12">
+                        <ArticlesTable setShowArticlesTable={setShowArticlesTable}/>
+                    </div>
+                </div>
+            );
+        }
+
+        return (
             <div className="row">
                 <div className="col-12">
                     <Views/>
                 </div>
                 <div className="col-12 mt-5">
-                    <Articles/>
+                    <Articles setShowArticlesTable={setShowArticlesTable} />
                 </div>
             </div>
+        );
+    };
+
+    return (
+        <AdminLayout>
+            { getPage() }
         </AdminLayout>
     );
 };

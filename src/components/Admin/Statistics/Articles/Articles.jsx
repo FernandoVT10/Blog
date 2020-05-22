@@ -1,7 +1,9 @@
+import Api from "../../../../ApiController";
+
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 import "./Articles.scss";
-import Api from "../../../../ApiController";
 
 function Card(props) {
     const mainArticle = props.data[0];
@@ -76,7 +78,8 @@ function Card(props) {
     const getFooter = () => {
         if(mainArticle) {
             return (
-                <span className="statistics-articles__card-footer-text">
+                <span className="statistics-articles__card-footer-text"
+                onClick={() => props.showArticlesTable()}>
                     Show All Articles
                 </span>
             );
@@ -114,9 +117,11 @@ function Card(props) {
     );
 }
 
-export default () => {
+export default ({ setShowArticlesTable }) => {
     const [monthViews, setMonthViews] = useState([]);
     const [dayViews, setDayViews] = useState([]);
+
+    const router = useRouter();
 
     useEffect(() => {
         Promise.all([
@@ -126,12 +131,27 @@ export default () => {
             setDayViews(dayViews);
             setMonthViews(monthViews);
         });
-    }, [])
+    }, []);
+
+    const showArticlesTable = (sort) => {
+        setShowArticlesTable(true);
+
+        router.push({
+            pathname: router.pathname,
+            query: { sort }
+        });
+    };
 
     return (
         <div className="statistics-articles">
-            <Card title="Most Viewed Article This Month" data={monthViews}/>
-            <Card title="Most Viewed Article This Day" data={dayViews}/>
+            <Card
+            title="Most Viewed Article This Month"
+            showArticlesTable={ () => showArticlesTable("month") }
+            data={monthViews}/>
+            <Card
+            title="Most Viewed Article This Day"
+            showArticlesTable={ () => showArticlesTable("day") }
+            data={dayViews}/>
         </div>
     );
 };

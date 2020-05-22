@@ -1,6 +1,8 @@
 @use "../../styles/variables";
 
 .articles-filter {
+    position: relative;
+
     &__search-container {
         position: relative;
         display: inline-block;
@@ -39,6 +41,7 @@
         z-index: 1000;
         right: 0;
         top: 50px;
+        padding-bottom: 10px;
         width: 90vw;
         max-width: 600px;
         background: variables.$black;
@@ -120,6 +123,11 @@
     }
 
     @media screen and (max-width: 576px) {
+        &__filter {
+            top: 20px;
+            right: -10px;
+        }
+
         &__search-container {
             display: none;
         }

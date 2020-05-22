@@ -42,7 +42,10 @@ function ArticlesFilter() {
         setFilterActive(false);
 
         const activeCategories = [];
-        const query = {};
+        const query = router.query;
+
+        delete query.search;
+        delete query.categories;
 
         categories.forEach(({ active, name }) => {
             if(active) {
@@ -51,11 +54,11 @@ function ArticlesFilter() {
         });
 
         if(search) {
-            Object.assign(query, { search });
+            query.search = search;
         }
 
         if(activeCategories.length) {
-            Object.assign(query, { categories: activeCategories });
+            query.categories = activeCategories;
         }
 
         router.push({
