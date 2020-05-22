@@ -92,3 +92,76 @@ body {
         border-radius: 10px;
     }
 }
+
+/*<--------------->*/
+    /* CUSTOM TABLE */
+/*<--------------->*/
+
+.custom-table {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        background: variables.$primary;
+
+        &-title {
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+
+    &__body {
+        background: variables.$primary;
+
+        &-label {
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        &-row {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            &:nth-child(2n) {
+                background: variables.$black;
+            }
+        }
+    }
+
+    &__article {
+        &__cover {
+            width: 90px;
+            height: 60px;
+            object-fit: cover;
+        }
+
+        &__title {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        &__data {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    }
+
+    &__not-found {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        font-size: 25px;
+        font-weight: bold;
+        color: variables.$secondary;
+        background: variables.$primary;
+        background: linear-gradient(variables.$primary, variables.$black);
+    }
+}

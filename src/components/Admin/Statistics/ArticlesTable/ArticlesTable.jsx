@@ -11,52 +11,52 @@ import "./ArticlesTable.scss";
 function ArticleItem({ article }) {
     const [activeMenu, setActiveMenu] = useState(false);
 
-    const rowClass = activeMenu ? "statistics-articles-table__row--active" : "";
+    const rowClass = activeMenu ? "custom-table__body-row--active" : "";
     const iconClass = activeMenu ? "fas fa-sort-down" : "fas fa-sort-up";
 
     return (
-        <div className={`statistics-articles-table__row ${rowClass}`}>
-            <div className="statistics-articles-table__row-article">
+        <div className={`custom-table__body-row ${rowClass}`}>
+            <div className="statistics-articles-table__article-section">
                 <img
-                className="statistics-articles-table__row-cover"
+                className="custom-table__article__cover"
                 src={`/img/articles/${article.cover}`}
                 alt="Article Image"/>
 
-                <span className="statistics-articles-table__row-title">
+                <span className="custom-table__article__title">
                     { article.title }
                 </span>
             </div>
 
-            <div className="statistics-articles-table__row-views-data">
-                <span className="statistics-articles-table__row-hidden-label">
+            <div className="statistics-articles-table__views-section">
+                <span className="statistics-articles-table__hidden-label">
                     Day Views:
                 </span>
-                <span className="statistics-articles-table__row-views">
+                <span className="custom-table__article__data">
                     { article.dayViews }
                 </span>
             </div>
 
-            <div className="statistics-articles-table__row-views-data">
-                <span className="statistics-articles-table__row-hidden-label">
+            <div className="statistics-articles-table__views-section">
+                <span className="statistics-articles-table__hidden-label">
                     Month Views:
                 </span>
-                <span className="statistics-articles-table__row-views">
+                <span className="custom-table__article__data">
                     { article.monthViews }
                 </span>
             </div>
 
-            <div className="statistics-articles-table__row-views-data">
-                <span className="statistics-articles-table__row-hidden-label">
+            <div className="statistics-articles-table__views-section">
+                <span className="statistics-articles-table__hidden-label">
                     Total Views:
                 </span>
                 
-                <span className="statistics-articles-table__row-views">
+                <span className="custom-table__article__data">
                     { article.totalViews }
                 </span>
             </div>
 
             <button
-            className="statistics-articles-table__row-toggle-button"
+            className="statistics-articles-table__toggle-button"
             onClick={() => setActiveMenu(!activeMenu)}>
                 <i className={iconClass} aria-hidden="true"></i>
             </button>
@@ -102,39 +102,39 @@ export default ({ setShowArticlesTable }) => {
     const getBody = () => {
         if(!articles.length) {
             return (
-                <div className="statistics-articles-table__articles-not-found">
+                <div className="custom-table__not-found">
                     <span>Articles Not Found</span>
                 </div>
             );
         }
 
         const sortDayClass = router.query.sort === "day" 
-        ? "statistics-articles-table__row-sort-label--active"
+        ? "statistics-articles-table__sort-label--active"
         : "";
 
         const sortMonthClass = router.query.sort === "month" 
-            ? "statistics-articles-table__row-sort-label--active"
+            ? "statistics-articles-table__sort-label--active"
             : "";
 
         const sortTotalClass = router.query.sort === "total" 
-            ? "statistics-articles-table__row-sort-label--active"
+            ? "statistics-articles-table__sort-label--active"
             : "";
 
         return (
             <div>
-                <div className="statistics-articles-table__body">
-                    <div className="statistics-articles-table__row">
+                <div className="custom-table__body">
+                    <div className="custom-table__body-row">
 
-                        <div className="statistics-articles-table__row-article">
-                            <span className="statistics-articles-table__row-label ml-2">
+                        <div className="statistics-articles-table__article-section">
+                            <span className="custom-table__body-label ml-2">
                                 Article
                             </span>
                         </div>
 
-                        <div className="statistics-articles-table__row-views-data">
+                        <div className="statistics-articles-table__views-section">
                             <span
                             className={`
-                                statistics-articles-table__row-sort-label
+                                statistics-articles-table__sort-label
                                 ${sortDayClass}
                             `}
                             onClick={() => changeSort("day")}>
@@ -142,10 +142,10 @@ export default ({ setShowArticlesTable }) => {
                             </span>
                         </div>
 
-                        <div className="statistics-articles-table__row-views-data">
+                        <div className="statistics-articles-table__views-section">
                             <span
                             className={`
-                                statistics-articles-table__row-sort-label
+                                statistics-articles-table__sort-label
                                 ${sortMonthClass}
                             `}
                             onClick={() => changeSort("month")}>
@@ -153,10 +153,10 @@ export default ({ setShowArticlesTable }) => {
                             </span>
                         </div>
 
-                        <div className="statistics-articles-table__row-views-data">
+                        <div className="statistics-articles-table__views-section">
                             <span
                             className={`
-                                statistics-articles-table__row-sort-label
+                                statistics-articles-table__sort-label
                                 ${sortTotalClass}
                             `}
                             onClick={() => changeSort("total")}>
@@ -181,23 +181,25 @@ export default ({ setShowArticlesTable }) => {
         <div className="statistics-articles-table">
             <FullScreenLoader loading={loading} />
 
-            <div className="statistics-articles-table__header">
-                <div className="statistics-articles-table__header-title">
-                    <button
-                    className="statistics-articles-table__header-back-button"
-                    onClick={() => setShowArticlesTable(false)}>
-                        <i className="fas fa-arrow-left" aria-hidden="true"></i>
-                    </button>
+            <div className="custom-table">
+                <div className="custom-table__header">
+                    <div className="custom-table__header-title">
+                        <button
+                        className="statistics-articles-table__back-button"
+                        onClick={() => setShowArticlesTable(false)}>
+                            <i className="fas fa-arrow-left" aria-hidden="true"></i>
+                        </button>
 
-                    Articles Views
+                        Articles Views
+                    </div>
+
+                    <div>
+                        <ArticlesFilter/>
+                    </div>
                 </div>
 
-                <div className="statistics-articles-table__header-filter-container">
-                    <ArticlesFilter/>
-                </div>
+                { getBody() }
             </div>
-
-            { getBody() }
         </div>
     );
 }
