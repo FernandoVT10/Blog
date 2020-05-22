@@ -24,7 +24,19 @@ const article = new Schema({
             type: mongoose.Types.ObjectId,
             ref: "categories"
         }
-    ]
+    ],
+    dayViews: {
+        type: Number,
+        default: 0
+    },
+    monthViews: {
+        type: Number,
+        default: 0
+    },
+    totalViews: {
+        type: Number,
+        default: 0
+    }
 }, { timestamps: true });
 
 export default mongoose.model("articles", article);

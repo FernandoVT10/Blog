@@ -1,29 +1,27 @@
 import PermanentViews from "../models/PermanentViews";
-import ArticleViews from "../models/ArticleViews";
+import Article from "../models/Article";
 import jwtAuthentication from "../utils/jwtAuthentication";
+import paginate from "../utils/paginate";
 
 import { Router } from "express";
+import Category from "../models/Category";
 
 const router = Router();
 
 router.get("/getTotalViews/", jwtAuthentication, async (_, res) => {
     try {
-        const views = await ArticleViews.aggregate([
+        const views = await Article.aggregate([
             {
                 $group: {
-                    _id: "$type",
-                    views: { $sum: "$views" }
+                    _id: null,
+                    day: { $sum: "$dayViews" },
+                    month: { $sum: "$monthViews" },
+                    total: { $sum: "$totalViews" }
                 }
             }
         ]);
 
-        const response = {};
-
-        views.forEach(({ _id, views }) => {
-            response[_id] = views;
-        });
-
-        res.json(response);
+        res.json(views[0]);
     } catch (error) {
         console.log(error);
 
@@ -53,23 +51,13 @@ router.get("/getMostViewedArticles/:type/:limit", jwtAuthentication, async (req,
     const type = req.params.type;
 
     try {
-        // with Look Up we get the article and with project we structure the response
-        const views = await ArticleViews.aggregate([
-            { $match: { type } },
-            {
-                $lookup: {
-                    from: "articles",
-                    localField: "articleId",
-                    foreignField: "_id",
-                    as: "article"
-                }
-            },
+        const views = await Article.aggregate([
             {
                 $project: {
                     _id: "$article._id",
-                    cover: { $arrayElemAt: ["$article.cover", 0] },
-                    title: { $arrayElemAt: ["$article.title", 0] },
-                    views: "$views"
+                    cover: "$cover",
+                    title: "$title",
+                    views: `$${type}Views`,
                 }
             }
         ]).sort({ views: "desc" }).limit(limit);
@@ -79,6 +67,61 @@ router.get("/getMostViewedArticles/:type/:limit", jwtAuthentication, async (req,
         console.log(error);
         
         res.json([]);
+    }
+});
+
+router.get("/getArticles/", jwtAuthentication, async (req, res) => {
+    const { search, categories } = req.query;
+    const limit = parseInt(req.query.limit) || 6;
+    const offset = parseInt(req.query.offset) || 1;
+    const sort = req.query.sort || "day";
+    const options = {};
+
+    try {
+        if(search) {
+            Object.assign(options, { title: { $regex: `.*(?i)${search}.*` } });
+        }
+
+        if(categories) {
+            const categoriesDocument = await Category.find({ name: categories });
+
+            const categoriesIds = categoriesDocument.map(category => category._id);
+            
+            Object.assign(options, { categories: { $all: categoriesIds } });
+        }
+
+        const articles = await Article.aggregate([
+            { $match: options },
+            {
+                $project: {
+                    _id: "$article._id",
+                    cover: "$cover",
+                    title: "$title",
+                    dayViews: "$dayViews",
+                    monthViews: "$monthViews",
+                    totalViews: "$totalViews",
+                    sortViews: `$${sort}Views`
+                }
+            },
+            { $sort: { sortViews: -1 } },
+            { $skip: (offset - 1) * limit },
+            { $limit: limit }
+        ]);
+
+        const totalArticles = await Article.find(options).countDocuments();
+
+        const totalPages = Math.ceil(totalArticles / limit);
+
+        const pagination = paginate(totalPages, offset);
+
+        res.json({
+            articles,
+            pagination
+        });
+    } catch (error) {
+        console.log(error);
+
+        res.json({});
     }
 });
 
