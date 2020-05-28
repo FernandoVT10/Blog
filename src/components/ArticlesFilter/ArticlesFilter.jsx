@@ -82,18 +82,18 @@ function ArticlesFilter() {
         if(categories.length) {
             return categories.map(category => {
                 return (
-                    <div key={category._id} className="articles-filter__category">
+                    <div key={category._id} className="formulary__checkbox">
                         <input
-                        className="articles-filter__checkbox"
+                        className="formulary__checkbox__input"
                         id={`category-${category.name}`}
                         onChange={() => handleCategory(category.name)}
                         type="checkbox"
                         checked={category.active} />
 
                         <label
-                        className="articles-filter__label"
+                        className="formulary__checkbox__label"
                         htmlFor={`category-${category.name}`}>
-                            <span className="articles-filter__label-checkbox"></span>
+                            <span className="formulary__checkbox__label-checkbox"></span>
                             { category.name }
                         </label>
                     </div>
