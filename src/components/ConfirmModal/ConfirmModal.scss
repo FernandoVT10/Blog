@@ -1,0 +1,51 @@
+@use "../../styles/variables";
+
+.confirm-modal {
+    &__content {
+        background: variables.$primary;
+    }
+
+    &__message {
+        margin: 0;
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 16px;
+        color: white;
+    }
+
+    &__button {
+        position: relative;
+        outline: 0 !important;
+        font-size: 20px;
+        background: transparent;
+        border: none;
+        color: white;
+        transition: .3s;
+
+        &:hover {
+            opacity: .8;
+        }
+
+        &--close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+        }
+
+        &--yes {
+            font-weight: 600;
+            font-size: 16px;
+            color: variables.$secondary;
+            float: right;
+        }
+
+        &--no {
+            font-weight: 600;
+            font-size: 16px;
+            color: variables.$danger;
+            float: right;
+        }
+    }
+}

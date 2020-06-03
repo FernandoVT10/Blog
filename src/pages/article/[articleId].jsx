@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/";
 import Footer from "../../components/Footer/";
 import Comment from "../../components/Comment/";
 import FullScreenLoader from "../../components/FullScreenLoader/";
+import Article from "../../components/Article";
 import Api from "../../ApiController";
 
 import { useState, useEffect } from "react";
@@ -108,64 +109,12 @@ function Comments({ articleId }) {
     );
 }
 
-function Article({ article }) {
-    const getCategories = () => {
-        if(article.categories.length) {
-            return (
-                <div className="article__categories">
-                    <i
-                    className="fas fa-tags"
-                    aria-hidden="true"></i>
-
-                    <span className="ml-2">
-                        {article.categories.map(({ name }, index) => {
-                            if(index) {
-                                return (
-                                    <span key={index}>
-                                        , { name }
-                                    </span>
-                                );
-                            } else {
-                                return (
-                                    <span key={index}>
-                                        { name }
-                                    </span>
-                                );
-                            }
-                        })}
-                    </span>                        
-                </div>
-            );
-        }
-
-        return;
-    }
-
+function ArticlePage({ article }) {
     return (
         <Layout title={`${article.title} - Fernando Blog`}>
             <Navbar/>
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-12 article">
-                        <img
-                        src={`/img/articles/${article.cover}`}
-                        className="article__cover"
-                        alt={article.title}/>
-
-                        <div className="article__content-container">
-                            <h1 className="article__title">{ article.title }</h1>
-
-                            <div
-                            className="article__content"
-                            dangerouslySetInnerHTML={{__html: article.content}}>
-                            </div>
-
-                            { getCategories() }
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Article article={article} />
 
             <Comments articleId={article._id}/>
 
@@ -174,10 +123,10 @@ function Article({ article }) {
     );
 };
 
-Article.getInitialProps = async ({ query }) => {
+ArticlePage.getInitialProps = async ({ query }) => {
     const article = await Api.get(`articles/getArticleById/${query.articleId}`);
 
     return { article };
 }
 
-export default Article;
+export default ArticlePage;

@@ -1,0 +1,270 @@
+@use "../../styles/variables";
+
+.article {
+    background: variables.$primary;
+    padding: 0;
+    color: white;
+
+    &__cover {
+        width: 100%;
+        height: 400px;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        background-size: cover !important;
+
+        &--edit {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &::before {
+                content: "";
+                opacity: 0;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: rgba($color: #000000, $alpha: .8);
+                transition: .3s;
+            }
+        }
+
+        &__label {
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            z-index: 2;
+            color: white;
+            font-size: 30px;
+            padding: 15px 40px;
+            background: variables.$primary;
+            transition: .3s;
+        }
+
+        &__input {
+            display: none;
+        }
+
+        &:hover {
+            &::before {
+                opacity: 1;
+            }
+
+            & .article__cover__label {
+                opacity: 1;
+
+                &:hover {
+                    opacity: .6;
+                }
+            }
+        }
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 30px;
+    }
+
+    &__edit-title {
+        outline: 0;
+        width: 100%;
+        font-weight: 600;
+        font-size: 30px;
+        border: none;
+        color: white;
+        height: 50px;
+        resize: none;
+        word-break: break-all;
+        background: transparent;
+    }
+
+    &__content-container {
+        padding: 30px;
+    }
+
+    &__content {
+        margin-top: 30px;
+    }
+
+    &__content-editor {
+        margin-bottom: 15px;
+
+        &.ql-disabled {
+            border: none !important;
+        }
+    }
+
+    &__categories {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 14px;
+        color: variables.$secondary;
+
+        &__container {
+            display: inline;
+        }
+
+        &__button-container {
+            display: inline-block;
+            position: relative;
+            margin: 0 5px;
+        }
+
+        &__add-category {
+            z-index: 10;
+            position: absolute;
+            display: none;
+            top: 30px;
+            left: 0;
+            flex-direction: column;
+            background: variables.$black;
+            border: solid 2px variables.$secondary;
+            padding: 10px 20px;
+            max-height: 160px;
+            width: 180px;
+            overflow: auto;
+
+            &--active {
+                display: flex;
+            }
+
+            &::-webkit-scrollbar {
+                width: 3px;
+                background: variables.$black;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: variables.$secondary;
+            }
+        }
+
+        &__add-button {
+            position: relative;
+            outline: 0 !important;
+            background: transparent;
+            font-size: 12px;
+            border: none;
+            border-radius: 5px;
+            color: variables.$secondary;
+            transition: .3s;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+
+    &__category {
+        display: inline-block;
+        color: variables.$secondary;
+        transition: .3s;
+
+        &:hover {
+            text-decoration: none;
+            color: white;
+        }
+    }
+
+    &__buttons-container {
+        position: fixed;
+        z-index: 100;
+        right: 25px;
+        bottom: 25px;
+    }
+
+    &__float-button {
+        outline: 0 !important;
+        display: inline-flex;
+        margin: 10px;
+        justify-content: center;
+        align-items: center;
+        background: variables.$secondary;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        transition: .3s;
+
+        &--cancel {
+            background: variables.$danger;
+            color: white;
+        }
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+}
+
+// Quill editor styles
+
+.ql-snow {
+    & .ql-stroke {
+        stroke: white;
+        transition: .3s;
+    }
+
+    & .ql-fill {
+        fill: white;
+        transition: .3s;
+    }
+
+    & .ql-picker-label {
+        color: white;
+
+        &:hover {
+            color: variables.$secondary;
+        }
+    }
+
+    & .ql-picker-options {
+        border: none !important;
+        padding: 20px;
+        background: variables.$black;
+    }
+
+    & .ql-picker-item {
+        color: white;
+        transition: .3s;
+
+        &.ql-selected {
+            color: variables.$secondary;
+        }
+    }
+
+    & p {
+        line-height: 40px;
+        font-size: 18px;
+        margin: 0;
+    }
+
+    &.ql-toolbar {
+        &.disabled {
+            display: none;
+        }
+
+        & .ql-picker-label:hover,
+        & .ql-picker-item.ql-selected,
+        & .ql-picker-item:hover {
+            color: variables.$secondary;
+        }
+
+        & button:hover,
+        & button:focus,
+        & button.ql-active {
+            & .ql-stroke {
+                stroke: variables.$secondary;
+            }
+        
+            & .ql-fill {
+                fill: variables.$secondary;
+            }
+        }
+    }
+
+    & .ql-syntax {
+        font-weight: bold;
+        font-family: consolas;
+        font-size: 18px;
+    }
+}

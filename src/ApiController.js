@@ -1,25 +1,37 @@
 import fetch from "node-fetch";
 
 export default {
-    post(url, data, secure = false) {
+    fetchCall(url, data, method, authorizationHeader = false) {
         const headers = {
             "Content-Type": "application/json"
         };
 
-        if(secure) {
+        if(authorizationHeader) {
             Object.assign(headers, {
                 "Authorization": "Bearer " + window.localStorage.token
             });
         }
-
+        
         return fetch(`http://localhost:3000/api/${url}`, {
-            method: "POST",
+            method,
             headers,
             body: JSON.stringify(data)
         })
         .then(res => res.json())
-        .catch(() => ({ status: false, message: "An error has occurred" }));
+        .catch(() => (
+            {
+                status: false,
+                error: {
+                    message: "An error has occurred"
+                }
+            }
+        ));
     },
+
+    post(url, data, secure = false) {
+        return this.fetchCall(url, data, "POST", secure);
+    },
+
     get(url, secure = false) {
         const headers = {};
 
@@ -33,6 +45,21 @@ export default {
             headers
         })
         .then(res => res.json())
-        .catch(() => ({ status: false, message: "An error has occurred" }));
+        .catch(() => (
+            {
+                status: false,
+                error: {
+                    message: "An error has occurred"
+                }
+            }
+        ));
+    },
+
+    delete(url, data, secure = true) {
+        return this.fetchCall(url, data, "DELETE", secure);
+    },
+
+    put(url, data, secure = true) {
+        return this.fetchCall(url, data, "PUT", secure);
     }
 };
