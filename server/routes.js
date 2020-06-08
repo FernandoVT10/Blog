@@ -6,6 +6,7 @@ import projects from "./api/projects";
 import messages from "./api/messages";
 import users from "./api/users";
 import views from "./api/views";
+import images from "./api/images";
 import suscribe from "./api/suscribe";
 
 export default app => {
@@ -17,5 +18,6 @@ export default app => {
     app.use("/api/messages", messages);
     app.use("/api/users", users);
     app.use("/api/views", views);
+    app.use("/api/images", images);
     app.use("/api/", suscribe);
 };
