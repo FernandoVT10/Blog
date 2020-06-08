@@ -1,10 +1,18 @@
 import fetch from "node-fetch";
 
+const API_URL = "http://localhost:3000/api/";
+
 export default {
-    fetchCall(url, data, method, authorizationHeader = false) {
-        const headers = {
-            "Content-Type": "application/json"
-        };
+    fetchCall(url, data, method, authorizationHeader = false, isFormData = false) {
+        const headers = {};
+
+        if(!isFormData) {
+            data = JSON.stringify(data);
+
+            Object.assign(headers, {
+                "Content-Type": "application/json"
+            });
+        }
 
         if(authorizationHeader) {
             Object.assign(headers, {
@@ -12,10 +20,10 @@ export default {
             });
         }
         
-        return fetch(`http://localhost:3000/api/${url}`, {
+        return fetch(API_URL + url, {
             method,
             headers,
-            body: JSON.stringify(data)
+            body: data
         })
         .then(res => res.json())
         .catch(() => (
@@ -28,8 +36,8 @@ export default {
         ));
     },
 
-    post(url, data, secure = false) {
-        return this.fetchCall(url, data, "POST", secure);
+    post(url, data, secure = false, isFormData = false) {
+        return this.fetchCall(url, data, "POST", secure, isFormData);
     },
 
     get(url, secure = false) {
@@ -41,7 +49,7 @@ export default {
             });
         }
 
-        return fetch(`http://localhost:3000/api/${url}`, {
+        return fetch(API_URL + url, {
             headers
         })
         .then(res => res.json())
@@ -56,10 +64,10 @@ export default {
     },
 
     delete(url, data, secure = true) {
-        return this.fetchCall(url, data, "DELETE", secure);
+        return this.fetchCall(url, JSON.stringify(data), "DELETE", secure);
     },
 
     put(url, data, secure = true) {
-        return this.fetchCall(url, data, "PUT", secure);
+        return this.fetchCall(url, JSON.stringify(data), "PUT", secure);
     }
 };
