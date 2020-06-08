@@ -1,27 +1,30 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 export default ({ editArticle, onChangeImage, cover }) => {
     const [imageURL, setImageURL] = useState("");
+
+    useEffect(() => {
+        setImageURL(`/img/articles/${cover}`);
+    }, [editArticle]);
 
     const changeImage = useCallback(({ target: { files } }) => {
         const file = files[0];
 
         if(file.type === "image/png"
         || file.type === "image/jpeg"
-        || file.type === "image/jpg") {
+        || file.type === "image/jpg"
+        || file.type === "image/gif") {
             onChangeImage(file);
             setImageURL(URL.createObjectURL(file));
         }
     });
-
-    const backgroundURL = imageURL ? imageURL : `/img/articles/${cover}`;
 
     if(editArticle) {
         return (
             <div
             className="article__cover article__cover--edit"
             style={{
-                background: `url(${backgroundURL})`
+                background: `url(${imageURL})`
             }}>
                 <label
                 htmlFor="cover-image"
@@ -42,7 +45,7 @@ export default ({ editArticle, onChangeImage, cover }) => {
         <div
         className="article__cover"
         style={{
-            background: `url(${backgroundURL})`
+            background: `url(${imageURL})`
         }}></div>
     );
 };

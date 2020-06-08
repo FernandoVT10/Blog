@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default ({ editArticle, categories, onChangeCategories }) => {
-    const [localCategories, setLocalCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [allCategories, setAllCategories] = useState([]);
     const [addCategoryStatus, setAddCategoryStatus] = useState(false);
 
@@ -31,25 +31,23 @@ export default ({ editArticle, categories, onChangeCategories }) => {
         });
     }, []);
 
-    useEffect(() => setLocalCategories(categories.map(
+    useEffect(() => setSelectedCategories(categories.map(
         category => category.name
     )), [categories]);
 
     const handleCheckbox = (categoryName) => {
-        if(localCategories.includes(categoryName)) {
-            const newCategories = localCategories.filter(
+        if(selectedCategories.includes(categoryName)) {
+            const newCategories = selectedCategories.filter(
                 localCategory => localCategory !== categoryName
             );
 
-            setLocalCategories(newCategories);
+            setSelectedCategories(newCategories);
             onChangeCategories(newCategories);
         } else {
-            setLocalCategories(prevCategories => {
-                const newCategories = [...prevCategories, categoryName];
+            const newCategories = [...selectedCategories, categoryName];
 
-                onChangeCategories(newCategories);
-                return newCategories;
-            });
+            onChangeCategories(newCategories);
+            setSelectedCategories(newCategories);
         }
 
         setAllCategories(allCategories.map(allCategory => {
@@ -112,7 +110,7 @@ export default ({ editArticle, categories, onChangeCategories }) => {
                 </div>
 
                 <div className="article__categories__container">
-                    {localCategories.map((categoryName, index) => {
+                    {selectedCategories.map((categoryName, index) => {
                         return (
                             <Link
                             href={`/articles?categories=${categoryName}`}
@@ -134,13 +132,13 @@ export default ({ editArticle, categories, onChangeCategories }) => {
                 <i className="fas fa-tags" aria-hidden="true"></i>
 
                 <span className="ml-2">
-                    {localCategories.map((categoryName, index) => {
+                    {categories.map((category, index) => {
                         return (
                             <Link
-                            href={`/articles?categories=${categoryName}`}
+                            href={`/articles?categories=${category.name}`}
                             key={index}>
                                 <a className="article__category mr-2">
-                                    { categoryName }
+                                    { category.name }
                                 </a>
                             </Link>
                         );
