@@ -1,7 +1,11 @@
 import Article from "../models/Article";
 import Category from "../models/Category";
+
 import { Router } from "express";
+
 import paginate from "../utils/paginate";
+import jwtAuthentication from "../utils/jwtAuthentication";
+import { uploadImage, deleteImage } from "../utils/imageUpload";
 
 const router = Router();
 
@@ -68,6 +72,44 @@ router.get("/getFilteredArticles/", async (req, res) => {
         console.log(error);
         
         res.json({pagination: {}, articles: []});
+    }
+});
+
+router.post("/updateArticle/", jwtAuthentication, uploadImage("cover", "/articles/"), async (req, res) => {
+    const { articleId, title, content, description, categories } = req.body;
+    const cover = req.file;
+
+    try {
+        const article = await Article.findById(articleId);
+        const categoriesDocument = await Category.find({ name: categories });
+
+        article.title = title;
+        article.content = content;
+        article.description = description;
+        article.categories = categoriesDocument;
+
+        if(cover) {
+            deleteImage(`/articles/${article.cover}`);
+
+            article.cover = cover.filename;
+        }
+
+        const newArticle = await article.save();
+        res.json({ status: true, newArticle });
+    } catch (error) {
+        res.json({ status: false, error });
+    }
+});
+
+router.delete("/deleteArticle/", jwtAuthentication, async (req, res) => {
+    const { articleId } = req.body;
+
+    try {
+        await Article.deleteOne({ _id: articleId });
+
+        res.json({ status: true, message: "The article has been deleted successfully" });
+    } catch (error) {
+        res.json({ status: false, error });
     }
 });
 

@@ -1,5 +1,4 @@
 {
-    "jest.debugMode": true,
     "jest.pathToConfig": "./jest.config.js",
     "jest.pathToJest": "node_modules/.bin/jest"
 }

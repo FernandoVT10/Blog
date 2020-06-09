@@ -2,28 +2,54 @@ import Cover from "./Cover";
 import Title from "./Title";
 import Content from "./Content";
 import Categories from "./Categories";
+import Description from "./Description";
 import Api from "../../ApiController";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./Article.scss";
 
-export default ({ article }) => {
-    const [coverImage, setCoverImage] = useState(null);
+export default (props) => {
+    const [coverImage, setCoverImage] = useState();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [description, setDescription] = useState("");
     const [categories, setCategories] = useState([]);
+
+    const [article, setArticle] = useState(props.article);
     const [editArticle, setEditArticle] = useState(false);
 
+    useEffect(() => {
+        setTitle(article.title);
+        setContent(article.content);
+        setDescription(article.description);
+        setCategories(article.categories.map(
+            category => category.name
+        ));
+    }, []);
+
     const saveArticle = () => {
-        Api.post("articles/updateArticle/", {
-            title,
-            content,
-            categories,
-            cover: coverImage
-        }, true)
+        if(!title.length) {
+            return;
+        }
+
+        const formData = new FormData();
+
+        formData.append("articleId", article._id);
+        formData.append("cover", coverImage);
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("description", description);
+        formData.append("categories", categories);
+
+        Api.post("articles/updateArticle/", formData, true, true)
         .then(res => {
-            
+            if(res.status) {
+                const newArticle = res.newArticle;
+
+                setArticle(newArticle);
+            }
+            setEditArticle(false);
         });
     };
 
@@ -76,6 +102,11 @@ export default ({ article }) => {
                         editArticle={editArticle}
                         content={article.content}
                         onChangeContent={setContent}/>
+
+                        <Description
+                        editArticle={editArticle}
+                        description={description}
+                        onChangeDescription={setDescription}/>
 
                         <Categories
                         editArticle={editArticle}
