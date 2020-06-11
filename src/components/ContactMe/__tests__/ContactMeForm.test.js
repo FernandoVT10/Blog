@@ -19,6 +19,8 @@ describe("<ContactMeForm /> component", () => {
     });
 
     afterEach(() => {
+        fetchMock.mockReset();
+
         document.body.removeChild(container);
         container = null;
     });
@@ -51,6 +53,16 @@ describe("<ContactMeForm /> component", () => {
         await act(async () => {
             Simulate.submit(form);
         });
+
+        const fetchCall = fetchMock.mock.calls[0];
+
+        expect(fetchCall[0]).toBe("http://localhost:3000/api/messages/addMessage");
+        expect(fetchCall[1].body).toBe(JSON.stringify(
+            {
+                email:"test@gmail.com",
+                message:"This is a test message"
+            }
+        ));
 
         expect(setLoading).toHaveBeenCalledTimes(2);
         expect(setModalMessage).toHaveBeenCalledWith("Test success message");
