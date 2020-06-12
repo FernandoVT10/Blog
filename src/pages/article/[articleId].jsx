@@ -5,8 +5,6 @@ import Article from "../../components/Article";
 import CommentList from "../../components/CommentList/CommentList";
 import Api from "../../ApiController";
 
-import "../../styles/pages/article.scss";
-
 function ArticlePage({ article }) {
     return (
         <Layout title={`${article.title} - Fernando Blog`}>

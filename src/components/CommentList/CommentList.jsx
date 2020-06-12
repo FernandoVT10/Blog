@@ -1,9 +1,11 @@
-import FullScreenLoader from "../FullScreenLoader/";
+import FullScreenLoader from "../FullScreenLoader";
 import Comment from "./Comment";
-import AddComment from "./AddComment/";
+import AddComment from "./AddComment";
 import Api from "../../ApiController";
 
 import { useState, useEffect } from "react";
+
+import "./CommentList.scss";
 
 const COMMENTS_LIMIT = 10;
 
@@ -38,9 +40,9 @@ export default ({ articleId }) => {
         <div className="container-fluid">
             <FullScreenLoader loading={loading}/>
 
-            <div className="row comments">
+            <div className="row comment-list">
                 <div className="col-12">
-                    <h3 className="comments__title">Comments</h3>
+                    <h3 className="comment-list__title">Comments</h3>
                 </div>
                 <div className="col-12 col-lg-8">
                     <AddComment
@@ -48,14 +50,14 @@ export default ({ articleId }) => {
                     setLoading={setLoading}
                     addComment={addComment} />
                 </div>
-                <div className="col-12 col-lg-8">
+                <div className="comment-list__container col-12 col-lg-8">
                     {comments.map(comment => {
                         return <Comment key={comment._id} comment={comment} />;
                     })}
                 </div>
                 <div className="col-12 col-lg-8 d-flex justify-content-center">
                     <button
-                    className={`comments__load-more ${loadMoreClass}`}
+                    className={`comment-list__load-more ${loadMoreClass}`}
                     onClick={() => setSkip(skip + COMMENTS_LIMIT)}>
                         Load more comments
                     </button>
