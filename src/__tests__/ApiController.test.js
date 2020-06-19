@@ -2,59 +2,112 @@ import Api from "../ApiController";
 
 describe("ApiController tests", () => {
    beforeEach(() => {
+       window.localStorage.clear();
        fetchMock.resetMocks();
        fetchMock.doMock();
    });
 
-   describe("Post method", () => {
-       it("It should return an error", async () => {
+   describe("FetchCall method", () => {
+        it("It should return an error", async () => {
             fetch.mockReject(new Error('Fake Error Message'));
             const data = { test: true };
 
-            const api = await Api.post("sendTests", data);
+            const api = await Api.fetchCall("sendTests", data, "GET");
 
-            expect(api).toEqual({ status: false, message: "An error has occurred" });
-            expect(fetchMock).toHaveBeenCalledWith("http://localhost:3000/api/sendTests", {
-                method: "POST",
+            expect(api).toEqual({
+                status: false,
+                error: { message: "An error has occurred" }
+            });
+
+            expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
+                method: "GET",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data)
             });
         });
 
-        it("It should call fetch with body and headers", async () => {
-            fetch.mockOnce(JSON.stringify({ status: true }));
-            const data = { message: "Test message" };
-
-            const api = await Api.post("sendTests", data);
-
-            expect(api).toEqual({ status: true });
-            expect(fetchMock).toHaveBeenCalledWith("http://localhost:3000/api/sendTests", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(data)
-            });
-        });
-
-        it("It should call fetch with the Authorization header", async () => {
+        it("It should call fetch with body and Authorization header", async () => {
             fetch.mockOnce(JSON.stringify({ status: true }));
 
             window.localStorage.setItem("token", "Test token");
 
             const data = { message: "Test message" };
 
-            const api = await Api.post("admin/sendTests", data, true);
+            const api = await Api.fetchCall("sendTests", data, "POST", true);
 
             expect(api).toEqual({ status: true });
-            expect(fetchMock).toHaveBeenCalledWith("http://localhost:3000/api/admin/sendTests", {
+            expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + window.localStorage.token
+                    "Authorization": "Bearer Test token"
                 },
                 body: JSON.stringify(data)
             });
         });
+
+        it("It should call fetch with FormData and Authorization header", async () => {
+            fetch.mockOnce(JSON.stringify({ status: true }));
+
+            window.localStorage.setItem("token", "Test token");
+            
+            const formData = new FormData();
+            formData.append("message", "Test message");
+
+            const api = await Api.fetchCall("sendTests", formData, "POST", true, true);
+
+            expect(api).toEqual({ status: true });
+            expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer Test token"
+                },
+                body: formData
+            });
+        });
    });
+
+   describe("Post method", () => {
+       it("It should call fetchCall with method POST", async () => {
+            fetch.mockOnce(JSON.stringify({ status: true }));
+
+            window.localStorage.setItem("token", "postmethod");
+            
+            const formData = new FormData();
+            formData.append("message", "Test message");
+
+            await Api.post("sendTests", formData, true, true);
+
+            expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer postmethod"
+                },
+                body: formData
+            });
+        });
+   });
+
+   describe("Delete method", () => {
+    it("It should call fetchCall with method DELETE", async () => {
+         fetch.mockOnce(JSON.stringify({ status: true }));
+
+         window.localStorage.setItem("token", "deletemethod");
+
+         const data = { articleId: 7 };
+
+         await Api.delete("sendTests", data, true);
+
+         expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
+             method: "DELETE",
+             headers: {
+                 "Content-Type": "application/json",
+                 "Authorization": "Bearer deletemethod"
+             },
+             body: JSON.stringify(data)
+         });
+     });
+});
 
    describe("Get method", () => {
         it("It should return an error", async () => {
@@ -63,11 +116,14 @@ describe("ApiController tests", () => {
             const api = await Api.get("getTests");
 
             expect(fetchMock).toHaveBeenCalledWith(
-                "http://localhost:3000/api/getTests",
+                WEBSITE_URL + "api/getTests",
                 {headers: {}}
             );
             
-            expect(api).toEqual({ status: false, message: "An error has occurred" });
+            expect(api).toEqual({
+                status: false,
+                error: { message: "An error has occurred" }
+            });
         });
 
         it("It should return an array in response", async () => {
@@ -76,7 +132,7 @@ describe("ApiController tests", () => {
             const api = await Api.get("getTests");
 
             expect(fetchMock).toHaveBeenCalledWith(
-                "http://localhost:3000/api/getTests",
+                WEBSITE_URL + "api/getTests",
                 {headers: {}}
             );
             expect(api).toEqual([]);
@@ -90,7 +146,7 @@ describe("ApiController tests", () => {
             const api = await Api.get("getTests", true);
 
             expect(fetchMock).toHaveBeenCalledWith(
-                "http://localhost:3000/api/getTests",
+                WEBSITE_URL + "api/getTests",
                 {
                     headers: {
                         "Authorization": "Bearer tokenmock"

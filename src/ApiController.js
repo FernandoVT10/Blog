@@ -64,10 +64,6 @@ export default {
     },
 
     delete(url, data, secure = true) {
-        return this.fetchCall(url, JSON.stringify(data), "DELETE", secure);
-    },
-
-    put(url, data, secure = true) {
-        return this.fetchCall(url, JSON.stringify(data), "PUT", secure);
+        return this.fetchCall(url, data, "DELETE", secure);
     }
 };
