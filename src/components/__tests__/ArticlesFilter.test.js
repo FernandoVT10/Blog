@@ -37,14 +37,6 @@ describe('<ArticleFilter/> Component', () => {
         container = null;
     });
 
-    it('Check if renders correctly', async () => {
-        await act(async () => {
-            render(<ArticlesFilter/>, container);
-        });
-
-        expect(container).toMatchSnapshot();
-    });
-
     it('It should active and desactive category', async () => {
         await act(async () => {
             render(<ArticlesFilter/>, container);

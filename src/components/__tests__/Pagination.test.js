@@ -19,12 +19,6 @@ const PAGIANATION_MOCK = {
 };
 
 describe("<Pagination/> Component", () => {
-    it("Check if renders correctly", () => {
-        const component = create(<Pagination pagination={PAGIANATION_MOCK}/>);
-
-        expect(component.toJSON()).toMatchSnapshot();
-    });
-
     it("It should redirect to 2 page", () => {
         let routerPush = jest.fn();
 

@@ -17,12 +17,6 @@ describe('<AdminLogin/> Component', () => {
         container = null;
     });
 
-    it('Check if renders correctly', () => {
-        render(<AdminLogin/>, container);
-
-        expect(container).toMatchSnapshot();
-    });
-
     it("It should display an error message", async () => {
         fetch.mockResponse(JSON.stringify(
             {

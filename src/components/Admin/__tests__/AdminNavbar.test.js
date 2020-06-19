@@ -15,12 +15,6 @@ describe('<AdminNavbar/> Component', () => {
         container = null;
     });
 
-    it('Check if renders correctly', () => {
-        render(<AdminNavbar/>, container);
-
-        expect(container).toMatchSnapshot();
-    });
-
     it("It should add the navbar--active class", async () => {
         render(<AdminNavbar/>, container);
 

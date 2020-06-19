@@ -2,21 +2,8 @@ import Footer from "../Footer/";
 import { act, Simulate } from "react-dom/test-utils";
 import { render } from "react-dom";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 let container;
-
-function T() {
-    const [name, setName] = useState("");
-
-    const onClick = () => {
-        fetch("https://asdasdas.com")
-        .then(res => res.json())
-        .then(data => setName("Hola"));
-    };
-
-    return <button onClick={onClick}><span>{name}</span></button>;
-}
 
 describe('<ArticleFilter/> Component', () => {
     beforeEach(() => {
@@ -27,14 +14,6 @@ describe('<ArticleFilter/> Component', () => {
     afterEach(() => {
         document.body.removeChild(container);
         container = null;
-    });
-
-    it('Check if renders correctly', () => {
-        act(() => {
-            render(<Footer/>, container);
-        });
-
-        expect(container).toMatchSnapshot();
     });
 
     it('It should display a success message on the suscribe form', async () => {
