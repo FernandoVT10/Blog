@@ -31,9 +31,11 @@ export default ({ editArticle, categories, onChangeCategories }) => {
         });
     }, []);
 
-    useEffect(() => setSelectedCategories(categories.map(
-        category => category.name
-    )), [categories]);
+    useEffect(() => {
+        setSelectedCategories(
+            categories.map(category => category.name)
+        );
+    }, [categories]);
 
     const handleCheckbox = (categoryName) => {
         if(selectedCategories.includes(categoryName)) {

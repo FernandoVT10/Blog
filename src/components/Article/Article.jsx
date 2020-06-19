@@ -19,6 +19,8 @@ export default (props) => {
     const [article, setArticle] = useState(props.article);
     const [editArticle, setEditArticle] = useState(false);
 
+    const [authenticationStatus, setAuthenticationStatus] = useState(false);
+
     useEffect(() => {
         setTitle(article.title);
         setContent(article.content);
@@ -26,6 +28,13 @@ export default (props) => {
         setCategories(article.categories.map(
             category => category.name
         ));
+
+        Api.get("users/verifyToken/", true)
+        .then(data => {
+            if(data.verifyToken) {
+                setAuthenticationStatus(true);
+            }
+        });
     }, []);
 
     const saveArticle = () => {
@@ -40,7 +49,10 @@ export default (props) => {
         formData.append("title", title);
         formData.append("content", content);
         formData.append("description", description);
-        formData.append("categories", categories);
+        
+        categories.forEach(
+            category => formData.append("categories", category)
+        );
 
         Api.post("articles/updateArticle/", formData, true, true)
         .then(res => {
@@ -54,6 +66,10 @@ export default (props) => {
     };
 
     const getFloatButtons = () => {
+        if(!authenticationStatus) {
+            return null;
+        }
+
         if(editArticle) {
             return (
                 <div className="article__buttons-container">

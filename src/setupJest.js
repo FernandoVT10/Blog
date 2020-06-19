@@ -11,3 +11,4 @@ jest.mock("next/router", () => ({
 }));
 
 global.fetchMock = fetchMock;
+global.WEBSITE_URL = "http://localhost:3000/";

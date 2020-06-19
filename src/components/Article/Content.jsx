@@ -1,5 +1,6 @@
+import imageHandler from "./imageHandler";
+
 import { useEffect, useRef } from "react";
-import Api from "../../ApiController";
 
 export default ({ editArticle, content, onChangeContent }) => {
     const editor = useRef();
@@ -27,38 +28,9 @@ export default ({ editArticle, content, onChangeContent }) => {
                 theme: "snow"
             });
 
-            function imageHandler() {
-                const input = document.createElement("input");
-                input.setAttribute("type", "file");
-                input.click();
-
-                input.onchange = () => {
-                    const file = input.files[0];
-
-                    if(file.type === "image/png"
-                    || file.type === "image/jpg"
-                    || file.type === "image/jpeg"
-                    || file.type === "image/gif") {
-                        const formData = new FormData();
-                        formData.append("image", file);
-
-                        Api.post("images/uploadImage", formData, true, true)
-                        .then(data => {
-                            if(data.status) {
-                                const range = editor.current.getSelection();
-                                
-                                editor.current.insertEmbed(
-                                    range.index,
-                                    "image",
-                                    `http://localhost:3000/img/articles/content/${data.imageName}`
-                                );
-                            }
-                        });
-                    }
-                };
-            }
-
-            editor.current.getModule("toolbar").addHandler("image", imageHandler);
+            editor.current
+                .getModule("toolbar")
+                .addHandler("image", imageHandler(editor.current));
 
             editor.current.on("text-change", () => {
                 const content = JSON.stringify(editor.current.getContents().ops);

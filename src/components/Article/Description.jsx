@@ -13,6 +13,7 @@ export default ({ editArticle, onChangeDescription, description }) => {
         placeholder="Enter a description"
         maxLength="250"
         onChange={onChange}
-        rows="3">{ description }</textarea>
+        value={description}
+        rows="3"></textarea>
     );
 }
