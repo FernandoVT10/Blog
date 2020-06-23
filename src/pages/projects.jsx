@@ -25,7 +25,7 @@ function Projects({ skills }) {
                 <div
                 className="col-sm-6 col-md-6 col-lg-4 mb-3"
                 key={skill._id}>
-                    <SkillCard skill={skill} openProjects={() => {}} />
+                    <SkillCard skill={skill} />
                 </div>
             );
         });

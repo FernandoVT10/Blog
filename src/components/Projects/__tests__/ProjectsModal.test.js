@@ -23,21 +23,146 @@ const PROJECTS_MOCK = [
 
 useRouter.mockImplementation(jest.fn(() => ({ query: { skill: "React JS" } })));
 
-let container;
+const modalMock = jest.fn();
 
-test("Check if <ProjectsModal/> renders correctly", async () => {
-    fetchMock.doMock();
+let container, callbackMock;
 
-    fetchMock.mockOnce(JSON.stringify(
-        PROJECTS_MOCK
-    ));
+window.$ = jest.fn(() => ({
+    on: (_, cb) => {
+        callbackMock = cb;
+    },
+    modal: modalMock
+}));
 
-    container = document.createElement('div');
-    document.body.appendChild(container);
+describe("<ProjectsModal/> component", () => {
+    beforeEach(() => {
+        fetchMock.doMock();
 
-    await act(async () => {
-        render(<ProjectsModal/>, container);
+        fetchMock.mockOnce(JSON.stringify(
+            PROJECTS_MOCK
+        ));
+
+        container = document.createElement("div");
+        document.body.appendChild(container);
     });
 
-    expect(container).toMatchSnapshot();
+    afterEach(() => {
+        fetchMock.mockReset();
+        modalMock.mockReset();
+
+        document.body.removeChild(container);
+        container = null;
+        callbackMock = null;
+    });
+
+    it("It should call the api to get the projects and open the modal", async () => {
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        const fetchCall = fetchMock.mock.calls[0];
+
+        expect(fetchCall[0]).toBe(
+            WEBSITE_URL + "api/projects/getProjectsBySkillName/React JS"
+        );
+        expect(modalMock).toHaveBeenCalledWith("show");
+    });
+
+    it("It should open the modal without changing the 'skill' query parameter", async () => {
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        fetchMock.mockReset();
+
+        useRouter.mockImplementation(jest.fn(() => {
+            return {
+                query: { skill: "React JS", other: "change" }
+            };
+        }));
+
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        expect(fetchMock).not.toHaveBeenCalled();
+        expect(modalMock).toHaveBeenCalledWith("show");
+    });
+
+    it("It should close the modal when we put the 'project' parameter", async () => {
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        useRouter.mockImplementation(jest.fn(() => {
+            return {
+                query: { skill: "React JS", project: "123456" }
+            };
+        }));
+
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        expect(modalMock).toHaveBeenCalledWith("hide");
+    });
+
+    it("It should close the modal when we remove the 'skill' parameter", async () => {
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        useRouter.mockImplementation(jest.fn(() => {
+            return {
+                query: { other: "Test" }
+            };
+        }));
+
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        expect(modalMock).toHaveBeenCalledWith("hide");
+    });
+
+    it("It should remove all paremters from the router.query", async () => {
+        const routerPush = jest.fn();
+
+        useRouter.mockImplementation(() => ({
+            query: { skill: "123456" },
+            pathname: "/",
+            push: routerPush
+        }));
+
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        act(() => {
+            callbackMock();
+        });
+
+        expect(routerPush).toHaveBeenCalledWith({
+            pathname: "/",
+            query: {}
+        });
+    });
+
+    it("It should add the 'modal-open' class to the body when we add the 'project' query parameter", async () => {
+        useRouter.mockImplementation(jest.fn(() => {
+            return {
+                query: { skill: "React JS", project: "123456" }
+            };
+        }));
+
+        await act(async () => {
+            render(<ProjectsModal/>, container);
+        });
+
+        act(() => {
+            callbackMock();
+        });
+
+        expect(document.body.classList.contains("modal-open")).toBeTruthy();
+    });
 });

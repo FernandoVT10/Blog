@@ -17,25 +17,10 @@ export default () => {
 
     const router = useRouter();
 
-    const activeModal = () => {
-        setModalActive(true);
-        setLoading(false);
-
-        // add z-index to the project modal
-        document.getElementById("project-modal").style.zIndex = 1060;
-
-        setTimeout(() => {
-            // add z-index to the last modal-backdrop
-            const backdrops = document.querySelectorAll(".modal-backdrop");
-
-            backdrops[backdrops.length - 1].style.zIndex = 1059;
-        }, 0);
-    }
-
     useEffect(() => {
         if(router.query.project) {
             if(projectId === router.query.project) {
-                activeModal();
+                setModalActive(true);
             } else {
                 setLoading(true);
                 setProjectId(router.query.project);
@@ -47,7 +32,8 @@ export default () => {
                     }
 
                     setProject(project);
-                    activeModal();
+                    setModalActive(true);
+                    setLoading(false);
                 });
             }
         } else {

@@ -22,12 +22,6 @@ describe("<ProjectCard/> component", () => {
         container = null;
     });
 
-    it("Check if renders correctly", () => {
-        render(<ProjectCard project={PROJECT_MOCK} />, container);
-
-        expect(container).toMatchSnapshot();
-    });
-
     it("It should change the image class", async () => {
         jest.useFakeTimers();
 
@@ -40,14 +34,14 @@ describe("<ProjectCard/> component", () => {
         expect(images[0].classList.contains("project__image--active")).toBeTruthy();
 
         act(() => {
-            jest.runAllTimers(); 
+            jest.runOnlyPendingTimers(); 
         });
 
         expect(images[0].classList.contains("project__image--active")).toBeFalsy();
         expect(images[1].classList.contains("project__image--active")).toBeTruthy();
     });
 
-    it("It should call router.push", async () => {
+    it("It should call router.push when we click on the project", async () => {
         const routerPush = jest.fn();
 
         useRouter.mockImplementation(() => ({

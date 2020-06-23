@@ -2,12 +2,11 @@ import Link from "next/link";
 
 import "./SkillCard.scss";
 
-export default ({ skill, openProjects }) => {
+export default ({ skill }) => {
     return (
         <Link href={`?skill=${skill.name}`}>
             <div
-            className="skill mb-3"
-            onClick={openProjects(skill._id)}>
+            className="skill mb-3">
                 <div className="skill__image-container">
                     <img
                     className="skill__image"

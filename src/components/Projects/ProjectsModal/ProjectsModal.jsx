@@ -3,7 +3,7 @@ import ProjectCard from "../ProjectCard/";
 import Api from "../../../ApiController";
 import Loader from "../../Loader/";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 
 export default () => {
@@ -11,13 +11,21 @@ export default () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(false);
     const [skill, setSkill] = useState(null);
+    const modalProjectIsActive = useRef();
 
     const router = useRouter();
 
     useEffect(() => {
         const querySkill = router.query.skill;
+        const queryProject = router.query.project;
+
+        if(queryProject) {
+            modalProjectIsActive.current = true;
+        } else {
+            modalProjectIsActive.current = false;
+        }
         
-        if(querySkill) {
+        if(querySkill && !queryProject) {
             if(skill === querySkill) {
                 setModalActive(true);
             } else {
@@ -37,10 +45,15 @@ export default () => {
     }, [router.query]);
 
     const onCloseModal = () => {
-        router.push({
-            pathname: router.pathname,
-            query: {}
-        });
+        if(!modalProjectIsActive.current) {
+            router.push({
+                pathname: router.pathname,
+                query: {}
+            });
+        } else {
+            // when the modal is closed, we add the modal-open class to the body
+            document.body.classList.add("modal-open");
+        }
     };
 
     const getProjects = () => {
