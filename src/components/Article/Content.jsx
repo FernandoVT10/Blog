@@ -1,8 +1,9 @@
 import imageHandler from "./imageHandler";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default ({ editArticle, content, onChangeContent }) => {
+    const [editorIsLoading, setEditorIsLoading] = useState(true);
     const editor = useRef();
 
     useEffect(() => {
@@ -46,13 +47,15 @@ export default ({ editArticle, content, onChangeContent }) => {
             try {
                 editor.current.setContents(JSON.parse(content));
             } catch (error) { }
+
+            setEditorIsLoading(false);
         }
 
         setupQuill();
     }, []);
 
     useEffect(() => {
-        if(editor.current) {
+        if(!editorIsLoading) {
             const toolbar = document.querySelector(".ql-toolbar");
             
             if(editArticle) {
@@ -71,7 +74,7 @@ export default ({ editArticle, content, onChangeContent }) => {
                 editor.current.setContents(JSON.parse(content));
             } catch (error) { }
         }
-    }, [editArticle]);
+    }, [editArticle, editorIsLoading]);
 
     return (
         <div>

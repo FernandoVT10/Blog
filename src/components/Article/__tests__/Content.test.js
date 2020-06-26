@@ -14,6 +14,12 @@ window.hljs = {
 };
 
 document.getSelection = jest.fn();
+document.querySelector = () => ({
+    classList: {
+        add: () => {},
+        remove: () => {}
+    }
+});
 
 describe("<Content/> component", () => {
     beforeEach(() => {
@@ -57,13 +63,6 @@ describe("<Content/> component", () => {
     });
 
     it("It should enable and disable the editor when we change the editArticle", async () => {
-        document.querySelector = () => ({
-            classList: {
-                add: () => {},
-                remove: () => {}
-            }
-        });
-
         await act(async () => {
             render(
                 <Content
@@ -94,6 +93,6 @@ describe("<Content/> component", () => {
         });
 
         expect(Quill.prototype.disable).toHaveBeenCalled();
-        expect(Quill.prototype.setContents).toHaveBeenCalledTimes(3);
+        expect(Quill.prototype.setContents).toHaveBeenCalledTimes(4);
     });
 });

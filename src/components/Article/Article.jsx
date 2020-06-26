@@ -6,6 +6,7 @@ import Description from "./Description";
 import Api from "../../ApiController";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import "./Article.scss";
 
@@ -20,6 +21,8 @@ export default (props) => {
     const [editArticle, setEditArticle] = useState(false);
 
     const [authenticationStatus, setAuthenticationStatus] = useState(false);
+
+    const router = useRouter();
 
     useEffect(() => {
         setTitle(article.title);
@@ -36,6 +39,14 @@ export default (props) => {
             }
         });
     }, []);
+
+    useEffect(() => {
+        const editArticle = router.query.editArticle;
+
+        if(editArticle && authenticationStatus) {
+            setEditArticle(true);
+        }
+    }, [router.query, authenticationStatus]);
 
     const saveArticle = () => {
         if(!title.length) {

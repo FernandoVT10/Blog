@@ -2,6 +2,7 @@ import { render } from "react-dom";
 import { act, Simulate } from "react-dom/test-utils";
 import Article from "../Article";
 import Quill from "quill";
+import { useRouter } from "next/router";
 
 const ARTICLE_MOCK = {
     _id: 192,
@@ -85,6 +86,18 @@ describe("<Article/> component", () => {
 
         act(() => Simulate.click(cancelButton));
         expect(container.querySelector(".article__float-button--cancel")).toBeNull();
+    });
+
+    it("It should set editArticle to true when the query parameter 'editArticle' is true", async () => {
+        useRouter.mockImplementation(() => ({
+            query: { editArticle: "true" }
+        }));
+
+        await act(async () => {
+            render(<Article article={ARTICLE_MOCK}/>, container);
+        });
+
+        expect(container.querySelector(".article__float-button--cancel")).not.toBeNull();
     });
 
     it("It should send the data to the api", async () => {
