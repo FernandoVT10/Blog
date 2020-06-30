@@ -196,10 +196,17 @@ body {
         }
 
         &__title {
+            cursor: pointer;
             margin-left: 15px;
             color: white;
             font-weight: bold;
             font-size: 16px;
+            transition: .3s;
+
+            &:hover {
+                text-decoration: none;
+                color: variables.$secondary;
+            }
         }
 
         &__data {

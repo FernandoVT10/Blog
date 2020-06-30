@@ -1,68 +1,13 @@
-import ArticlesFilter from "../../../ArticlesFilter";
+import ArticlesFilter from "../../../Articles/ArticlesFilter";
 import Pagination from "../../../Pagination/";
 import FullScreenLoader from "../../../FullScreenLoader/";
+import ArticleItem from "./ArticleItem";
 import Api from "../../../../ApiController";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import "./ArticlesTable.scss";
-
-function ArticleItem({ article }) {
-    const [activeMenu, setActiveMenu] = useState(false);
-
-    const rowClass = activeMenu ? "custom-table__body-row--active" : "";
-    const iconClass = activeMenu ? "fas fa-sort-down" : "fas fa-sort-up";
-
-    return (
-        <div className={`custom-table__body-row ${rowClass}`}>
-            <div className="statistics-articles-table__article-section">
-                <img
-                className="custom-table__article__cover"
-                src={`/img/articles/${article.cover}`}
-                alt="Article Image"/>
-
-                <span className="custom-table__article__title">
-                    { article.title }
-                </span>
-            </div>
-
-            <div className="statistics-articles-table__views-section">
-                <span className="statistics-articles-table__hidden-label">
-                    Day Views:
-                </span>
-                <span className="custom-table__article__data">
-                    { article.dayViews }
-                </span>
-            </div>
-
-            <div className="statistics-articles-table__views-section">
-                <span className="statistics-articles-table__hidden-label">
-                    Month Views:
-                </span>
-                <span className="custom-table__article__data">
-                    { article.monthViews }
-                </span>
-            </div>
-
-            <div className="statistics-articles-table__views-section">
-                <span className="statistics-articles-table__hidden-label">
-                    Total Views:
-                </span>
-                
-                <span className="custom-table__article__data">
-                    { article.totalViews }
-                </span>
-            </div>
-
-            <button
-            className="statistics-articles-table__toggle-button"
-            onClick={() => setActiveMenu(!activeMenu)}>
-                <i className={iconClass} aria-hidden="true"></i>
-            </button>
-        </div>
-    );
-}
 
 export default ({ setShowArticlesTable }) => {
     const [articles, setArticles] = useState([]);

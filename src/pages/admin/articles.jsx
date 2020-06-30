@@ -1,5 +1,5 @@
 import AdminLayout from "../../components/Admin/AdminLayout/";
-import ArticlesFilter from "../../components/ArticlesFilter/";
+import ArticlesFilter from "../../components/Articles/ArticlesFilter/";
 import Pagination from "../../components/Pagination/";
 import FullScreenLoader from "../../components/FullScreenLoader/";
 import ConfirmModal from "../../components/ConfirmModal/";
@@ -7,6 +7,7 @@ import Api from "../../ApiController";
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import "../../styles/pages/admin/articles.scss";
 
@@ -37,15 +38,19 @@ function ArticleItem({ article, deleteArticle }) {
             </div>
 
             <div className="admin-articles-table__title-section">
-                <span className="custom-table__article__title">
-                    { article.title }
-                </span>
+                <Link href={`/article/${article._id}`}>
+                    <a className="custom-table__article__title">
+                        { article.title }
+                    </a>
+                </Link>
             </div>
 
             <div className="admin-articles-table__actions-section">
-                <button className="custom-table__button custom-table__button--edit">
-                    <i className="fas fa-edit" aria-hidden="true"></i>
-                </button>
+                <Link href={`/article/${article._id}?editArticle=true`}>
+                    <button className="custom-table__button custom-table__button--edit">
+                        <i className="fas fa-edit" aria-hidden="true"></i>
+                    </button>
+                </Link>
                 <button
                 className="custom-table__button custom-table__button--delete"
                 onClick={() => setConfirmModalActive(true)}>

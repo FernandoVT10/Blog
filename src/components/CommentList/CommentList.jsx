@@ -14,7 +14,7 @@ export default ({ articleId }) => {
 
     // LOAD MORE COMMENTS
     const [skip, setSkip] = useState(0);
-    const [loadMoreClass, setLoadMoreClass] = useState("comments__load-more--active");
+    const [loadMoreClass, setLoadMoreClass] = useState("comment-list__load-more--active");
     const [loading, setLoading] = useState(false);
 
     // GET COMMENTS

@@ -1,8 +1,8 @@
-import Layout from "../components/Layout/";
+import Layout from "../components/Layout";
 import Navbar from "../components/Navbar/";
 import Footer from "../components/Footer/";
 import MainCarousel from "../components/MainCarousel/";
-import ArticleCard from "../components/ArticleCard/";
+import ArticleCard from "../components/Articles/ArticleCard/";
 import Api from "../ApiController";
 
 function Index({ articles }) {

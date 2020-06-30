@@ -35,7 +35,7 @@ window.Chart = ChartMock;
 
 document.getElementById = () => ({ getContext: jest.fn() });
 
-describe('<Articles/> Component', () => {
+describe('<Views/> Component', () => {
     beforeEach(() => {
         fetchMock.doMock();
 
@@ -48,29 +48,32 @@ describe('<Articles/> Component', () => {
         container = null;
     });
 
-    describe("Check if renders correctly", () => {
-        it('It should render without data', async () => {
-            fetchMock
-                .once(JSON.stringify([]))
-                .once(JSON.stringify({}));
+    it('It should call the api correctly', async () => {
+        fetchMock
+            .once(JSON.stringify([]))
+            .once(JSON.stringify(MOCK_TOTAL_VIEWS));
 
-            await act(async () => {
-                render(<Views/>, container);
-            });
-    
-            expect(container).toMatchSnapshot();
+        await act(async () => {
+            render(<Views/>, container);
         });
 
-        it('It should render with data', async () => {
-            fetchMock
-                .once(JSON.stringify([]))
-                .once(JSON.stringify(MOCK_TOTAL_VIEWS));
+        const fetchCall = fetchMock.mock.calls[1];
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/views/getTotalViews/");
+    });
 
-            await act(async () => {
-                render(<Views/>, container);
-            });
-    
-            expect(container).toMatchSnapshot();
+    it('It should set the data correctly', async () => {
+        fetchMock
+            .once(JSON.stringify([]))
+            .once(JSON.stringify(MOCK_TOTAL_VIEWS));
+
+        await act(async () => {
+            render(<Views/>, container);
         });
+
+        const viewsNumbers = container.querySelectorAll(".statistics-views__total-views-number");
+
+        expect(viewsNumbers[0].textContent).toBe("3 319 519");
+        expect(viewsNumbers[1].textContent).toBe("22 112");
+        expect(viewsNumbers[2].textContent).toBe("5 564");
     });
 });
