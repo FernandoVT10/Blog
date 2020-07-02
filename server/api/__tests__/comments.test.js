@@ -51,6 +51,7 @@ describe("comments api", () => {
 
     afterEach(async () => {
         await Comment.deleteMany();
+        await Article.deleteMany();
 
         article = null;
     });

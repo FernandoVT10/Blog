@@ -1,5 +1,6 @@
 import Article from "../models/Article";
 import Category from "../models/Category";
+import Comment from "../models/Comment";
 
 import { Router } from "express";
 
@@ -75,6 +76,38 @@ router.get("/getFilteredArticles/", async (req, res) => {
     }
 });
 
+router.post("/createArticle/", jwtAuthentication, uploadImage("cover", "/articles/"), async (req, res) => {
+    const { title, content, description, categories } = req.body;
+    const cover = req.file;
+    // const cover = req.file;
+    try {
+        if(cover) {
+            const categoriesDocument = await Category.find({ name: categories });
+
+            const newArticle = await Article.create({
+                title,
+                content,
+                description,
+                cover: cover.filename,
+                categories: categoriesDocument
+            });
+
+            res.json({ status: true, newArticle });
+        } else {
+            res.json({
+                status: false,
+                error: { message: "The cover is required" }
+            });
+        }
+    } catch (error) {
+        if(cover) {
+            deleteImage(`/articles/${cover.filename}`);
+        }
+
+        res.json({ status: false, error });
+    }
+});
+
 router.post("/updateArticle/", jwtAuthentication, uploadImage("cover", "/articles/"), async (req, res) => {
     const { articleId, title, content, description, categories } = req.body;
     const cover = req.file;
@@ -101,11 +134,17 @@ router.post("/updateArticle/", jwtAuthentication, uploadImage("cover", "/article
     }
 });
 
-router.delete("/deleteArticle/", jwtAuthentication, async (req, res) => {
+router.post("/deleteArticle/", jwtAuthentication, async (req, res) => {
     const { articleId } = req.body;
 
     try {
-        await Article.deleteOne({ _id: articleId });
+        const article = await Article.findById(articleId);
+
+        await Comment.deleteMany({ articleId: article._id });
+
+        deleteImage(`/articles/${article.cover}`);
+        
+        await article.remove();
 
         res.json({ status: true, message: "The article has been deleted successfully" });
     } catch (error) {

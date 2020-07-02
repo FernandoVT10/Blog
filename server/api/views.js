@@ -2,9 +2,9 @@ import PermanentViews from "../models/PermanentViews";
 import Article from "../models/Article";
 import jwtAuthentication from "../utils/jwtAuthentication";
 import paginate from "../utils/paginate";
+import Category from "../models/Category";
 
 import { Router } from "express";
-import Category from "../models/Category";
 
 const router = Router();
 
@@ -94,7 +94,7 @@ router.get("/getArticles/", jwtAuthentication, async (req, res) => {
             { $match: options },
             {
                 $project: {
-                    _id: "$article._id",
+                    _id: "$_id",
                     cover: "$cover",
                     title: "$title",
                     dayViews: "$dayViews",

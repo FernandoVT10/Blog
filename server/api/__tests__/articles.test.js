@@ -1,5 +1,6 @@
 import Article from "../../models/Article";
 import Category from "../../models/Category";
+import { uploadImage, deleteImage } from "../../utils/imageUpload";
 import request from "supertest";
 import app from "../../app";
 
@@ -37,6 +38,28 @@ const ARTICLE_MOCKS = [
 ];
 
 setupTestDB();
+
+jest.mock("../../utils/jwtAuthentication", () => {
+    return (_req, _res, next) => {
+        next();
+    };
+});
+
+jest.mock("../../utils/imageUpload", () => ({
+    uploadImage: jest.fn(() => {
+        return (req, _res, next) => {
+            if(req.body.cover) {
+                req.file = {
+                    filename: req.body.cover
+                };
+            }
+
+            next();
+        };
+    }),
+    deleteImage: jest.fn()
+}));
+
 console.log = jest.fn();
 
 describe("articles api", () => {
@@ -56,6 +79,13 @@ describe("articles api", () => {
     afterEach(async () => {
         await Category.deleteMany();
         await Article.deleteMany();
+
+        // uploadImage.mockReset();
+        deleteImage.mockReset();
+
+        ARTICLE_MOCKS[0].categories = [];
+        ARTICLE_MOCKS[1].categories = [];
+        ARTICLE_MOCKS[2].categories = [];
     });
 
     describe("Get Recent", () => {
@@ -154,6 +184,129 @@ describe("articles api", () => {
             expect(articles[0].title).toBe("Test Article 2");
 
             expect(pagination.pages.length).toBe(2);
+        });
+    });
+
+    describe("Create Article", () => {
+        it("It should create an article", async () => {
+            const res = await request(app)
+                .post(`/api/articles/createArticle/`)
+                .send({
+                    cover: "create.jpg",
+                    title: "create title",
+                    content: "create content",
+                    description: "create description",
+                    categories: ["Technology", "Tutorials"]
+                });
+
+            const { newArticle } = res.body;
+            
+            expect(res.body.status).toBeTruthy();
+            expect(newArticle.cover).toBe("create.jpg");
+            expect(newArticle.title).toBe("create title");
+            expect(newArticle.content).toBe("create content");
+            expect(newArticle.description).toBe("create description");
+
+            expect(newArticle.categories.length).toBe(2);
+        });
+
+        it("It should throw an error when we don't send the cover", async () => {
+            const res = await request(app)
+                .post(`/api/articles/createArticle/`)
+                .send({
+                    title: "create title",
+                    content: "create content",
+                    description: "create description",
+                    categories: ["Technology", "Tutorials"]
+                });
+            
+            expect(res.body.status).toBeFalsy();
+            expect(res.body.error.message).toBe("The cover is required");
+        });
+
+        it("It should delete the image when there has a mongoose error", async () => {
+            const res = await request(app)
+                .post(`/api/articles/createArticle/`)
+                .send({
+                    cover: "create.jpg",
+                    title: "",
+                    content: "create content",
+                    description: "create description",
+                    categories: ["Technology", "Tutorials"]
+                });
+            
+            expect(res.body.status).toBeFalsy();;
+            expect(deleteImage).toHaveBeenCalledWith("/articles/create.jpg");
+        });
+    });
+
+    describe("Update Article", () => {
+        it("It should update the article without cover", async () => {
+            const article = await Article.findOne({ title: "Test Article 2" });
+
+            const res = await request(app)
+                .post(`/api/articles/updateArticle/`)
+                .send({
+                    articleId: article._id,
+                    title: "update title",
+                    content: "update content",
+                    description: "update description",
+                    categories: ["Technology"]
+                });
+
+            const { newArticle } = res.body;
+            
+            expect(res.body.status).toBeTruthy();
+            expect(newArticle.title).toBe("update title");
+            expect(newArticle.content).toBe("update content");
+            expect(newArticle.description).toBe("update description");
+
+            expect(newArticle.categories.length).toBe(1);
+            expect(newArticle.categories[0].name).toBe("Technology");
+
+            expect(deleteImage).not.toHaveBeenCalled();
+        });
+
+        it("It should update the article with cover", async () => {
+            const article = await Article.findOne({ title: "Test Article 3" });
+
+            const res = await request(app)
+                .post(`/api/articles/updateArticle/`)
+                .send({
+                    articleId: article._id,
+                    cover: "update.jpg",
+                    title: "update title",
+                    content: "update content",
+                    description: "update description",
+                    categories: []
+                });
+
+            const { newArticle } = res.body;
+            
+            expect(res.body.status).toBeTruthy();
+            expect(newArticle.cover).toBe("update.jpg");
+            expect(newArticle.title).toBe("update title");
+            expect(newArticle.content).toBe("update content");
+            expect(newArticle.description).toBe("update description");
+
+            expect(newArticle.categories.length).toBe(0);
+
+            expect(deleteImage).toHaveBeenCalledWith("/articles/cover-3.jpg");
+        });
+    });
+
+    describe("Delete Article", () => {
+        it("It should delete an article and delete the cover image and comments", async () => {
+            const article = await Article.findOne({ title: "Test Article 3" });
+
+            const res = await request(app)
+                .post(`/api/articles/deleteArticle/`)
+                .send({
+                    articleId: article._id,
+                });
+
+            expect(res.body.status).toBeTruthy();
+            expect(deleteImage).toHaveBeenCalledWith("/articles/cover-3.jpg");
         });
     });
 });
