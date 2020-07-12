@@ -1,9 +1,11 @@
 import Message from "../../models/Message";
 import transporter from "../../config/mail";
-import request from "supertest";
+import supertest from "supertest";
 import app from "../../app";
 
-setupTestDB();
+const request = supertest(app);
+
+setupTestDB("test_messages");
 
 jest.mock("../../config/mail", () => ({
     sendMail: jest.fn(),
@@ -16,13 +18,12 @@ describe("messages api", () => {
             const sendMail = jest.fn();
             transporter.sendMail.mockImplementation(sendMail);
 
-            const res = await request(app)
-                .post("/api/messages/addMessage")
+            const res = await request
+                .post("/api/messages/")
                 .send({ email: "test@gmail.com", message: "Test message" });
 
             expect(res.body).toEqual({
-                status: true,
-                message: "Your message has been sent successfully"
+                data: { message: "Your message has been sent successfully" }
             });
 
             const { message } = await Message.findOne({ email: "test@gmail.com" });

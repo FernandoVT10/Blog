@@ -23,7 +23,10 @@ export function uploadImage(field, url) {
                 && ext !== "image/jpg"
                 && ext !== "image/jpeg"
                 && ext !== "image/gif") {
-                    return cb(new Error(`The ${field} must be an image`));
+                    cb({
+                        status: 200,
+                        message: `The ${field} must be an image`
+                    });
                 }
         
                 cb(null, true);
@@ -32,7 +35,7 @@ export function uploadImage(field, url) {
     
         upload(req, res, error => {
             if(error) {
-                res.json({ status: false, error });
+                res.json({ errors: [error] });
             } else {
                 next();
             }

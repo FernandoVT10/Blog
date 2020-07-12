@@ -1,6 +1,8 @@
 import Category from "../../models/Category";
-import request from "supertest";
+import supertest from "supertest";
 import app from "../../app";
+
+const request = supertest(app);
 
 const CACEGORY_MOCKS = [
     { name: "Technology" },
@@ -8,25 +10,18 @@ const CACEGORY_MOCKS = [
     { name: "Tutorials" }
 ];
 
-setupTestDB();
+setupTestDB("test_categories");
 
 describe("categories api", () => {
     beforeEach(async () => {
         await Category.insertMany(CACEGORY_MOCKS); 
     });
 
-    afterEach(async () => {
-        await Category.deleteMany(); 
-    });
-
-    describe("Get All Categories", () => {
+    describe("Get Categories", () => {
         it("it should get the all categories", async () => {
-            const res = await request(app).get("/api/categories/getAllCategories/");
-            const skills = res.body;
+            const res = await request.get("/api/categories/");
     
-            skills.forEach(({ name }, index) => {
-                expect(name).toBe(CACEGORY_MOCKS[index].name);
-            });
+            expect(res.body.data.categories.length).toBe(3);
         });
     });
 });

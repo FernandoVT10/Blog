@@ -1,6 +1,8 @@
 import Skill from "../../models/Skill";
-import request from "supertest";
+import supertest from "supertest";
 import app from "../../app";
+
+const request = supertest(app);
 
 const SKILLS_MOCK = [
     {
@@ -20,25 +22,19 @@ const SKILLS_MOCK = [
     }
 ];
 
-setupTestDB();
+setupTestDB("test_skills");
 
 describe("skills api", () => {
     beforeEach(async () => {
         await Skill.insertMany(SKILLS_MOCK); 
     });
 
-    afterEach(async () => {
-        await Skill.deleteMany(); 
-    });
-
     describe("GetAllSkills", () => {
-        it("it should get the all skills", async () => {
-            const res = await request(app).get("/api/skills/getAllSkills/");
-            const skills = res.body;
-    
-            skills.forEach(({ name, image, color }, index) => {
-                expect({ name, image, color }).toEqual(SKILLS_MOCK[index]);
-            });
+        it("it should get all the skills", async () => {
+            const res = await request.get("/api/skills/");
+            const { skills } = res.body.data;
+
+            expect(skills.length).toBe(3);
         });
     });
 });

@@ -4,31 +4,46 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/getProjectsBySkillName/:name", async (req, res) => {
-    const {name} = req.params;
+router.get("/", async (req, res) => {
+    const { skill } = req.query;
     
     try {
-        const skill = await Skill.findOne({ name });
+        const options = {};
 
-        const projects = await Project.find({ skills: skill });
+        if(skill) {
+            const skillDocument = await Skill.findOne({ name: skill });
 
-        res.json(projects);
-    } catch (error) {
-        console.log(error);
+            Object.assign(options, { skills: skillDocument });
+        }
 
-        res.json([]);
+        const projects = await Project.find(options).populate("skills");
+
+        res.json({ data: { projects } });
+    } catch {
+        res.json({ data: { projects: [] } });
     }
 });
 
-router.get("/getProjectById/:projectId", async (req, res) => {
+router.get("/:projectId", async (req, res) => {
+    const { projectId } = req.params;
+
     try {
-        const project = await Project.findById(req.params.projectId).populate("skills");
+        const project = await Project.findById(projectId).populate("skills");
 
-        res.json(project);
+        if(project) {
+            res.json({ data: { project } });
+        } else {
+            res.json({
+                errors: [
+                    {
+                        status: 404,
+                        message: `The project ${projectId} doesn't exist`
+                    }
+                ]
+            });
+        }
     } catch (error) {
-        console.log(error);
-
-        res.json({});
+        res.json({ errors: [error] });
     }
 });
 

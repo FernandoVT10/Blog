@@ -4,7 +4,7 @@ import transporter from "../config/mail";
 
 const router = Router();
 
-router.post("/addMessage/", async (req, res) => {
+router.post("/", async (req, res) => {
     const { email, message } = req.body;
 
     try {
@@ -19,9 +19,9 @@ router.post("/addMessage/", async (req, res) => {
 
         transporter.close();
 
-        res.json({ status: true, message: "Your message has been sent successfully" });
+        res.json({ data: { message: "Your message has been sent successfully" } });
     } catch (error) {
-        res.json({ status: false, error });
+        res.json({ errors: [error] });
     }
 });
 

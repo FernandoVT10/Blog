@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #content {
+            display: block;
+            margin: auto;
+            padding-bottom: 25px;
+            background: #2f2f2f;
+            max-width: 600px;
+        }
+
+        #header {
+            padding: 10px;
+            background: #1A1A1A;
+        }
+
+        #header a {
+            text-decoration: none;
+        }
+
+        #header img {
+            vertical-align: middle;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        #header h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 20px;
+            font-weight: normal;
+            vertical-align: middle;
+            display: inline;
+            margin: 0;
+            color: white;
+        }
+
+        #body {
+            padding: 0 25px;
+        }
+
+        #body h3 {
+            color: white;
+            margin: 25px 0;
+        }
+
+        #body p {
+            display: block;
+            margin: 25px 0;
+            font-size: 18px;
+            line-height: 2em;
+            color: white;
+        }
+
+        #body a {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            background: #8BD1FF;
+            padding: 10px 0;
+            margin: auto;
+            width: 150px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="header">
+            <a href="{url}">
+                <img src="{url}/favicon.ico" alt="Icon">
+                <h1>Fernando Vaca Tamayo</h1>
+            </a>
+        </div>
+        <div id="body">
+            <h3>Thanks for registering on our blog!</h3>
+            <p>
+                Now to confirm your email just click on the button below.
+            </p>
+            <a href="{url}?subscriptionId={subscriptionId}">Confirm</a>
+        </div>
+    </div>
+</body>
+</html>

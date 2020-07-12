@@ -1,16 +1,42 @@
 import mongoose from "mongoose";
 
-global.setupTestDB = () => {
+global.setupTestDB = (databaseName) => {
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost/test', {
+        await mongoose.connect(`mongodb://localhost/${databaseName}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
         });
     });
 
-    afterAll(() => {
-        mongoose.connection.close();
+    afterAll(async () => {
+        const collections = Object.keys(mongoose.connection.collections);
+
+        for (const collectionName of collections) {
+            const collection = mongoose.connection.collections[collectionName];
+
+            try {
+                await collection.drop();
+            } catch (error) {
+                if (error.message === "ns not found"
+                || error.message.includes("a background operation is currently running")) {
+                    continue
+                }
+
+                console.log(error.message);
+            }
+        }
+
+        await mongoose.connection.close();
+    });
+
+    afterEach(async () => {
+        const collections = Object.keys(mongoose.connection.collections);
+
+        for (const collectionName of collections) {
+            const collection = mongoose.connection.collections[collectionName];
+            await collection.deleteMany();
+        }
     });
 }
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import jwtAuthentication from "../utils/jwtAuthentication";
-import { uploadImage } from "../utils/imageUpload";
+import jwtAuthentication from "../../utils/jwtAuthentication";
+import { uploadImage } from "../../utils/imageUpload";
 
 const router = Router();
 
@@ -15,15 +15,18 @@ router.post("/uploadImage/", ...uploadMiddleware, (req, res) => {
 
     if(image) {
         res.json({
-            status: true,
-            imageName: image.filename
+            data: {
+                imageName: image.filename
+            }
         });
     } else {
         res.json({
-            status: true,
-            error: {
-                message: "An error ocurred while trying to upload the image."
-            }
+            errors: [
+                {
+                    status: 200,
+                    message: "An error ocurred while trying to upload the image."
+                }
+            ]
         });
     }
 });

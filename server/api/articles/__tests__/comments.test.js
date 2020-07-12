@@ -1,7 +1,9 @@
-import Comment from "../../models/Comment";
-import Article from "../../models/Article";
-import request from "supertest";
-import app from "../../app";
+import Comment from "../../../models/Comment";
+import Article from "../../../models/Article";
+import supertest from "supertest";
+import app from "../../../app";
+
+const request = supertest(app);
 
 const COMMENT_MOCKS = [
     {
@@ -30,8 +32,7 @@ const ARTICLE_MOCK = {
     createdAt: Date.now() + 2
 };
 
-setupTestDB();
-console.log = jest.fn();
+setupTestDB("test_comments");
 
 let article;
 
@@ -49,17 +50,14 @@ describe("comments api", () => {
         }
     });
 
-    afterEach(async () => {
-        await Comment.deleteMany();
-        await Article.deleteMany();
-
+    afterEach(() => {
         article = null;
     });
 
     describe("Get Comments", () => {
         it("it should get the all comments", async () => {
-            const res = await request(app).get(`/api/comments/getComments/${article._id}/3/0`);
-            const comments = res.body;
+            const res = await request.get(`/api/articles/${article._id}/comments`);
+            const { comments } = res.body.data;
 
             comments.forEach(({ name, comment }, index) => {
                 expect(name).toBe(COMMENT_MOCKS[index].name);
@@ -68,81 +66,84 @@ describe("comments api", () => {
         });
 
         it("it should get the second comment", async () => {
-            const res = await request(app).get(`/api/comments/getComments/${article._id}/1/1`);
-            const comments = res.body;
+            const res = await request
+                .get(`/api/articles/${article._id}/comments`)
+                .query({ offset: 1, limit: 1 });
+
+            const { comments } = res.body.data;
 
             expect(comments[0].name).toBe("Test name 2");
             expect(comments[0].comment).toBe("Test comment 2");
         });
 
         it("it should get an empty array", async () => {
-            const res = await request(app).get(`/api/comments/getComments/null/1/0`);
-            const comments = res.body;
+            const res = await request.get(`/api/articles/abcefabcefabcefabcefabce/comments`);
+            const { comments } = res.body.data;
 
             expect(comments).toEqual([]);
         });
     });
 
     describe("Add Comment", () => {
-        it("It should get an error", async () => {
-            const res = await request(app)
-                .post(`/api/comments/addComment/`)
+        it("It should get a 404 error", async () => {
+            const res = await request
+                .post(`/api/articles/abcefabcefabcefabcefabce/comments`)
                 .send({
-                    articleId: "6eb5a0f353621a20f8961bd3",
                     name: "Test name",
                     comment: "Test comment"
                 });
 
             expect(res.body).toEqual({
-                status: false,
-                error: { message: "The article doesn't exists" }
+                errors: [
+                    {
+                        status: 404,
+                        message: "The article doesn't exist"
+                    }
+                ]
             });
         });
 
         it("It should get a max character error in the name", async () => {
-            const res = await request(app)
-                .post(`/api/comments/addComment/`)
+            const res = await request
+                .post(`/api/articles/${article._id}/comments`)
                 .send({
-                    articleId: article._id,
                     name: "Test name with more of 30 characters",
                     comment: "Test comment"
                 });
 
-            expect(res.body.status).toBeFalsy();
-            expect(res.body.error).toMatchSnapshot();
+            const { errors } = res.body;
+
+            expect(errors).toMatchSnapshot();
         });
 
-        it("It should get a max character error in the email", async () => {
+        it("It should get a max character error in the comment", async () => {
             const comment = randomText(501);
 
-            const res = await request(app)
-                .post(`/api/comments/addComment/`)
+            const res = await request
+                .post(`/api/articles/${article._id}/comments`)
                 .send({
-                    articleId: article._id,
                     name: "Test name",
                     comment
                 });
 
-            expect(res.body.status).toBeFalsy();
+            const { errors } = res.body;
 
-            expect(res.body.error.message)
+            expect(errors[0].message)
             .toBe(`comments validation failed: comment: Path \`comment\` (\`${comment}\`) is longer than the maximum allowed length (500).`);
         });
 
         it("It should create a comment", async () => {
             const comment = randomText(250);
 
-            const res = await request(app)
-                .post(`/api/comments/addComment/`)
+            const res = await request
+                .post(`/api/articles/${article._id}/comments`)
                 .send({
-                    articleId: article._id,
                     name: "Test name #21",
                     comment
                 });
 
-            const { createdComment } = res.body;
+            const { createdComment } = res.body.data;
 
-            expect(res.body.status).toBeTruthy();
             expect(createdComment.name).toBe("Test name #21");
             expect(createdComment.comment).toBe(comment);
         });

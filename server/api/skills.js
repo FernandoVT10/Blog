@@ -3,15 +3,13 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/getAllSkills/", async (req, res) => {
+router.get("/", async (_, res) => {
     try {
         const skills = await Skill.find();
 
-        res.json(skills);
-    } catch (error) {
-        console.log(error);
-        
-        res.json([]);
+        res.json({ data: { skills } });
+    } catch {
+        res.json({ data: { skills: [] } });
     }
 });
 

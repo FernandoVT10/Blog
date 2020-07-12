@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`comments api Add Comment It should get a max character error in the name 1`] = `
+Array [
+  Object {
+    "_message": "comments validation failed",
+    "errors": Object {
+      "name": Object {
+        "kind": "maxlength",
+        "message": "Path \`name\` (\`Test name with more of 30 characters\`) is longer than the maximum allowed length (30).",
+        "name": "ValidatorError",
+        "path": "name",
+        "properties": Object {
+          "maxlength": 30,
+          "message": "Path \`name\` (\`Test name with more of 30 characters\`) is longer than the maximum allowed length (30).",
+          "path": "name",
+          "type": "maxlength",
+          "value": "Test name with more of 30 characters",
+        },
+        "value": "Test name with more of 30 characters",
+      },
+    },
+    "message": "comments validation failed: name: Path \`name\` (\`Test name with more of 30 characters\`) is longer than the maximum allowed length (30).",
+    "name": "ValidationError",
+  },
+]
+`;

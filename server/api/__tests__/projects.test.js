@@ -1,7 +1,9 @@
 import Project from "../../models/Project";
 import Skill from "../../models/Skill";
-import request from "supertest";
+import supertest from "supertest";
 import app from "../../app";
+
+const request = supertest(app);
 
 const SKILLS_MOCK = [
     {
@@ -42,8 +44,7 @@ const PROJECT_MOCKS = [
     }
 ];
 
-setupTestDB();
-console.log = jest.fn();
+setupTestDB("test_projects");
 
 describe("projects api", () => {
     beforeEach(async () => {
@@ -58,47 +59,48 @@ describe("projects api", () => {
         await Project.insertMany(PROJECT_MOCKS);
     });
 
-    afterEach(async () => {
-        await Project.deleteMany();
-        await Skill.deleteMany();
-    });
-
-    describe("Get Projects By Skill Name", () => {
+    describe("Get Projects", () => {
         it("it should get all projects", async () => {
-            const res = await request(app).get("/api/projects/getProjectsBySkillName/Node JS");
-            const projects = res.body;
+            const res = await request.get("/api/projects/");
+            const { projects } = res.body.data;
     
-            projects.forEach(({ title, description, images }, index) => {
-                expect(title).toBe(PROJECT_MOCKS[index].title);
-                expect(description).toBe(PROJECT_MOCKS[index].description);
-                expect(images).toEqual(PROJECT_MOCKS[index].images);
-            });
+            expect(projects.length).toBe(3);
         });
 
-        it("it should get the second projects", async () => {
-            const res = await request(app).get("/api/projects/getProjectsBySkillName/GraphQL");
-            const projects = res.body;
+        it("it should get the projects with skill", async () => {
+            const res = await request
+                .get("/api/projects/")
+                .query({ skill: "GraphQL" });
+            const project = res.body.data.projects[0];
 
-            expect(projects[0].title).toBe(PROJECT_MOCKS[1].title);
-            expect(projects[0].description).toBe(PROJECT_MOCKS[1].description);
-            expect(projects[0].images).toEqual(PROJECT_MOCKS[1].images);
+            expect(project.title).toBe(PROJECT_MOCKS[1].title);
+            expect(project.description).toBe(PROJECT_MOCKS[1].description);
+            expect(project.images).toEqual(PROJECT_MOCKS[1].images);
         });
     });
 
     describe("Get Project By Id", () => {
         it("it should get the third project", async () => {
             const project = await Project.findOne({ title: "Application with Node JS" });
+            const res = await request.get(`/api/projects/${project._id}`);
 
-            const res = await request(app).get(`/api/projects/getProjectById/${project._id}`);
+            const { title, description } = res.body.data.project;
 
-            expect(project.title).toBe(res.body.title);
-            expect(project.description).toBe(res.body.description);
+            expect(title).toBe(project.title);
+            expect(description).toBe(project.description);
         });
 
-        it("it should get an empty object", async () => {
-            const res = await request(app).get(`/api/projects/getProjectById/null`);
+        it("it should get a 404 error", async () => {
+            const res = await request.get(`/api/projects/abcefabcefabcefabcefabce`);
 
-            expect(res.body).toEqual({});
+            expect(res.body).toEqual({
+                errors: [
+                    {
+                        status: 404,
+                        message: `The project abcefabcefabcefabcefabce doesn't exist`
+                    }
+                ]
+            });
         });
     });
 });

@@ -3,15 +3,13 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/getAllCategories/", async (_, res) => {
+router.get("/", async (_, res) => {
     try {
         const categories = await Category.find();
 
-        res.json(categories);
-    } catch (error) {
-        console.log(error);
-
-        res.json([]);
+        res.json({ data: { categories } });
+    } catch {
+        res.json({ data: { categories: [] } });
     }
 });
 
