@@ -1,9 +1,7 @@
-@use "../../../styles/variables";
-
 .article-card {
     width: 100%;
-    background: variables.$primary;
-    color: white;
+    background: var(--primary);
+    color: var(--white);
 
     &__cover {
         object-fit: cover;
@@ -17,23 +15,23 @@
 
     &__title {
         font-weight: bold;
-        font-size: var(--subtitle);
+        font-size: 1.25em;
     }
 
     &__description {
         font-weight: bold;
-        font-size: 14px;
+        font-size: 0.8em;
     }
 
     &__link {
-        color: white;
+        color: var(--white);
         font-weight: bold;
         font-size: 14px;
         transition: .3s;
 
         &:hover {
             text-decoration: none;
-            color: variables.$secondary;
+            color: var(--secondary);
         }
     }
 }

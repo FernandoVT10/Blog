@@ -1,0 +1,11 @@
+.home-confirm-subscription {
+    display: none;
+    background: var(--secondary);
+    color: var(--black);
+    font-weight: bold;
+    padding: 20px;
+
+    &--active {
+        display: block;
+    }
+}

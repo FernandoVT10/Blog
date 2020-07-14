@@ -15,8 +15,12 @@ describe("ApiController tests", () => {
             const api = await Api.fetchCall("sendTests", data, "GET");
 
             expect(api).toEqual({
-                status: false,
-                error: { message: "An error has occurred" }
+                errors: [
+                    {
+                        status: 500,
+                        message: "An error has occurred in the server. Please try again later."
+                    }
+                ]
             });
 
             expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
@@ -88,26 +92,47 @@ describe("ApiController tests", () => {
         });
    });
 
+   describe("Put method", () => {
+        it("It should call fetchCall with method Put", async () => {
+            fetch.mockOnce(JSON.stringify({ status: true }));
+
+            window.localStorage.setItem("token", "putmethod");
+            
+            const data = { message: "hola" }
+
+            await Api.post("sendTests", data, true);
+
+            expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer putmethod"
+                },
+                body: JSON.stringify(data)
+            });
+        });
+    });
+
    describe("Delete method", () => {
-    it("It should call fetchCall with method DELETE", async () => {
-         fetch.mockOnce(JSON.stringify({ status: true }));
+        it("It should call fetchCall with method DELETE", async () => {
+            fetch.mockOnce(JSON.stringify({ status: true }));
 
-         window.localStorage.setItem("token", "deletemethod");
+            window.localStorage.setItem("token", "deletemethod");
 
-         const data = { articleId: 7 };
+            const data = { articleId: 7 };
 
-         await Api.delete("sendTests", data, true);
+            await Api.delete("sendTests", data, true);
 
-         expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
-             method: "DELETE",
-             headers: {
-                 "Content-Type": "application/json",
-                 "Authorization": "Bearer deletemethod"
-             },
-             body: JSON.stringify(data)
-         });
-     });
-});
+            expect(fetchMock).toHaveBeenCalledWith(WEBSITE_URL + "api/sendTests", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer deletemethod"
+                },
+                body: JSON.stringify(data)
+            });
+        });
+    });
 
    describe("Get method", () => {
         it("It should return an error", async () => {
@@ -121,8 +146,12 @@ describe("ApiController tests", () => {
             );
             
             expect(api).toEqual({
-                status: false,
-                error: { message: "An error has occurred" }
+                errors: [
+                    {
+                        status: 500,
+                        message: "An error has occurred in the server. Please try again later."
+                    }
+                ]
             });
         });
 

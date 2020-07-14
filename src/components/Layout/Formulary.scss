@@ -1,0 +1,115 @@
+.formulary {
+    &__input {
+        outline: 0;
+        width: 100%;
+        height: 50px;
+        padding: 15px;
+        color: var(--white);
+        font-weight: 600;
+        border: none;
+        background: var(--black);
+        border-radius: 10px;
+
+        &--error {
+            box-shadow: 0 0 6px 0px var(--danger);
+        }
+    }
+
+    &__error-label {
+        display: none;
+        font-size: 12px;
+        color: var(--danger);
+
+        &--error {
+            display: block;
+        }
+    }
+
+    &__textarea {
+        outline: 0;
+        resize: none;
+        width: 100%;
+        padding: 15px;
+        color: var(--white);
+        font-weight: 600;
+        border: none;
+        background: var(--black);
+        border-radius: 10px;
+    }
+
+    &__category {
+        margin-right: 10px;
+        display: inline;
+    }
+
+    &__checkbox {
+        display: inline;
+        margin-right: 10px;
+
+        &__input {
+            display: none;
+        }
+
+        &__label {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--white);
+            transition: .3s;
+    
+            &:hover {
+                color: var(--gray-light);
+            }
+        }
+    
+        &__label-checkbox {
+            position: relative;
+            top: 3px;
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border: solid 3px var(--secondary);
+            margin-right: 5px;
+        }
+    
+        &__input:checked ~ &__label {
+            & .formulary__checkbox__label-checkbox {
+                background: var(--secondary);
+    
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: -2px;
+                    left: 3px;
+                    width: 5px;
+                    height: 10px;
+                    border: solid var(--white);
+                    border-width: 0 2px 2px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+
+    &__submit-button {
+        background: var(--secondary);
+        color: var(--black);
+        font-weight: 600;
+        padding: 10px 30px;
+        border-radius: 5px;
+        border: solid var(--secondary) 2px;
+        transition: .3s;
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:hover {
+            background: var(--black);
+            color: var(--secondary);
+            box-shadow: inset 0 0 5px var(--secondary);
+        }
+    }
+}

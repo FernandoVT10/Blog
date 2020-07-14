@@ -26,18 +26,16 @@ export default {
             body: data
         })
         .then(res => res.json())
-        .catch(() => (
-            {
-                status: false,
-                error: {
-                    message: "An error has occurred"
-                }
-            }
-        ));
-    },
-
-    post(url, data, secure = false, isFormData = false) {
-        return this.fetchCall(url, data, "POST", secure, isFormData);
+        .catch(() => {
+            return {
+                errors: [
+                    {
+                        status: 500,
+                        message: "An error has occurred in the server. Please try again later."
+                    }
+                ]
+            };
+        });
     },
 
     get(url, secure = false) {
@@ -53,17 +51,27 @@ export default {
             headers
         })
         .then(res => res.json())
-        .catch(() => (
-            {
-                status: false,
-                error: {
-                    message: "An error has occurred"
-                }
-            }
-        ));
+        .catch(() => {
+            return {
+                errors: [
+                    {
+                        status: 500,
+                        message: "An error has occurred in the server. Please try again later."
+                    }
+                ]
+            };
+        });
     },
 
-    delete(url, data, secure = true) {
+    post(url, data, secure = false, isFormData = false) {
+        return this.fetchCall(url, data, "POST", secure, isFormData);
+    },
+
+    put(url, data = {}, secure = false, isFormData = false) {
+        return this.fetchCall(url, data, "PUT", secure, isFormData);
+    },
+
+    delete(url, data = {}, secure = true) {
         return this.fetchCall(url, data, "DELETE", secure);
     }
 };

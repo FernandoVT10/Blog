@@ -1,5 +1,7 @@
 import Head from "next/head";
-import "../styles/global.scss";
+
+import "./Layout.scss";
+import "./Formulary.scss";
 
 export default ({ children, title = "Fernando Vaca Tamayo Blog" }) => {
     return (

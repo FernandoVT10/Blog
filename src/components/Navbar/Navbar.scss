@@ -1,17 +1,16 @@
-@use "../../styles/variables";
-
 .navbar {
     padding: 0 30px;
-    background: variables.$primary;
+    background: var(--primary);
 
     &__brand {
+        font-size: 0.75rem;
         display: flex;
         align-items: center;
     }
 
     &__title {
         font-family: 'Pacifico', cursive;
-        font-size: var(--subtitle);
+        font-size: 1.5em;
         margin: 0;
         margin-left: 10px;
     }
@@ -21,6 +20,12 @@
     }
 
     &__link {
-        font-size: 14px;
+        font-size: 0.8rem;
+    }
+
+    @media only screen and (min-width: 578px) {
+        &__brand {
+            font-size: 1rem;
+        }
     }
 }

@@ -1,8 +1,6 @@
-@use "../../styles/variables";
-
 .main-footer {
-    background: variables.$primary;
-    padding: 30px;
+    background: var(--primary);
+    padding: 30px 10px;
 
     &__brand {
         display: flex;
@@ -15,39 +13,46 @@
 
     &__title {
         font-family: 'Pacifico', cursive;
-        font-size: var(--subtitle);
+        font-size: 1.25em;
         margin: 0;
         margin-left: 10px;
-        color: white;
+        color: var(--white);
     }
 
     &__subtitle {
-        color: variables.$secondary;
-        font-size: 20px;
+        color: var(--secondary);
+        font-size: 1.25em;
         font-weight: 600;
+        margin-top: 1.5em;
     }
 
     &__icon {
-        color: variables.$secondary;
+        color: var(--secondary);
     }
 
     &__text {
-        color: white;
+        color: var(--white);
         margin-left: 10px;
         font-weight: bold;
     }
 
     &__description {
-        color: white;
+        color: var(--white);
         font-weight: bold;
+        line-height: 1.8em;
     }
 
-    @media screen and (max-width: 576px) {
+    &__subscription-form-loader {
+        margin-top: 40px;
+        text-align: center;
+        color: var(--secondary);
+    }
+
+    @media screen and (min-width: 576px) {
+        padding: 30px;
+
         &__subtitle {
-            color: variables.$secondary;
-            margin-top: 1.5rem;
-            font-size: 20px;
-            font-weight: 600;
+            margin-top: 0;
         }
     }
 }
