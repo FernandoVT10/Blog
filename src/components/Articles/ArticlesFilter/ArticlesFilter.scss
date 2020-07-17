@@ -1,5 +1,3 @@
-@use "../../../styles/variables";
-
 .articles-filter {
     position: relative;
 
@@ -17,7 +15,7 @@
         right: 10px;
         background: transparent;
         border: none;
-        color: white;
+        color: var(--white);
     }
 
     &__filter-button {
@@ -26,12 +24,12 @@
         display: inline-block;
         background: transparent;
         border: none;
-        color: white;
+        color: var(--white);
         transition: .3s;
 
         &:hover,
         &--active {
-            color: variables.$secondary;
+            color: var(--secondary);
         }
     }
     
@@ -44,7 +42,7 @@
         padding-bottom: 10px;
         width: 90vw;
         max-width: 600px;
-        background: variables.$black;
+        background: var(--black);
 
         &--active {
             display: block;
@@ -60,15 +58,26 @@
     }
 
     &__categories-title {
-        color: white;
+        color: var(--white);
         font-weight: bold;
         font-size: 18px;
     }
 
     &__set-categories-button {
-        display: block;
-        margin-top: 10px;
         float: right;
+        display: block;
+        padding: 10px 20px;
+        font-weight: 600;
+        border: none;
+        color: var(--black);
+        background: var(--secondary);
+        margin-top: 10px;
+        transition: .3s;
+
+        &:hover {
+            color: var(--secondary);
+            background: var(--black);
+        }
     }
 
     @media screen and (max-width: 576px) {

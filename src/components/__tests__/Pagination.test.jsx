@@ -37,7 +37,7 @@ describe("<Pagination/> Component", () => {
         expect(routerPush).toHaveBeenCalledWith({
             pathname: "/",
             query: {
-                offset: 2
+                page: 2
             }
         });
     });
@@ -60,7 +60,7 @@ describe("<Pagination/> Component", () => {
         expect(routerPush).toHaveBeenCalledWith({
             pathname: "/",
             query: {
-                offset: 5
+                page: 5
             }
         });
     });
@@ -83,7 +83,7 @@ describe("<Pagination/> Component", () => {
         expect(routerPush).toHaveBeenCalledWith({
             pathname: "/",
             query: {
-                offset: 7
+                page: 7
             }
         });
     });

@@ -1,24 +1,23 @@
-@use "../../styles/variables";
-
 .pagination {
     display: flex;
     justify-content: center;
     padding: 10px 0;
     width: 100%;
-    background: variables.$primary;
+    background: var(--primary);
 
     &__arrow {
-        color: white;
+        color: var(--white);
         margin: 10px;
         transition: .3s;
 
         &:hover {
-            color: variables.$secondary;
+            color: var(--secondary);
         }
 
         &--disabled,
         &--disabled:hover {
-            color: #aaaaaa;
+            cursor: default;
+            color: var(--gray-light);
         }
     }
 
@@ -33,13 +32,13 @@
     }
 
     &__number {
-        color: white;
+        color: var(--white);
         font-weight: bold;
         transition: .3s;
 
         &:hover,
         &--active {
-            color: variables.$secondary;
+            color: var(--secondary);
         }
     }
 }

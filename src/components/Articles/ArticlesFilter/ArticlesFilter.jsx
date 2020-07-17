@@ -1,6 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import FloatFilter from "./FloatFilter";
+
+import ApiController from "../../../services/ApiController";
+
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Api from "../../../ApiController";
 
 import "./ArticlesFilter.scss";
 
@@ -11,41 +14,39 @@ function ArticlesFilter() {
 
     const router = useRouter();
 
-    // we active the categories with the URL query
-    const setCategoriesStatus = (categories, queryCategories) => {
-        setCategories(categories.map(({ _id, name }) => {
-            if(queryCategories.includes(name)) {
-                return { active: true, _id, name };
-            } else {
-                return { active: false, _id, name };
-            }
-        }));
-    }
-
     useEffect(() => {
         // we use the URLSearchParams with window.location.search, 
         // because the router.query is undefined in the first call
         const queryCategories = new URLSearchParams(location.search).getAll("categories");
 
-        Api.get("categories/getAllCategories/")
-        .then(categories => setCategoriesStatus(categories, queryCategories));
+        ApiController.get("categories")
+        .then(res => {
+            if(res.data) {
+                const categories = res.data.categories.map(({ _id, name }) => {
+                    if(queryCategories.includes(name)) {
+                        return { active: true, _id, name };
+                    } else {
+                        return { active: false, _id, name };
+                    }
+                });
+
+                setCategories(categories);
+            }
+        });
     }, []);
 
     useEffect(() => {
         if(router.query.search) {
             setSearch(router.query.search);
         }
-    }, [router]);
+    }, [router.query]);
 
     const handleForm = e => {
         e.preventDefault();
         setFilterActive(false);
 
         const activeCategories = [];
-        const query = router.query;
-
-        delete query.search;
-        delete query.categories;
+        const query = {};
 
         categories.forEach(({ active, name }) => {
             if(active) {
@@ -67,42 +68,6 @@ function ArticlesFilter() {
         });
     };
 
-    // Active or desactive the category
-    const handleCategory = name => {
-        setCategories(categories.map(category => {
-            if(category.name === name) {
-                Object.assign(category, { active: !category.active });
-            }
-
-            return category;
-        }));
-    };
-
-    const getCategories = () => {
-        if(categories.length) {
-            return categories.map(category => {
-                return (
-                    <div key={category._id} className="formulary__checkbox">
-                        <input
-                        className="formulary__checkbox__input"
-                        id={`category-${category.name}`}
-                        onChange={() => handleCategory(category.name)}
-                        type="checkbox"
-                        checked={category.active} />
-
-                        <label
-                        className="formulary__checkbox__label"
-                        htmlFor={`category-${category.name}`}>
-                            <span className="formulary__checkbox__label-checkbox"></span>
-                            { category.name }
-                        </label>
-                    </div>
-                );
-            });
-        }
-    };
-
-    const filterClass = filterActive ? "articles-filter__filter--active" : "";
     const filterButtonClass = filterActive ? "articles-filter__filter-button--active" : "";
     
     return (
@@ -122,29 +87,12 @@ function ArticlesFilter() {
                     </button>
                 </div>
 
-                <div className={`articles-filter__filter ${filterClass}`}>
-                    <input
-                    className="formulary__input articles-filter__filter-search"
-                    type="search"
-                    placeholder="Search article"
-                    value={search}
-                    onChange={({ target: { value } }) => setSearch(value)}
-                    autoComplete="search" />
-
-                    <div className="articles-filter__categories-container">
-                        <h4 className="articles-filter__categories-title">Categories</h4>
-
-                        <div className="aticles-filter__categories">
-                            { getCategories() }
-                        </div>
-
-                        <button
-                        type="submit"
-                        className="submit-button articles-filter__set-categories-button">
-                            Set Categories
-                        </button>
-                    </div>
-                </div>
+                <FloatFilter
+                search={search}
+                setSearch={setSearch}
+                categories={categories}
+                setCategories={setCategories}
+                filterActive={filterActive}/>
                 
                 <a
                 onClick={() => setFilterActive(!filterActive)}

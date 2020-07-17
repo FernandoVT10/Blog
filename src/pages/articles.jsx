@@ -1,7 +1,8 @@
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar/";
 import Footer from "../components/Footer/";
-import ArticleCardList from "../components/Articles/ArticleCardList";
+
+import ArticleCardList from "../domain/Articles/ArticleCardList";
 
 export default () => {
     return (

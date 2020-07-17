@@ -5,10 +5,10 @@ import "./Pagination.scss";
 export default ({ pagination }) => {
     const router = useRouter();
 
-    const handleOffset = (offset) => {
+    const handlePage = (page) => {
         const query = router.query;
 
-        Object.assign(query, { offset });
+        Object.assign(query, { page });
 
         router.push({
             pathname: router.pathname,
@@ -21,7 +21,7 @@ export default ({ pagination }) => {
             return (
                 <a
                 href="#"
-                onClick={() => handleOffset(pagination.prevPage)}
+                onClick={() => handlePage(pagination.prevPage)}
                 className="pagination__arrow">
                     <i className="fas fa-chevron-left" aria-hidden="true"></i>
                 </a>
@@ -40,7 +40,7 @@ export default ({ pagination }) => {
             return (
                 <a
                 href="#"
-                onClick={() => handleOffset(pagination.nextPage)}
+                onClick={() => handlePage(pagination.nextPage)}
                 className="pagination__arrow">
                     <i className="fas fa-chevron-right" aria-hidden="true"></i>
                 </a>
@@ -63,7 +63,7 @@ export default ({ pagination }) => {
                     <li className="pagination__number-item" key={index}>
                         <a 
                         href="#"
-                        onClick={() => handleOffset(number)}
+                        onClick={() => handlePage(number)}
                         className={`pagination__number ${numberClass}`}>
                             { number }
                         </a>

@@ -1,6 +1,6 @@
 import { act, Simulate } from "react-dom/test-utils";
 import { render } from "react-dom";
-import ArticlesFilter from "../ArticlesFilter/";
+import ArticlesFilter from "../ArticlesFilter";
 import { useRouter } from "next/router";
 
 const CATEGORIES_MOCK = [
@@ -18,45 +18,47 @@ const CATEGORIES_MOCK = [
     }
 ];
 
+Object.defineProperty(window, "location", {
+    value: {
+        search: "?"
+    }
+});
+
 let container;
 
-describe('<ArticleFilter/> Component', () => {
+describe("<ArticleFilter/> Component", () => {
     beforeEach(() => {
         fetchMock.doMock();
 
-        fetchMock.mockOnce(JSON.stringify(
-            CATEGORIES_MOCK
-        ));
+        fetchMock.mockOnce(JSON.stringify({
+            data: {
+                categories: CATEGORIES_MOCK
+            }
+        }));
 
-        container = document.createElement('div');
+        container = document.createElement("div");
         document.body.appendChild(container);
     });
     
     afterEach(() => {
         document.body.removeChild(container);
         container = null;
+
+        fetchMock.mockReset();
+        window.location.search = "";
     });
 
-    it('It should active and desactive category', async () => {
+    it("It should call the api correctly", async () => {
         await act(async () => {
             render(<ArticlesFilter/>, container);
         });
 
-        const checkbox = container.querySelector("#category-Technology");
+        const fetchCall = fetchMock.mock.calls[0];
 
-        act(() => {
-            Simulate.change(checkbox);
-        });
-
-        expect(checkbox.checked).toBeTruthy();
-
-        act(() => {
-            Simulate.change(checkbox);
-        });
-        expect(checkbox.checked).toBeFalsy();
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/categories");
     });
 
-    it('It should change the search inputs value with query search value', async () => {
+    it("It should change the search inputs value with query search value", async () => {
         useRouter.mockImplementation(() => ({
             query: { search: "Test value" }
         }));
@@ -72,28 +74,8 @@ describe('<ArticleFilter/> Component', () => {
         });
     });
 
-    it('It should render the categories with an active', async () => {
-        Object.defineProperty(window, 'location', {
-            value: {
-                search: "?categories=Landscapes"
-            }
-        });
-
-        await act(async () => {
-            render(<ArticlesFilter/>, container);
-        });
-        
-        const category = container.querySelector("#category-Landscapes");
-
-        expect(category.checked).toBeTruthy();
-    });
-
-    it('It should call router.push', async () => {
-        Object.defineProperty(window, 'location', {
-            value: {
-                search: "?categories=Technology"
-            }
-        });
+    it("It should call router.push", async () => {
+        window.location.search = "?categories=Technology";
 
         const routerPush = jest.fn();
 
@@ -116,13 +98,44 @@ describe('<ArticleFilter/> Component', () => {
         expect(routerPush).toHaveBeenCalledWith({
             pathname: "/",
             query: {
-                categories: ["Landscapes"],
+                categories: ["Technology"],
                 search: "Test value"
             }
         });
     });
 
-    it('It should active and desactive the filter', async () => {
+    it("It should call active and a category", async () => {
+        const routerPush = jest.fn();
+
+        useRouter.mockImplementation(() => ({
+            query: {},
+            pathname: "/",
+            push: routerPush
+        }));
+
+        await act(async () => {
+            render(<ArticlesFilter/>, container);
+        });
+
+        const category = container.querySelector("#category-Landscapes");
+
+        act(() => Simulate.change(category));
+
+        const form = container.querySelector("form");
+
+        act(() => {
+            Simulate.submit(form);
+        });
+
+        expect(routerPush).toHaveBeenCalledWith({
+            pathname: "/",
+            query: {
+                categories: ["Landscapes"]
+            }
+        });
+    });
+
+    it("It should active and desactive the filter", async () => {
         await act(async () => {
             render(<ArticlesFilter/>, container);
         });

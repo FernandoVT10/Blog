@@ -31,10 +31,12 @@ describe("<ArticleCardList/> component", () => {
     beforeEach(() => {
         fetchMock.doMock();
         fetchMock
-            .once(JSON.stringify([]))
+            .once(JSON.stringify({ data: { categories: [] } }))
             .once(JSON.stringify({
-                articles: [],
-                pagination: PAGIANATION_MOCK
+                data: {
+                    articles: [],
+                    pagination: PAGIANATION_MOCK
+                }
             }));
 
         container = document.createElement("div");
@@ -58,7 +60,7 @@ describe("<ArticleCardList/> component", () => {
 
         const fetchCall = fetchMock.mock.calls[1];
 
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles/getFilteredArticles?test=true");
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles?test=true");
     });
 
     it("It should call the api when we change the router.query", async () => {
@@ -69,9 +71,9 @@ describe("<ArticleCardList/> component", () => {
         });
 
         let fetchCall = fetchMock.mock.calls[1];
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles/getFilteredArticles?test=true");
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles?test=true");
 
-        fetchMock.mockClear();
+        fetchMock.mockReset();
         fetchMock.mockOnce(JSON.stringify({
             articles: [],
             pagination: PAGIANATION_MOCK
@@ -88,7 +90,7 @@ describe("<ArticleCardList/> component", () => {
         });
 
         fetchCall = fetchMock.mock.calls[0];
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles/getFilteredArticles?test=false");
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles?test=false");
     });
 
     it("It shouldn't call the api when we change the router.query", async () => {
