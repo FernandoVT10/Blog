@@ -1,0 +1,9 @@
+.article__content-editor {
+    border: none !important;
+    font-size: 1em;
+    line-height: 3em;
+
+    & .ql-syntax {
+        font-weight: bold;
+    }
+}
