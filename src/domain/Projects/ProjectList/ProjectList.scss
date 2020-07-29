@@ -1,0 +1,19 @@
+.project-list {
+    &__loader {
+        display: flex;
+        height: 300px;
+        justify-content: center;
+        align-items: center;
+        color: var(--secondary);
+    }
+
+    &__not-available {
+        display: flex;
+        height: 300px;
+        justify-content: center;
+        align-items: center;
+        color: var(--secondary);
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+}

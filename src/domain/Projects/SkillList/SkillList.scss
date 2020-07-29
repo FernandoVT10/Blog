@@ -1,0 +1,30 @@
+.skill-card-list {
+    &__wrapper {
+        padding: 20px 0;
+        background: var(--primary);
+    }
+
+    &__loader {
+        display: flex;
+        height: 300px;
+        justify-content: center;
+        align-items: center;
+        color: var(--secondary);
+    }
+
+    &__not-available {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        color: var(--secondary);
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    &__title {
+        color: var(--white);
+        font-weight: 600;
+        font-size: 1.5em;
+    }
+}

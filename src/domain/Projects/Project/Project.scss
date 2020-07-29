@@ -1,0 +1,35 @@
+.project-details {
+    &__description {
+        margin-top: 20px;
+    }
+
+    &__skill {
+        cursor: pointer;
+        background: var(--secondary);
+        color: var(--black);
+        margin-right: 10px;
+        transition: .3s;
+
+        &:hover {
+            background: var(--white);
+        }
+    }
+
+    &__loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        color: var(--secondary);
+    }
+
+    &__not-available {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        color: var(--secondary);
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+}

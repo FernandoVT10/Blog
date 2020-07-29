@@ -1,0 +1,29 @@
+.modal {
+    &__content {
+        background-color: var(--black);
+        color: var(--white);
+    }
+
+    &__header {
+        border: none;
+    }
+
+    &__title {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    &__close-button {
+        outline: 0 !important;
+        color: var(--secondary);
+        transition: .3s;
+
+        &:hover {
+            color: var(--secondary);
+        }
+    }
+
+    &__footer {
+        border: none;
+    }
+}
