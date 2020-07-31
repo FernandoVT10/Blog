@@ -44,7 +44,7 @@ export default () => {
 
     if(successMessage) {
         return (
-            <p className="contact-me-form__message contact-me-form__message--success">
+            <p className="formulary__message formulary__message--success">
                 <i className="fas fa-check-circle mr-2" aria-hidden="true"></i>
                 { successMessage }
             </p>
@@ -87,7 +87,7 @@ export default () => {
             required></textarea>
 
             { errorMessage &&
-                <p className="contact-me-form__message contact-me-form__message--error">
+                <p className="formulary__message formulary__message--error">
                     <i className="fas fa-times-circle mr-2" aria-hidden="true"></i>
                     { errorMessage }
                 </p>

@@ -80,7 +80,7 @@ describe("<ContactMeForm /> component", () => {
             Simulate.submit(form);
         });
 
-        const messageError = container.querySelector(".contact-me-form__message--success");
+        const messageError = container.querySelector(".formulary__message--success");
 
         expect(messageError.textContent).toBe("Test success message");
     });
@@ -113,7 +113,7 @@ describe("<ContactMeForm /> component", () => {
             Simulate.submit(form);
         });
 
-        const messageError = container.querySelector(".contact-me-form__message--error");
+        const messageError = container.querySelector(".formulary__message--error");
 
         expect(messageError.textContent).toBe("An error has occurred");
     });

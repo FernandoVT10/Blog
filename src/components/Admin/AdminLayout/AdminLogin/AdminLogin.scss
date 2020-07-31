@@ -1,0 +1,33 @@
+.admin-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    &__form-container {
+        padding: 20px;
+        background: var(--primary);
+        max-width: 500px;
+    }
+
+    &__title {
+        color: var(--white);
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    &__input {
+        margin: 10px 0;
+    }
+
+    &__submit-button-container {
+        text-align: center;
+        margin: 10px;
+    }
+
+    &__loader {
+        margin: 10px;
+        text-align: center;
+        color: var(--secondary);
+    }
+}

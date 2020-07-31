@@ -1,11 +1,9 @@
-@use "../../../styles/variables";
-
 .admin-navbar {
     position: fixed;
     z-index: 1000;
     top: 0;
     left: 0;
-    background: variables.$primary;
+    background: var(--primary);
     width: 50px;
     height: 100vh;
     overflow-x: hidden;
@@ -37,7 +35,7 @@
         transition: .3s;
 
         &:hover {
-            background: variables.$secondary;
+            background: var(--secondary);
         }
     }
 
@@ -49,11 +47,11 @@
         width: 50px;
         height: 50px;
         font-size: 20px;
-        color: white;
+        color: var(--white);
         transition: .3s;
 
         &:hover {
-            background: variables.$secondary;
+            background: var(--secondary);
         }
     }
 
@@ -62,7 +60,7 @@
         white-space: nowrap;
         top: 13px;
         left: 65px;
-        color: white;
+        color: var(--white);
         font-size: 18px;
         font-weight: bold;
     }
@@ -79,7 +77,7 @@
     }
 
     &__item:hover &__item-text {
-        color: white;
+        color: var(--white);
     }
 
     &__item-badge {
@@ -88,13 +86,13 @@
         left: 25px;
         display: flex;
         justify-content: center;
-        color: black;
+        color: var(--black);
         font-size: 14px;
         font-weight: bold;
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: variables.$secondary;
+        background: var(--secondary);
     }
 
     @media screen and (max-width: 768px) {
