@@ -1,8 +1,12 @@
-import { useState } from "react";
 import ApiController from "../../services/ApiController";
 
+import { useEmailValidation } from "../../hooks/useEmailValidation";
+
+import { useState } from "react";
+
 export default () => {
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useEmailValidation();
+
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [loading, setLoading] = useState(false);
@@ -10,13 +14,11 @@ export default () => {
     const suscribe = e => {
         e.preventDefault();
 
-        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            setError("The email is invalid");
-        } else {
+        if(!email.error) {
             setLoading(true);
             setError("");
 
-            ApiController.post("subscribe", { email })
+            ApiController.post("subscribe", { email: email.value })
             .then(res => {
                 if(res.errors) {
                     setError(res.errors[0].message);
@@ -38,8 +40,8 @@ export default () => {
     }
 
     if(!success) {
-        const inputClass = error ? "formulary__input--error" : "";
-        const labelClass = error ? "formulary__error-label--error" : "";
+        const inputClass = error || email.error ? "formulary__input--error" : "";
+        const labelClass = error || email.error ? "formulary__error-label--error" : "";
 
         return (
             <form onSubmit={suscribe}>
@@ -49,7 +51,7 @@ export default () => {
                     type="email"
                     className={`formulary__input ${inputClass}`}
                     onChange={({ target: { value } }) => setEmail(value)}
-                    value={email}
+                    value={email.value}
                     placeholder="Enter your email"
                     autoComplete="email"
                     maxLength="100"
@@ -59,7 +61,7 @@ export default () => {
                     className={`formulary__error-label ${labelClass} mt-2`}
                     htmlFor={`subscribe-input`}>
                         <i className="fas fa-info-circle mr-1" aria-hidden="true"></i>
-                        { error }
+                        { error || email.error }
                     </label>
                 </div>
 

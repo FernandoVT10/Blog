@@ -1,0 +1,51 @@
+.contact-me {
+    &__about-me {
+        margin-top: 20px;
+        padding: 25px 15px;
+        background: var(--primary);
+    }
+
+    &__title {
+        font-size: 1.5em;
+        color: var(--white);
+        font-weight: bold;
+    }
+
+    &__profile-container {
+        position: relative;
+        margin-bottom: 85px;
+    }
+
+    &__cover {
+        background: url(http://localhost:3000/img/cover.jpg);
+        background-size: cover;
+        background-position: center;
+        border: solid 3px var(--secondary);
+        width: 100%;
+        height: 250px;
+    }
+
+    &__picture {
+        position: absolute;
+        bottom: -75px;
+        left: 20px;
+        width: 150px;
+        border: solid 3px var(--secondary);
+        border-radius: 50%;
+    }
+
+    &__description {
+        color: var(--white);
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 3;
+        margin-top: 25px;
+        margin-bottom: 0;
+    }
+
+    &__form {
+        margin-top: 20px;
+        padding: 20px;
+        background: var(--primary);
+    }
+}
