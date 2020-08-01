@@ -1,27 +1,23 @@
-/*<--------------->*/
-    /* CUSTOM TABLE */
-/*<--------------->*/
-
 .custom-table {
     &__header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 10px;
-        background: variables.$primary;
+        background: var(--primary);
 
         &-title {
-            color: white;
+            color: var(--white);
             font-weight: bold;
             font-size: 18px;
         }
     }
 
     &__body {
-        background: variables.$primary;
+        background: var(--primary);
 
         &-label {
-            color: white;
+            color: var(--white);
             font-weight: bold;
             font-size: 14px;
         }
@@ -32,7 +28,7 @@
             align-items: center;
 
             &:nth-child(2n) {
-                background: variables.$black;
+                background: var(--black);
             }
         }
     }
@@ -47,19 +43,19 @@
         &__title {
             cursor: pointer;
             margin-left: 15px;
-            color: white;
+            color: var(--white);
             font-weight: bold;
             font-size: 16px;
             transition: .3s;
 
             &:hover {
                 text-decoration: none;
-                color: variables.$secondary;
+                color: var(--secondary);
             }
         }
 
         &__data {
-            color: white;
+            color: var(--white);
             font-weight: bold;
             font-size: 16px;
         }
@@ -72,9 +68,9 @@
         height: 300px;
         font-size: 25px;
         font-weight: bold;
-        color: variables.$secondary;
-        background: variables.$primary;
-        background: linear-gradient(variables.$primary, variables.$black);
+        color: var(--secondary);
+        background: var(--primary);
+        background: linear-gradient(var(--primary), var(--black));
     }
 
     &__button {
@@ -84,18 +80,18 @@
         transition: .3s;
 
         &--edit {
-            color: variables.$success;
+            color: var(--success);
 
             &:hover {
-                color: darken($color: variables.$success, $amount: 20);
+                // color: darken($color: var(--success), $amount: 20);
             }
         }
 
         &--delete {
-            color: variables.$danger;
+            color: var(--danger);
 
             &:hover {
-                color: darken($color: variables.$danger, $amount: 20);
+                // color: darken($color: var(--danger), $amount: 20);
             }
         }
     }

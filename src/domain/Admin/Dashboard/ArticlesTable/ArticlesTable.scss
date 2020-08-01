@@ -1,9 +1,7 @@
-@use "../../../../styles/variables";
-
-.statistics-articles-table {
+.dashboard-articles-table {
     &__back-button {
         outline: none !important;
-        color: white;
+        color: var(--white);
         padding: 10px;
         margin-right: 5px;
         background: transparent;
@@ -12,7 +10,7 @@
         transition: .3s;
 
         &:hover {
-            color: variables.$secondary;
+            color: var(--secondary);
         }
     }
 
@@ -33,20 +31,20 @@
 
     &__sort-label {
         cursor: pointer;
-        color: white;
+        color: var(--white);
         font-weight: bold;
         font-size: 14px;
         transition: .3s;
 
         &--active,
         &:hover {
-            color: variables.$secondary;
+            color: var(--secondary);
         }
     }
 
     &__hidden-label {
         display: none;
-        color: white;
+        color: var(--white);
         font-weight: bold;
         margin-right: 15px;
         font-size: 14px;
@@ -58,19 +56,19 @@
         display: none;
         top: 15px;
         right: 10px;
-        color: white;
+        color: var(--white);
         font-size: 20px;
         background: transparent;
         border: none;
         transition: .3s;
 
         &:hover {
-            color: variables.$secondary;
+            color: var(--secondary);
         }
     }
 
     &__footer .pagination {
-        background: variables.$black;
+        background: var(--black);
     }
 
     @media screen and (max-width: 792px) {

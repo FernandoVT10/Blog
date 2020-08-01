@@ -53,19 +53,23 @@ describe("<ArticlesTable/> component", () => {
         fetchMock.doMock();
         fetchMock
             .once(JSON.stringify(CATEGORIES_MOCK))
-            .once(JSON.stringify(RESPONSE_MOCK));
+            .once(JSON.stringify({
+                data: RESPONSE_MOCK
+            }));
 
         container = document.createElement("div");
         document.body.appendChild(container);
     });
 
     afterEach(() => {
+        fetchMock.mockReset();
+
         document.body.removeChild(container);
         container = null;
     });
 
-    it("It should call the api to get the articles", async () => {
-        Object.defineProperty(window, 'location', {
+    it("should call the api to get the articles", async () => {
+        Object.defineProperty(window, "location", {
             value: {
                 search: "?sort=day"
             }
@@ -77,16 +81,36 @@ describe("<ArticlesTable/> component", () => {
 
         const fecthCall = fetchMock.mock.calls[1];
 
-        expect(fecthCall[0]).toBe(WEBSITE_URL + "api/views/getArticles?sort=day");
+        expect(fecthCall[0]).toBe(WEBSITE_URL + "api/articles?sort=day");
     });
 
-    it("It should call the api when we change the window.location.search", async () => {
+    it("should set the articles", async () => {
+        await act(async () => {
+            render(<ArticlesTable/>, container); 
+        });
+
+        const articleTitle = container.querySelector(".custom-table__article__title");
+        const articleViews = container.querySelectorAll(".custom-table__article__data");
+
+        expect(articleTitle.textContent).toBe("Test title");
+        expect(articleViews[0].textContent).toBe("100");
+        expect(articleViews[1].textContent).toBe("500");
+        expect(articleViews[2].textContent).toBe("1 000");
+    });
+
+    it("should call the api when we change the window.location.search", async () => {
         await act(async () => {
             render(<ArticlesTable/>, container); 
         });
 
         fetchMock.mockReset();
-        fetchMock.mockOnce(JSON.stringify(RESPONSE_MOCK));
+        fetchMock
+        .once()
+        .once(JSON.stringify({
+            data: {
+                RESPONSE_MOCK
+            }
+        }));
 
         window.location.search = "?sort=month";
 
@@ -95,10 +119,10 @@ describe("<ArticlesTable/> component", () => {
         });
 
         const fecthCall = fetchMock.mock.calls[0];
-        expect(fecthCall[0]).toBe(WEBSITE_URL + "api/views/getArticles?sort=month");
+        expect(fecthCall[0]).toBe(WEBSITE_URL + "api/articles?sort=month");
     });
 
-    it("It should change the 'sort' paramter when we click in the sort labels", async () => {
+    it("It change the 'sort' paramter when we click in the sort labels", async () => {
         const routerPush = jest.fn();
 
         useRouter.mockImplementation(() => ({
@@ -111,13 +135,13 @@ describe("<ArticlesTable/> component", () => {
             render(<ArticlesTable/>, container); 
         });
 
-        const sortLabels = container.querySelectorAll(".statistics-articles-table__sort-label");
+        const sortLabels = container.querySelectorAll(".dashboard-articles-table__sort-label");
 
         act(() => Simulate.click(sortLabels[0]));
 
         expect(routerPush).toHaveBeenCalledWith({
             pathname: "/",
-            query: { test: "test", sort: "day" }
+            query: { test: "test", sort: "dayViews" }
         });
 
         routerPush.mockReset();
@@ -126,7 +150,7 @@ describe("<ArticlesTable/> component", () => {
 
         expect(routerPush).toHaveBeenCalledWith({
             pathname: "/",
-            query: { test: "test", sort: "month" }
+            query: { test: "test", sort: "monthViews" }
         });
 
         routerPush.mockReset();
@@ -135,7 +159,7 @@ describe("<ArticlesTable/> component", () => {
 
         expect(routerPush).toHaveBeenCalledWith({
             pathname: "/",
-            query: { test: "test", sort: "total" }
+            query: { test: "test", sort: "totalViews" }
         });
     });
 });

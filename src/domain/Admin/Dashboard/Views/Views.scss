@@ -1,7 +1,5 @@
-@use "../../../../styles/variables";
-
-.statistics-views {
-    background: variables.$primary;
+.dashboard-views {
+    background: var(--primary);
 
     &__total-views {
         display: flex;
@@ -14,15 +12,15 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: var(--white);
         transition: .3s;
 
         &:hover {
-            background: variables.$black;
+            background: var(--black);
         }
 
         &.active {
-            background: variables.$black;
+            background: var(--black);
         }
 
         &.disabled:hover {

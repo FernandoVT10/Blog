@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import separateThousands from "../../../../services/separateThousands";
 
 export default ({ article }) => {
     const [activeMenu, setActiveMenu] = useState(false);
@@ -9,7 +10,7 @@ export default ({ article }) => {
 
     return (
         <div className={`custom-table__body-row ${rowClass}`}>
-            <div className="statistics-articles-table__article-section">
+            <div className="dashboard-articles-table__article-section">
                 <img
                 className="custom-table__article__cover"
                 src={`/img/articles/${article.cover}`}
@@ -22,36 +23,36 @@ export default ({ article }) => {
                 </Link>
             </div>
 
-            <div className="statistics-articles-table__views-section">
-                <span className="statistics-articles-table__hidden-label">
+            <div className="dashboard-articles-table__views-section">
+                <span className="dashboard-articles-table__hidden-label">
                     Day Views:
                 </span>
                 <span className="custom-table__article__data">
-                    { article.dayViews }
+                    { separateThousands(article.dayViews) }
                 </span>
             </div>
 
-            <div className="statistics-articles-table__views-section">
-                <span className="statistics-articles-table__hidden-label">
+            <div className="dashboard-articles-table__views-section">
+                <span className="dashboard-articles-table__hidden-label">
                     Month Views:
                 </span>
                 <span className="custom-table__article__data">
-                    { article.monthViews }
+                    { separateThousands(article.monthViews) }
                 </span>
             </div>
 
-            <div className="statistics-articles-table__views-section">
-                <span className="statistics-articles-table__hidden-label">
+            <div className="dashboard-articles-table__views-section">
+                <span className="dashboard-articles-table__hidden-label">
                     Total Views:
                 </span>
                 
                 <span className="custom-table__article__data">
-                    { article.totalViews }
+                    { separateThousands(article.totalViews) }
                 </span>
             </div>
 
             <button
-            className="statistics-articles-table__toggle-button"
+            className="dashboard-articles-table__toggle-button"
             onClick={() => setActiveMenu(!activeMenu)}>
                 <i className={iconClass} aria-hidden="true"></i>
             </button>

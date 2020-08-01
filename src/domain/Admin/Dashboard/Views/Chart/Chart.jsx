@@ -1,5 +1,6 @@
+import ApiController from "../../../../../services/ApiController";
+
 import { useEffect, useRef } from "react";
-import Api from "../../../../ApiController";
 
 export default ({ type }) => {
     const chart = useRef();
@@ -30,25 +31,33 @@ export default ({ type }) => {
     }, []);
 
     useEffect(() => {
-        Api.get(`views/getViewsHistory/${type}/5`, true)
+        ApiController.get(`articles/views?type=${type}&limit=5`, true)
         .then(res => {
-            const labels = res.map(({ name }) => name);
-            const data = res.map(({ views }) => views);
+            if(res.data) {
+                const { views } = res.data;
+                const labels = [];
+                const data = [];
 
-            // Here we turn the arrays because the data is ordered by date
-            labels.reverse();
-            data.reverse();
+                views.forEach(({ name, views }) => {
+                    labels.push(name);
+                    data.push(views);
+                });
 
-            chart.current.data.labels = labels;
-            chart.current.data.datasets[0].data = data;
-            chart.current.update();
+                // Here we turn the arrays because the data is ordered by date
+                labels.reverse();
+                data.reverse();
+
+                chart.current.data.labels = labels;
+                chart.current.data.datasets[0].data = data;
+                chart.current.update();
+            }
         });
     }, [type]);
 
     return (
         <canvas
         id="viewsChart"
-        className="statistics-views__chart"
+        className="dashboard-views__chart"
         width="2400"
         height="400"></canvas>
     );

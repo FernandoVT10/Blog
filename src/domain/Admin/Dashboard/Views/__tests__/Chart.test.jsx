@@ -1,6 +1,6 @@
 import { act } from "react-dom/test-utils";
 import { render } from "react-dom";
-import Chart from "../Chart/";
+import Chart from "../Chart";
 
 const MOCK_DAY_VIEWS = [
     {
@@ -70,7 +70,7 @@ class ChartMock {
 
 let container;
 
-describe('<Chart/> Component', () => {
+describe("<Chart/> Component", () => {
     beforeEach(() => {
         window.Chart = ChartMock;
         ChartConstructorMock.mockReset();
@@ -78,9 +78,13 @@ describe('<Chart/> Component', () => {
 
         fetchMock.doMock();
 
-        fetchMock.mockResponse(JSON.stringify(MOCK_MONTH_VIEWS));
+        fetchMock.mockResponse(JSON.stringify({
+            data: {
+                views: MOCK_MONTH_VIEWS
+            }
+        }));
 
-        container = document.createElement('div');
+        container = document.createElement("div");
         document.body.appendChild(container);
     });
     
@@ -89,7 +93,7 @@ describe('<Chart/> Component', () => {
         container = null;
     });
 
-    it("It should inititialize ChartJS correctly", async () => {
+    it("should inititialize ChartJS correctly", async () => {
         document.getElementById = () => ({
             getContext: () => "Test ctx"
         });
@@ -123,14 +127,14 @@ describe('<Chart/> Component', () => {
         });
     });
 
-    it("It should call the api correclty and set the data in the chart", async () => {
+    it("should call the api correclty and set the data in the chart", async () => {
         await act(async () => {
             render(<Chart type="month"/>, container);
         });
 
         const fetchCall = fetchMock.mock.calls[0];
 
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/views/getViewsHistory/month/5");
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles/views?type=month&limit=5");
         expect(ChartUpdateMock).toHaveBeenCalledWith({
             labels: ["March", "February", "January"],
             datasets: [
@@ -141,13 +145,13 @@ describe('<Chart/> Component', () => {
         });
     });
 
-    it("It should call the api and set the new data when we change the type prop", async () => {
+    it("should call the api and set the new data when we change the type prop", async () => {
         await act(async () => {
             render(<Chart type="month"/>, container);
         });
 
         let fetchCall = fetchMock.mock.calls[0];
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/views/getViewsHistory/month/5");
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles/views?type=month&limit=5");
         expect(ChartUpdateMock).toHaveBeenCalledWith({
             labels: ["March", "February", "January"],
             datasets: [
@@ -158,14 +162,18 @@ describe('<Chart/> Component', () => {
         });
 
         fetchMock.mockReset();
-        fetchMock.mockResponse(JSON.stringify(MOCK_DAY_VIEWS));
+        fetchMock.mockResponse(JSON.stringify({
+            data: {
+                views: MOCK_DAY_VIEWS
+            }
+        }));
 
         await act(async () => {
             render(<Chart type="day"/>, container);
         });
 
         fetchCall = fetchMock.mock.calls[0];
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/views/getViewsHistory/day/5");
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles/views?type=day&limit=5");
         expect(ChartUpdateMock).toHaveBeenCalledWith({
             labels: ["Wednesday", "Tuesday", "Monday"],
             datasets: [

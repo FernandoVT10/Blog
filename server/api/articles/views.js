@@ -1,11 +1,13 @@
 import PermanentViews from "../../models/PermanentViews";
 import Article from "../../models/Article";
 
+import jwtAuthentication from "../../utils/jwtAuthentication";
+
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/views/", async (req, res) => {
+router.get("/views/", jwtAuthentication, async (req, res) => {
     const type = req.query.type || "day";
     const limit = parseInt(req.query.limit) || 1;
 
@@ -20,7 +22,7 @@ router.get("/views/", async (req, res) => {
     }
 });
 
-router.get("/views/getTotalViews/", async (_, res) => {
+router.get("/views/getTotalViews/", jwtAuthentication, async (_, res) => {
     try {
         const views = await Article.aggregate([
             {

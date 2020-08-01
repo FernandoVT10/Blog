@@ -1,0 +1,41 @@
+.dashboard-home-article-card-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+
+    &:nth-child(2n+1) {
+        background: var(--black);
+    }
+
+    &__cover {
+        width: 80px;
+        height: 50px;
+        object-fit: cover;
+    }
+
+    &__title {
+        margin-left: 15px;
+        color: vaR(--white);
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    &__views {
+        position: absolute;
+        right: 15px;
+        color: vaR(--white);
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    @media screen and (max-width: 576px) {
+        &__item {
+            padding: 20px 0;
+        }
+
+        &__cover {
+            display: none;
+        }
+    }
+}

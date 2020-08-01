@@ -57,6 +57,12 @@ const PERMANENT_VIEWS_MOCKS = [
     }
 ];
 
+jest.mock("../../../utils/jwtAuthentication", () => {
+    return (_req, _res, next) => {
+        next();
+    };
+});
+
 setupTestDB("test_views");
 
 describe("views api", () => {

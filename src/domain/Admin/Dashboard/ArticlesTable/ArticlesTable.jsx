@@ -1,8 +1,9 @@
-import ArticlesFilter from "../../../Articles/ArticlesFilter";
-import Pagination from "../../../Pagination/";
-import FullScreenLoader from "../../../FullScreenLoader/";
+import ArticlesFilter from "../../../../components/Articles/ArticlesFilter";
+import Pagination from "../../../../components/Pagination";
+
 import ArticleItem from "./ArticleItem";
-import Api from "../../../../ApiController";
+
+import ApiController from "../../../../services/ApiController";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -19,14 +20,11 @@ export default ({ setShowArticlesTable }) => {
     useEffect(() => {
         setLoading(true);
 
-        Api.get("views/getArticles" + window.location.search, true)
-        .then(data => {
-            if(data.articles) {
-                setArticles(data.articles);
-            }
-
-            if(data.pagination) {
-                setPagination(data.pagination);
+        ApiController.get("articles" + window.location.search, true)
+        .then(res => {
+            if(res.data) {
+                setArticles(res.data.articles);
+                setPagination(res.data.pagination);
             }
 
             setLoading(false);
@@ -44,7 +42,7 @@ export default ({ setShowArticlesTable }) => {
         });
     };
 
-    const getBody = () => {
+    const getArticles = () => {
         if(!articles.length) {
             return (
                 <div className="custom-table__not-found">
@@ -53,16 +51,16 @@ export default ({ setShowArticlesTable }) => {
             );
         }
 
-        const sortDayClass = router.query.sort === "day" 
-        ? "statistics-articles-table__sort-label--active"
+        const sortDayClass = router.query.sort === "dayViews" 
+        ? "dashboard-articles-table__sort-label--active"
         : "";
 
-        const sortMonthClass = router.query.sort === "month" 
-            ? "statistics-articles-table__sort-label--active"
+        const sortMonthClass = router.query.sort === "monthViews" 
+            ? "dashboard-articles-table__sort-label--active"
             : "";
 
-        const sortTotalClass = router.query.sort === "total" 
-            ? "statistics-articles-table__sort-label--active"
+        const sortTotalClass = router.query.sort === "totalViews" 
+            ? "dashboard-articles-table__sort-label--active"
             : "";
 
         return (
@@ -70,41 +68,41 @@ export default ({ setShowArticlesTable }) => {
                 <div className="custom-table__body">
                     <div className="custom-table__body-row">
 
-                        <div className="statistics-articles-table__article-section">
+                        <div className="dashboard-articles-table__article-section">
                             <span className="custom-table__body-label ml-2">
                                 Article
                             </span>
                         </div>
 
-                        <div className="statistics-articles-table__views-section">
+                        <div className="dashboard-articles-table__views-section">
                             <span
                             className={`
-                                statistics-articles-table__sort-label
+                                dashboard-articles-table__sort-label
                                 ${sortDayClass}
                             `}
-                            onClick={() => changeSort("day")}>
+                            onClick={() => changeSort("dayViews")}>
                                 Day Views
                             </span>
                         </div>
 
-                        <div className="statistics-articles-table__views-section">
+                        <div className="dashboard-articles-table__views-section">
                             <span
                             className={`
-                                statistics-articles-table__sort-label
+                                dashboard-articles-table__sort-label
                                 ${sortMonthClass}
                             `}
-                            onClick={() => changeSort("month")}>
+                            onClick={() => changeSort("monthViews")}>
                                 Month Views
                             </span>
                         </div>
 
-                        <div className="statistics-articles-table__views-section">
+                        <div className="dashboard-articles-table__views-section">
                             <span
                             className={`
-                                statistics-articles-table__sort-label
+                                dashboard-articles-table__sort-label
                                 ${sortTotalClass}
                             `}
-                            onClick={() => changeSort("total")}>
+                            onClick={() => changeSort("totalViews")}>
                                 Total Views
                             </span>
                         </div>
@@ -115,7 +113,7 @@ export default ({ setShowArticlesTable }) => {
                     }) }
                 </div>
 
-                <div className="statistics-articles-table__footer">
+                <div className="dashboard-articles-table__footer">
                     <Pagination pagination={pagination}/>
                 </div>
             </div>
@@ -123,14 +121,12 @@ export default ({ setShowArticlesTable }) => {
     };
 
     return (
-        <div className="statistics-articles-table">
-            <FullScreenLoader loading={loading} />
-
+        <div className="dashboard-articles-table">
             <div className="custom-table">
                 <div className="custom-table__header">
                     <div className="custom-table__header-title">
                         <button
-                        className="statistics-articles-table__back-button"
+                        className="dashboard-articles-table__back-button"
                         onClick={() => setShowArticlesTable(false)}>
                             <i className="fas fa-arrow-left" aria-hidden="true"></i>
                         </button>
@@ -143,7 +139,7 @@ export default ({ setShowArticlesTable }) => {
                     </div>
                 </div>
 
-                { getBody() }
+                { getArticles() }
             </div>
         </div>
     );

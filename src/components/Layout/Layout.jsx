@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import "./Layout.scss";
 import "./Formulary.scss";
+import "./CustomTable.scss";
 
 export default ({ children, title = "Fernando Vaca Tamayo Blog" }) => {
     return (
