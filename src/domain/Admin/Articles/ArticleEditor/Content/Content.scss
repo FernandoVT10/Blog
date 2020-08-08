@@ -1,0 +1,84 @@
+.article-editor-content {
+    margin-bottom: 15px;
+    font-size: 1em;
+    line-height: 3em;
+
+    &.ql-disabled {
+        border: none !important;
+    }
+    
+    & .ql-syntax {
+        font-weight: bold;
+    }
+}
+
+.ql-snow {
+    & .ql-stroke {
+        stroke: var(--white);
+        transition: .3s;
+    }
+
+    & .ql-fill {
+        fill: var(--white);
+        transition: .3s;
+    }
+
+    & .ql-picker-label {
+        color: var(--white);
+
+        &:hover {
+            color: var(--secondary);
+        }
+    }
+
+    & .ql-picker-options {
+        border: none !important;
+        padding: 20px;
+        background: var(--black);
+    }
+
+    & .ql-picker-item {
+        color: var(--white);
+        transition: .3s;
+
+        &.ql-selected {
+            color: var(--secondary);
+        }
+    }
+
+    & p {
+        line-height: 40px;
+        font-size: 18px;
+        margin: 0;
+    }
+
+    &.ql-toolbar {
+        &.disabled {
+            display: none;
+        }
+
+        & .ql-picker-label:hover,
+        & .ql-picker-item.ql-selected,
+        & .ql-picker-item:hover {
+            color: var(--secondary);
+        }
+
+        & button:hover,
+        & button:focus,
+        & button.ql-active {
+            & .ql-stroke {
+                stroke: var(--secondary);
+            }
+        
+            & .ql-fill {
+                fill: var(--secondary);
+            }
+        }
+    }
+
+    & .ql-syntax {
+        font-weight: bold;
+        font-family: consolas;
+        font-size: 18px;
+    }
+}

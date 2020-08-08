@@ -1,0 +1,14 @@
+.article-editor-description {
+    background: transparent;
+    padding: 20px;
+    width: 100%;
+    border: solid 1px var(--white);
+    color: var(--white);
+    font-weight: 600;
+    transition: .3s;
+
+    &:focus {
+        outline: 0 !important;
+        border-color: var(--secondary);
+    }
+}

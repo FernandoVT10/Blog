@@ -4,6 +4,12 @@ import "./ConfirmModal.scss";
 
 export default ({ active, message, onClose, prefix="" }) => {
     useEffect(() => {
+        $(`#${prefix}-confirm-modal`).on("hidden.bs.modal", () => {
+            onClose(false);
+        });
+    }, []);
+
+    useEffect(() => {
         if(active) {
             $(`#${prefix}-confirm-modal`).modal('show');
         } else {
@@ -33,17 +39,16 @@ export default ({ active, message, onClose, prefix="" }) => {
                         </button>
 
                         <button
+                        className="confirm-modal__button confirm-modal__button--no"
+                        data-dismiss="modal">
+                            No
+                        </button>
+
+                        <button
                         className="confirm-modal__button confirm-modal__button--yes"
                         data-dismiss="modal"
                         onClick={() => onClose(true)}>
                             Yes
-                        </button>
-
-                        <button
-                        className="confirm-modal__button confirm-modal__button--no"
-                        data-dismiss="modal"
-                        onClick={() => onClose(false)}>
-                            No
                         </button>
                     </div>
                 </div>

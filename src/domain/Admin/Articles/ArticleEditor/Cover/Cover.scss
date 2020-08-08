@@ -1,0 +1,51 @@
+.article-editor-cover {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+
+    &::before {
+        content: "";
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba($color: #000000, $alpha: .8);
+        transition: .3s;
+    }
+
+    &__label {
+        cursor: pointer;
+        position: relative;
+        opacity: 0;
+        z-index: 2;
+        color: var(--white);
+        font-size: 30px;
+        padding: 15px 40px;
+        background: var(--primary);
+        transition: .3s;
+    }
+
+    &__input {
+        display: none;
+    }
+
+    &:hover {
+        &::before {
+            opacity: 1;
+        }
+
+        & .article-editor-cover__label {
+            opacity: 1;
+
+            &:hover {
+                opacity: .6;
+            }
+        }
+    }
+}

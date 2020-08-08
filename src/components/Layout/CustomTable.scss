@@ -81,18 +81,10 @@
 
         &--edit {
             color: var(--success);
-
-            &:hover {
-                // color: darken($color: var(--success), $amount: 20);
-            }
         }
 
         &--delete {
             color: var(--danger);
-
-            &:hover {
-                // color: darken($color: var(--danger), $amount: 20);
-            }
         }
     }
 }

@@ -1,0 +1,57 @@
+.admin-articles-table {
+    &__image-section {
+        width: 100px;
+    }
+
+    &__title-section {
+        width: calc(100% - 200px);
+    }
+
+    &__actions-section {
+        text-align: center;
+        width: 100px;
+    }
+
+    &__loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        background: (var(--primary));
+        color: var(--secondary);
+    }
+
+    &__add-article-button {
+        background: transparent;
+        border: none;
+        // background: var(--secondary);
+        // color: var(--black);
+        color: var(--secondary);
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    & .custom-table__footer .pagination {
+        background: var(--black);
+    }
+
+    @media screen and (max-width: 576px) {
+        & .custom-table {
+            &__body-row {
+                &:nth-child(1) {
+                    padding: 15px 0;
+                }
+
+                padding: 25px 0;
+            }
+        }
+
+        &__image-section {
+            display: none;
+        }
+
+        &__title-section {
+            width: calc(100% - 100px);
+        }
+    }
+}

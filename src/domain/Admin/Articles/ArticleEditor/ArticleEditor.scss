@@ -1,0 +1,104 @@
+.article-editor {
+    position: relative;
+    background: var(--primary);
+    color: var(--white);
+
+    &__loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--secondary);
+        min-height: calc(100vh - 60px);
+
+        & .spinner-border {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    &__not-found {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-weight: bold;
+        font-size: 1.5em;
+        justify-content: center;
+        color: var(--white);
+        min-height: calc(100vh - 60px);
+    }
+
+    &__not-found-link {
+        font-size: .8em;
+        color: var(--secondary);
+        transition: .3s;
+
+        &:hover {
+            color: var(--white);
+            text-decoration: none;
+        }
+    }
+
+    &__update-loader {
+        position: absolute;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        color: var(--secondary);
+        background: rgba($color: #000000, $alpha: .6);
+
+        &--active {
+            display: flex;
+        }
+
+        & .spinner-border {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    &__wrapper {
+        padding: 30px;
+    }
+    
+    &__button {
+        outline: 0 !important;
+        position: relative;
+        padding: 10px 20px;
+        font-weight: bold;
+        border: none;
+        color: var(--black);
+        background: var(--secondary);
+        margin: 20px 5px 0;
+        transition: .3s;
+
+        &--cancel {
+            color: var(--white);
+            background: var(--danger);
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba($color: #000000, $alpha: .3);
+            opacity: 0;
+            transition: .3s;
+        }
+
+        &:hover::before {
+            opacity: 1;
+        }
+
+        & .fas {
+            margin-right: 5px;
+        }
+    }
+}

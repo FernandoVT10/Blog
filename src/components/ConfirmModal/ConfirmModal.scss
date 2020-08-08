@@ -1,8 +1,6 @@
-@use "../../styles/variables";
-
 .confirm-modal {
     &__content {
-        background: variables.$primary;
+        background: var(--primary);
     }
 
     &__message {
@@ -10,7 +8,7 @@
         margin-top: 10px;
         font-weight: bold;
         font-size: 16px;
-        color: white;
+        color: var(--white);
     }
 
     &__button {
@@ -19,7 +17,7 @@
         font-size: 20px;
         background: transparent;
         border: none;
-        color: white;
+        color: var(--white);
         transition: .3s;
 
         &:hover {
@@ -37,14 +35,14 @@
         &--yes {
             font-weight: 600;
             font-size: 16px;
-            color: variables.$secondary;
+            color: var(--secondary);
             float: right;
         }
 
         &--no {
             font-weight: 600;
             font-size: 16px;
-            color: variables.$danger;
+            color: var(--danger);
             float: right;
         }
     }
