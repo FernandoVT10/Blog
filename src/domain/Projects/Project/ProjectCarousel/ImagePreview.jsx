@@ -1,6 +1,10 @@
 export default ({ image, setImage }) => {
     const imagePreviewClass = image ? "project-carousel__image-preview--active" : "";
 
+    if(!image) {
+        return null;
+    }
+
     return (
         <div className={`project-carousel__image-preview ${imagePreviewClass}`}>
             <img
