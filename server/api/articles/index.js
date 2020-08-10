@@ -157,6 +157,7 @@ router.put("/:articleId", jwtAuthentication, uploadImage("cover", "/articles/"),
         const article = await Article.findById(articleId);
         
         if(article) {
+            const oldCover = article.cover;
             const categoriesDocument = await Category.find({ name: categories });
 
             article.title = title;
@@ -165,12 +166,15 @@ router.put("/:articleId", jwtAuthentication, uploadImage("cover", "/articles/"),
             article.categories = categoriesDocument;
 
             if(cover) {
-                deleteImage(`/articles/${article.cover}`);
-
                 article.cover = cover.filename;
             }
 
             const updatedArticle = await article.save();
+
+            if(cover) {
+                deleteImage(`/articles/${oldCover}`);
+            }
+
             res.json({ data: { updatedArticle } });
         } else {
             res.json({
