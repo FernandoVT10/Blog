@@ -78,34 +78,44 @@ router.post("/", jwtAuthentication, uploadImages("images", "/projects/"), async 
     }
 });
 
-router.put("/:projectId", jwtAuthentication, uploadImages("images", "/projects/"), async (req, res) => {
+router.put("/:projectId", jwtAuthentication, uploadImages("newImages", "/projects/"), async (req, res) => {
     const { projectId } = req.params;
     const { title, description, skills } = req.body;
+    const currentImages = req.body.currentImages || [];
     
     try {
         const project = await Project.findById(projectId);
         
         if(project) {
-            const oldImages = project.images;
-
             const skillDocuments = await Skill.find({ name: skills });
 
             project.title = title;
             project.description = description;
             project.skills = skillDocuments;
 
+            const newImages = [];
+            const oldImages = [];
+
+            project.images.forEach(image => {
+                if(currentImages.includes(image)) {
+                    newImages.push(image);
+                } else {
+                    oldImages.push(image);
+                }
+            });
+
             if(req.files.length) {
-                const images = req.files.map(image => image.filename);
-                project.images = images;
+                const imageNames = req.files.map(image => image.filename);
+                newImages.push(...imageNames);
             }
+
+            project.images = newImages;
 
             const updatedProject = await project.save();
 
-            if(req.files.length) {
-                oldImages.forEach(image => {
-                    deleteImage(`/projects/${image}`);
-                });
-            }
+            oldImages.forEach(image => {
+                deleteImage(`/projects/${image}`);
+            });
 
             res.json({
                 data: { updatedProject }

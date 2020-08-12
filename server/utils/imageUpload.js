@@ -1,7 +1,8 @@
-import multer from "multer";
-
 import { IMAGES_URL } from "../config/constants";
-import { unlinkSync } from "fs";
+
+import { unlinkSync, existsSync } from "fs";
+
+import multer from "multer";
 
 export function uploadImage(field, url) {
     const storage = multer.diskStorage({
@@ -84,5 +85,7 @@ export function uploadImages(field, url) {
 }
 
 export function deleteImage(url) {
-    unlinkSync(IMAGES_URL + url);
+    if(existsSync(IMAGES_URL + url)) {
+        unlinkSync(IMAGES_URL + url);   
+    }
 }
