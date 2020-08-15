@@ -17,6 +17,18 @@ router.get("/", async (_, res) => {
     }
 });
 
+router.get("/skillId", async (req, res) => {
+    const { skillId } = req.params;
+
+    try {
+        const skill = await Skill.findById(skillId);
+
+        res.json({ data: { skill } });
+    } catch {
+        res.json({ data: { skill: {} } });
+    }
+});
+
 router.post("/", jwtAuthentication, uploadImage("image", "/skills/"), async (req, res) => {
     const { name, color } = req.body;
     const image = req.file;
