@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import "./Cover.scss";
+import "./ImageEditor.scss";
 
-export default ({ cover, onChangeImage }) => {
+export default ({ image, onChangeImage }) => {
     const [imageURL, setImageURL] = useState("");
 
-    useState(() => {
-        if(cover) {
-            setImageURL(`/img/articles/${cover}`);
+    useEffect(() => {
+        if(image) {
+            setImageURL(image);
         }
-    }, [cover]);
+    }, [image]);
 
     const changeImage = ({ target: { files } }) => {
         const file = files[0];
@@ -25,21 +25,21 @@ export default ({ cover, onChangeImage }) => {
 
     return (
         <div
-        className="article-editor-cover"
+        className="image-editor"
         style={{
             background: `url(${imageURL})`
         }}>
             <label
-            htmlFor="cover-image"
-            className="article-editor-cover__label">
+            htmlFor="image-editor-input"
+            className="image-editor__label">
                 <i className="fas fa-image" aria-hidden="true"></i>
             </label>
 
             <input
             type="file"
-            id="cover-image"
+            id="image-editor-input"
             onChange={changeImage}
-            className="article-editor-cover__input" />
+            className="image-editor__input" />
         </div>
     );
 }

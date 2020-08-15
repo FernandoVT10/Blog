@@ -1,0 +1,34 @@
+.skill-editor {
+    &__input {
+        margin: 10px 0;
+        border: solid 1px var(--primary);
+        transition: .3s;
+
+        &:focus {
+            border-color: var(--secondary);
+        }
+    }
+
+    &__color-label {
+        margin-top: 10px;
+        padding: 10px;
+        font-weight: bold;
+        color: var(--white);
+    }
+
+    &__color-input {
+        display: block;
+        height: 0;
+        opacity: 0;
+    }
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: var(--secondary);
+    }
+}

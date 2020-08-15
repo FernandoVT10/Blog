@@ -34,6 +34,45 @@ body {
     }
 }
 
+.custom-button {
+    position: relative;
+    outline: 0 !important;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+
+    &--save {
+        color: var(--black);
+        background: var(--secondary);
+    }
+
+    &--cancel {
+        margin-left: 10px;
+        color: var(--white);
+        background: var(--danger);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba($color: #000000, $alpha: .3);
+        opacity: 0;
+        transition: .3s;
+    }
+
+    &:hover::before {
+        opacity: 1;
+    }
+
+    & .fas {
+        margin-right: 5px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .container-fluid {
         padding: 0;

@@ -1,0 +1,16 @@
+.admin-skill-list-project-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+
+    &__title {
+        color: var(--white);
+        font-weight: bold;
+        transition: .3s;
+
+        &:hover {
+            text-decoration: none;
+            color: var(--secondary);
+        }
+    }
+}

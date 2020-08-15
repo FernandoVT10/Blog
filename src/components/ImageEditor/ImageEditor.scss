@@ -1,4 +1,4 @@
-.article-editor-cover {
+.image-editor {
     position: relative;
     display: flex;
     justify-content: center;
@@ -40,7 +40,7 @@
             opacity: 1;
         }
 
-        & .article-editor-cover__label {
+        & .image-editor__label {
             opacity: 1;
 
             &:hover {

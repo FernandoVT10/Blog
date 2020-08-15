@@ -1,8 +1,9 @@
-import Cover from "./Cover";
 import Title from "./Title";
 import Content from "./Content";
 import Description from "./Description";
 import Categories from "./Categories";
+
+import ImageEditor from "../../../../components/ImageEditor";
 
 import ApiController from "../../../../services/ApiController";
 
@@ -68,7 +69,7 @@ export default ({ setAddArticle }) => {
                 <span className="spinner-border"></span>
             </div>
 
-            <Cover cover="" onChangeImage={setCoverFile}/>
+            <ImageEditor image="" onChangeImage={setCoverFile}/>
 
             <div className="article-editor__wrapper">
                 <Title title={title} onChangeTitle={setTitle} />
@@ -86,13 +87,13 @@ export default ({ setAddArticle }) => {
                     </p>
                 }
 
-                <button className="article-editor__button" onClick={updateArticle}>
+                <button className="custom-button custom-button--save" onClick={updateArticle}>
                     <i className="fas fa-folder"></i>
                     Save
                 </button>
 
                 <button
-                className="article-editor__button article-editor__button--cancel"
+                className="custom-button custom-button--cancel"
                 onClick={() => setAddArticle(false)}>
                     <i className="fas fa-trash"></i>
                     Cancel

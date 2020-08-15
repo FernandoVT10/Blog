@@ -1,0 +1,22 @@
+.project-editor {
+    &__input,
+    &__textarea {
+        margin: 10px 0;
+        border: solid 1px var(--primary);
+        transition: .3s;
+
+        &:focus {
+            border-color: var(--secondary);
+        }
+    }
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: var(--secondary);
+    }
+}

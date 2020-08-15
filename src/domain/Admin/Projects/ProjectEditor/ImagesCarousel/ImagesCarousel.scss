@@ -1,0 +1,104 @@
+.project-editor-carousel {
+    &__image-active {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border: solid 2px var(--secondary);
+        display: none;
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__carousel-container {
+        white-space: nowrap;
+        width: 100%;
+        height: 100px;
+        overflow: auto hidden;
+
+        &::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+        }
+    }
+
+    &__carousel-item {
+        position: relative;
+        display: inline-block;
+    }
+
+    &__remove-image {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border: none;
+        color: var(--secondary);
+        background: transparent;
+        opacity: 0;
+        transition: .3s;
+    }
+
+    &__image-container {
+        position: relative;
+
+        &::before {
+            cursor: pointer;
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba($color: #000000, $alpha: .6);
+            opacity: 0;
+            transition: .3s;
+        }
+
+        &:hover {
+            &::before,
+            & ~ .project-editor-carousel__remove-image {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__image {
+        width: 150px;
+        height: 94px;
+        object-fit: cover;
+
+        &--active {
+            border: solid 2px var(--secondary);
+        }
+    }
+
+    &__add-image {
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        width: 150px;
+        height: 100px;
+        border: solid 2px var(--primary);
+        background: var(--primary);
+        color: var(--secondary);
+        transition: .3s;
+
+        &:hover {
+            border-color: var(--secondary);
+        }
+    }
+
+    &__input-file {
+        display: none;
+    }
+}

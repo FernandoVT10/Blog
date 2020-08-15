@@ -1,0 +1,37 @@
+.admin-skill-list-skill-card {
+    display: block;
+
+    &__title {
+        padding: 20px 0;
+    }
+
+    &__title-active {
+        color: var(--secondary);
+    }
+
+    &__project-list {
+        display: none;
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__skill-actions {
+        float: right;
+        margin-right: 10px;
+    }
+
+    &__loader {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        color: var(--secondary);
+    }
+
+    &__not-found {
+        padding: 10px;
+        color: var(--secondary);
+        font-weight: bold;
+    }
+}

@@ -17,15 +17,26 @@ router.get("/", async (_, res) => {
     }
 });
 
-router.get("/skillId", async (req, res) => {
+router.get("/:skillId", async (req, res) => {
     const { skillId } = req.params;
 
     try {
         const skill = await Skill.findById(skillId);
 
-        res.json({ data: { skill } });
-    } catch {
-        res.json({ data: { skill: {} } });
+        if(skill) {
+            res.json({ data: { skill } });
+        } else {
+            res.json({
+                errors: [
+                    {
+                        status: 404,
+                        message: `The skill ${skillId} doesn't exist`
+                    }
+                ]
+            });
+        }
+    } catch(error) {
+        res.json({ errors: [error] });
     }
 });
 

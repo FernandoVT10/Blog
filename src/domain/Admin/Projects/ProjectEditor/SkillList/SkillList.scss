@@ -1,0 +1,100 @@
+.project-editor-skill-list {
+    &__toggle-button {
+        outline: 0 !important;
+        display: flex;
+        width: 100%;
+        text-transform: uppercase;
+        padding: 20px;
+        justify-content: space-between;
+        border: solid 1px var(--secondary);
+        background: var(--primary);
+        color: var(--white);
+        font-weight: bold;
+        margin-bottom: 10px;
+
+        & .fas {
+            position: relative;
+            top: 8px;
+        }
+    }
+
+    &__container {
+        height: 0;
+        overflow: hidden;
+        transition: .3s;
+
+        &--active {
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        &::-webkit-scrollbar {
+            width: 3px;
+            background: var(--black);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+        }
+    }
+
+    &__label {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 10px;
+        background: var(--primary);
+        font-weight: bold;
+        margin: 0;
+        transition: .3s;
+
+        &:hover {
+            background: var(--black);
+        }
+    }
+
+    &__input {
+        display: none;
+    }
+
+    &__input:checked {
+        & ~ .project-editor-skill-list__label {
+            color: var(--black);
+            background: var(--secondary);
+
+            & .project-editor-skill-list__label-checkbox {
+                border-color: var(--black);
+                background: var(--black);
+
+                &:after {
+                    border: solid var(--white);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &__label-checkbox {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border: solid 2px var(--white);
+        border-radius: 50%;
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            width: 5px;
+            height: 10px;
+            border: solid var(--white);
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+    }
+}

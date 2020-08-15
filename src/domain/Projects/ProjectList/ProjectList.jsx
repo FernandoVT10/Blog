@@ -1,4 +1,4 @@
-import Modal from "../Modal";
+import Modal from "../../../components/Modal";
 import ProjectCard from "./ProjectCard";
 
 import ApiController from "../../../services/ApiController";

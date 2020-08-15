@@ -1,0 +1,51 @@
+.admin-skill-list {
+    &__add-skill-button {
+        background: transparent;
+        border: none;
+        color: var(--secondary);
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    &__loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        color: var(--secondary);
+    }
+
+    &__add-new-menu-container {
+        position: relative;
+    }
+
+    &__add-new-menu {
+        z-index: 10;
+        position: absolute;
+        top: 0;
+        left: -120px;
+        width: 150px;
+        background: var(--black);
+        transform: scale(0);
+        overflow: hidden;
+        transition: .2s;
+
+        &--active {
+            transform: scale(1);
+        }
+    }
+
+    &__add-new-menu-item {
+        cursor: pointer;
+        display: block;
+        font-weight: bold;
+        font-size: .8em;
+        padding: 10px;
+        color: var(--white);
+        transition: .3s;
+
+        &:hover {
+            background: var(--primary);
+        }
+    }
+}
