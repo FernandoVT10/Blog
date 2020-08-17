@@ -68,6 +68,7 @@ jest.mock("../../../utils/imageUpload", () => ({
             next();
         };
     }),
+    uploadImages: () => { return () => {} },
     deleteImage: jest.fn()
 }));
 

@@ -102,6 +102,10 @@ router.put("/:skillId", jwtAuthentication, uploadImage("image", "/skills/"), asy
                 data: { updatedSkill }
             });
         } else {
+            if(image) {
+                deleteImage(`/skills/${image.filename}`);
+            }
+
             res.json({
                 errors: [
                     {
@@ -144,10 +148,6 @@ router.delete("/:skillId", jwtAuthentication, async (req, res) => {
             });
         }
     } catch (error) {
-        if(image) {
-            deleteImage(`/skills/${image.filename}`);
-        }
-
         res.json({ errors: [error] });
     }
 });

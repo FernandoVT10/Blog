@@ -121,6 +121,10 @@ router.put("/:projectId", jwtAuthentication, uploadImages("newImages", "/project
                 data: { updatedProject }
             });
         } else {
+            req.files.forEach(image => {
+                deleteImage(`/projects/${image.filename}`);
+            });
+            
             res.json({
                 errors: [
                     {
