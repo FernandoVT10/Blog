@@ -54,7 +54,7 @@ describe("<AddArticle/> component", () => {
             render(<AddArticle setAddArticle={setAddArticleMock}/>, container);
         });
 
-        const inputFile = container.querySelector(".article-editor-cover__input");
+        const inputFile = container.querySelector("input[type='file']");
         const titleTextarea = container.querySelector(".article-editor-title");
         const descriptionTextarea = container.querySelector(".article-editor-description");
         const categoryCheckbox = container.querySelector("#category-Travels");
@@ -70,7 +70,7 @@ describe("<AddArticle/> component", () => {
             Simulate.change(categoryCheckbox);
         });
 
-        const button = container.querySelector(".article-editor__button");
+        const button = container.querySelector(".custom-button--save");
 
         fetchMock.mockOnce(JSON.stringify({ data: null }));
 
@@ -98,7 +98,7 @@ describe("<AddArticle/> component", () => {
             render(<AddArticle setAddArticle={() => {}}/>, container);
         });
 
-        const inputFile = container.querySelector(".article-editor-cover__input");
+        const inputFile = container.querySelector("input[type='file']");
         const titleTextarea = container.querySelector(".article-editor-title");
         const descriptionTextarea = container.querySelector(".article-editor-description");
 
@@ -112,7 +112,7 @@ describe("<AddArticle/> component", () => {
             Simulate.change(inputFile, { target: { files: [iMAGE_FILE_MOCK] } });
         });
 
-        const button = container.querySelector(".article-editor__button");
+        const button = container.querySelector(".custom-button--save");
 
         fetchMock.mockOnce(JSON.stringify({
             errors: [
@@ -132,7 +132,7 @@ describe("<AddArticle/> component", () => {
             render(<AddArticle/>, container);
         });
 
-        const button = container.querySelector(".article-editor__button");
+        const button = container.querySelector(".custom-button--save");
 
         act(() => Simulate.click(button));
 
@@ -146,11 +146,11 @@ describe("<AddArticle/> component", () => {
             render(<AddArticle/>, container);
         });
 
-        const inputFile = container.querySelector(".article-editor-cover__input");
+        const inputFile = container.querySelector("input[type='file']");
 
         act(() => Simulate.change(inputFile, { target: { files: [iMAGE_FILE_MOCK] } }));
 
-        const button = container.querySelector(".article-editor__button");
+        const button = container.querySelector(".custom-button--save");
 
         act(() => Simulate.click(button));
 
@@ -164,7 +164,7 @@ describe("<AddArticle/> component", () => {
             render(<AddArticle/>, container);
         });
 
-        const inputFile = container.querySelector(".article-editor-cover__input");
+        const inputFile = container.querySelector("input[type='file']");
         const titleTextarea = container.querySelector(".article-editor-title");
 
         act(() => {
@@ -173,7 +173,7 @@ describe("<AddArticle/> component", () => {
             Simulate.change(inputFile, { target: { files: [iMAGE_FILE_MOCK] } });
         });
 
-        const button = container.querySelector(".article-editor__button");
+        const button = container.querySelector(".custom-button--save");
 
         act(() => Simulate.click(button));
 
