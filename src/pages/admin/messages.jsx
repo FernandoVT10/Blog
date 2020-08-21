@@ -1,6 +1,6 @@
-import AdminLayout from "@components/Admin/AdminLayout";
+import AdminLayout from "@/components/Admin/AdminLayout";
 
-import Messages from "@domain/Admin/Messages";
+import Messages from "@/domain/Admin/Messages";
 
 const MessagesPage = () => {
     return (

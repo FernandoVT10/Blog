@@ -1,7 +1,7 @@
 import MessageCard from "./MessageCard";
 import ReplyMessage from "./ReplyMessage";
 
-import ApiController from "@services/ApiController";
+import ApiController from "@/services/ApiController";
 
 import { useEffect, useState } from "react";
 

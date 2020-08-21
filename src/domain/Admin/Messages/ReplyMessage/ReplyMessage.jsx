@@ -1,6 +1,6 @@
-import Modal from "@components/Modal";
+import Modal from "@/components/Modal";
 
-import ApiController from "@services/ApiController";
+import ApiController from "@/services/ApiController";
 
 import { useState, useEffect } from "react";
 

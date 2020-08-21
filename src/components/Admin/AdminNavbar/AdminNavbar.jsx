@@ -1,4 +1,4 @@
-import ApiController from "@services/ApiController";
+import ApiController from "@/services/ApiController";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";

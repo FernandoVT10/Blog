@@ -3,10 +3,7 @@
     "baseUrl": "src",
     "jsx": "react",
     "paths": {
-      "@components/*": ["./components/*"],
-      "@domain/*": ["./domain/*"],
-      "@services/*": ["./services/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["src"]
