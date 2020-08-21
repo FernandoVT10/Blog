@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import "./Modal.scss";
 
-export default ({ children, title, active = false, onClose, prefix = "" }) => {
+const Modal = ({ children, title, active = false, onClose, prefix = "" }) => {
     useEffect(() => {
         $(`#${prefix}-modal`).on("hidden.bs.modal", () => {
             onClose();
@@ -40,3 +40,5 @@ export default ({ children, title, active = false, onClose, prefix = "" }) => {
         </div>
     );
 };
+
+export default Modal;

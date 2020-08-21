@@ -1,0 +1,23 @@
+.admin-messages-reply-message {
+    &__message {
+        line-height: 2;
+    }
+
+    &__textarea {
+        margin: 10px 0;
+        border: solid 1px var(--primary);
+        transition: .3s;
+
+        &:focus {
+            border-color: var(--secondary);
+        }
+    }
+
+    &__loader {
+        padding: 20px 0;
+        margin-top: 10px;
+        color: var(--secondary);
+        display: flex;
+        justify-content: center;
+    }
+}

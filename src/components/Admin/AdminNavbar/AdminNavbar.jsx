@@ -1,10 +1,22 @@
+import ApiController from "@services/ApiController";
+
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./AdminNavbar.scss";
 
 function AdminNavbar() {
     const [navbarStatus, setNavbarStatus] = useState(false);
+    const [pendingMessagesCount, setPendingMessagesCount] = useState(0);
+
+    useEffect(() => {
+        ApiController.get("messages/pendingMessages", true)
+        .then(res => {
+            if(res.data) {
+                setPendingMessagesCount(res.data.count);
+            }
+        });
+    }, []);
 
     const navbarClass = navbarStatus ? "admin-navbar--active" : "";
 
@@ -78,9 +90,11 @@ function AdminNavbar() {
                             <span className="admin-navbar__item-icon">
                                 <i className="fas fa-envelope" aria-hidden="true"></i>
 
-                                <span className="admin-navbar__item-badge">
-                                    0
-                                </span>
+                                { pendingMessagesCount &&
+                                    <span className="admin-navbar__item-badge">
+                                        { pendingMessagesCount }
+                                    </span>
+                                }
                             </span>
 
                             <span className="admin-navbar__item-text">
