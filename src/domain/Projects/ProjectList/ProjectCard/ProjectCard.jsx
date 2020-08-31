@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import "./ProjectCard.scss";
 
-export default ({ project }) => {
+const ProjectCard =  ({ project }) => {
     const [imageActive, setImageActive] = useState(0);
     
     const router = useRouter();
@@ -30,14 +30,14 @@ export default ({ project }) => {
     };
 
     return (
-        <div className="project" onClick={handleClick}>
+        <div className="projects-project-card" onClick={handleClick}>
             {project.images.map((image, index) => {
-                const projectClass = imageActive === index ? "project__image--active" : "";
+                const projectClass = imageActive === index ? "projects-project-card__image--active" : "";
 
                 return (
                     <img
                     src={`/img/projects/${image}`}
-                    className={`project__image ${projectClass}`}
+                    className={`projects-project-card__image ${projectClass}`}
                     alt={project.title}
                     key={index} />
                 );
@@ -45,3 +45,5 @@ export default ({ project }) => {
         </div>
     );
 };
+
+export default ProjectCard;

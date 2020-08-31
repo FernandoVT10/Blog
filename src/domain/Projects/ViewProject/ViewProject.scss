@@ -1,0 +1,61 @@
+.projects-view-project {
+    margin-top: 20px;
+
+    &__wrapper {
+        position: relative;
+        padding: 20px 0;
+        background: var(--primary);
+    }
+
+    &__title {
+        color: var(--white);
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    &__close-button {
+        z-index: 10;
+        outline: 0 !important;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        color: var(--secondary);
+        border: none;
+        font-size: 1.2em;
+    }
+
+    &__description {
+        color: var(--white);
+        line-height: 2;
+        font-size: 1em;
+        margin: 10px 0;
+    }
+
+    &__skills {
+        margin-top: 10px;
+    }
+
+    &__skill {
+        cursor: pointer;
+        background: var(--secondary);
+        color: var(--black);
+        margin-right: 10px;
+        transition: .3s;
+
+        &:hover {
+            background: var(--white);
+        }
+    }
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--secondary);
+        font-weight: bold;
+        font-size: 1.2em;
+        height: 300px;
+        width: 100%;
+    }
+}

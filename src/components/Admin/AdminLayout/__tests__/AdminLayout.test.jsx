@@ -45,11 +45,13 @@ describe("<AdminLayout/> component", () => {
     });
 
     it("should render the dashboard page", async () => {
-        fetchMock.mockOnce(JSON.stringify({
+        fetchMock
+        .once(JSON.stringify({
             data: {
                 isLogged: true
             }
-        }));
+        }))
+        .once(JSON.stringify({}));
 
         await act(async () => {
             render(<AdminLayout/>, container);

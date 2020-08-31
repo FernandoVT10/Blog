@@ -4,7 +4,7 @@ import { act, Simulate } from "react-dom/test-utils";
 
 let container;
 
-describe("<ProjectCarousel/> component", () => {
+describe("Domain Projects <ProjectCarousel/> component", () => {
     beforeEach(() => {
         container = document.createElement("div");
         document.body.appendChild(container);
@@ -20,7 +20,7 @@ describe("<ProjectCarousel/> component", () => {
             [ "test-1.jpg", "test-2.jpg", "test-3.jpg" ]
         } />, container);
 
-        const images = container.querySelectorAll(".project-carousel__image");
+        const images = container.querySelectorAll(".projects-project-carousel__image");
 
         expect(images.length).toBe(3);
     });
@@ -30,14 +30,14 @@ describe("<ProjectCarousel/> component", () => {
             [ "test-1.jpg", "test-2.jpg", "test-3.jpg" ]
         } />, container);
 
-        const images = container.querySelectorAll(".project-carousel__image");
+        const images = container.querySelectorAll(".projects-project-carousel__image");
 
         act(() => Simulate.click(images[2]));
 
-        const previewImageContainer = container.querySelector(".project-carousel__image-preview");
+        const previewImageContainer = container.querySelector(".projects-project-carousel__image-preview");
         const previewImage = previewImageContainer.querySelector("img");
 
-        expect(previewImageContainer.classList.contains("project-carousel__image-preview--active")).toBeTruthy();
+        expect(previewImageContainer.classList.contains("projects-project-carousel__image-preview--active")).toBeTruthy();
         expect(previewImage.src).toBe("http://localhost/img/projects/test-3.jpg");
     });
 });

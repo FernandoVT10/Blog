@@ -1,19 +1,25 @@
-.project-list {
-    &__loader {
-        display: flex;
-        height: 300px;
-        justify-content: center;
-        align-items: center;
-        color: var(--secondary);
+.projects-project-list {
+    margin-top: 20px;
+
+    &__wrapper {
+        padding: 20px 0;
+        background: var(--primary);
     }
 
-    &__not-available {
+    &__title {
+        font-weight: bold;
+        font-size: 1.5em;
+        color: var(--white);
+    }
+    
+    &__container {
         display: flex;
-        height: 300px;
         justify-content: center;
         align-items: center;
         color: var(--secondary);
-        font-size: 1.2em;
         font-weight: bold;
+        font-size: 1.2em;
+        height: 300px;
+        width: 100%;
     }
 }

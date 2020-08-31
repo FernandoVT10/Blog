@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import "./ProjectCarousel.scss";
 
-export default ({ title, images }) => {
+const ProjectCarousel =  ({ title, images }) => {
     const [imagePreview, setImagePreview] = useState("");
 
     return (
@@ -13,7 +13,7 @@ export default ({ title, images }) => {
 
             <div
             id="projectCarousel"
-            className="carousel project-carousel slide"
+            className="carousel projects-project-carousel slide"
             data-ride="carousel">
                 <ol className="carousel-indicators">
                     {images.map((_, index) => {
@@ -37,7 +37,7 @@ export default ({ title, images }) => {
                             className={`carousel-item ${carouselItemClass}`}
                             key={index}>
                                 <img
-                                className="d-block w-100 project-carousel__image"
+                                className="d-block w-100 projects-project-carousel__image"
                                 onClick={() => setImagePreview(image)}
                                 src={`/img/projects/${image}`}
                                 alt={title} />
@@ -47,7 +47,7 @@ export default ({ title, images }) => {
                     
                 </div>
                 <a
-                className="carousel-control-prev project-carousel__control-button"
+                className="carousel-control-prev projects-project-carousel__control-button"
                 href="#projectCarousel"
                 role="button"
                 data-slide="prev">
@@ -57,7 +57,7 @@ export default ({ title, images }) => {
                     <span className="sr-only">Previous</span>
                 </a>
                 <a
-                className="carousel-control-next project-carousel__control-button"
+                className="carousel-control-next projects-project-carousel__control-button"
                 href="#projectCarousel"
                 role="button"
                 data-slide="next">
@@ -69,4 +69,6 @@ export default ({ title, images }) => {
             </div>
         </div>
     );
-};
+}
+
+export default ProjectCarousel;
