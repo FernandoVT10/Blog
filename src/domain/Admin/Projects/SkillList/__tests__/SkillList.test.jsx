@@ -24,22 +24,27 @@ jest.mock("next/link", () => {
     }
 });
 
-jest.mock("../../../../../components/ConfirmModal", () => {
-    return ({ message, prefix, onClose }) => {
+jest.mock("../SkillCard", () => {
+    return ({ skill, deleteSkill, updateSkillName }) => {
         return (
-            <span id={`confirm-modal-${prefix}`} onClick={() => onClose(true)}>
-                { message }
-            </span>
+            <div className="test-skills">
+                <button
+                id={`delete-button-${skill._id}`}
+                onClick={() => deleteSkill(skill._id)}></button>
+
+                <button
+                id={`update-button-${skill._id}`}
+                onClick={() => updateSkillName(skill._id, skill.name)}></button>
+            </div>
         );
     }
 });
 
 let container;
 
-describe("<SkillList/> component", () => {
+describe("Domain Projects <SkillList/> component", () => {
     beforeEach(() => {
         fetchMock.doMock();
-
         fetchMock.mockOnce(JSON.stringify({
             data: { skills: SKILLS_MOCK }
         }));
@@ -64,9 +69,23 @@ describe("<SkillList/> component", () => {
 
         expect(fetchCall[0]).toBe(WEBSITE_URL + "api/skills");
 
-        const skillCardList = container.querySelector(".custom-table__body");
+        const skillCardList = container.querySelectorAll(".test-skills");
+        expect(skillCardList.length).toBe(3);
+    });
 
-        expect(skillCardList.children.length).toBe(3);
+    it("should display a 'no skills available' message", async () => {
+        fetchMock.mockReset();
+        fetchMock.doMock();
+        fetchMock.mockOnce(JSON.stringify({
+            data: { skills: [] }
+        }));
+
+        await act(async () => {
+            render(<SkillList/>, container); 
+        });
+
+        const div = container.querySelector(".custom-table__not-found");
+        expect(div.textContent).toBe("No skills available.");
     });
 
     it("should delete a skill", async () => {
@@ -76,17 +95,33 @@ describe("<SkillList/> component", () => {
 
         fetchMock.mockOnce(JSON.stringify({}));
 
-        const confirmModal = container.querySelector("#confirm-modal-2");
-        await act(async () => Simulate.click(confirmModal));
+        const deleteButton = container.querySelector("#delete-button-2");
+        await act(async () => Simulate.click(deleteButton));
 
         const fetchCall = fetchMock.mock.calls[1];
-        // console.log(fetchMock.mock.calls[3]);
 
         expect(fetchCall[0]).toBe(WEBSITE_URL + "api/skills/2");
         expect(fetchCall[1].method).toBe("DELETE");
 
-        const skillCardList = container.querySelector(".custom-table__body");
-        expect(skillCardList.children.length).toBe(2);
+        const skillCardList = container.querySelectorAll(".test-skills");
+        expect(skillCardList.length).toBe(2);
+    });
+
+    it("should update skill name of a skill", async () => {
+        await act(async () => {
+            render(<SkillList/>, container); 
+        });
+
+        fetchMock.mockOnce(JSON.stringify({}));
+
+        const updateButton = container.querySelector("#update-button-2");
+        await act(async () => Simulate.click(updateButton));
+
+        const fetchCall = fetchMock.mock.calls[1];
+
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/skills/2");
+        expect(fetchCall[1].body).toBe(JSON.stringify({ name: "React JS" }));
+        expect(fetchCall[1].method).toBe("PUT");
     });
 
     it("should call router.push", async () => {
@@ -106,9 +141,6 @@ describe("<SkillList/> component", () => {
         act(() => Simulate.click(addNewButtons[0]));
         expect(routerPushMock).toHaveBeenCalledWith("/", "/admin/projects/addProject");
 
-        act(() => Simulate.click(addNewButtons[1]));
-        expect(routerPushMock).toHaveBeenCalledWith("/", "/admin/projects/addSkill");
-
-        expect(routerPushMock).toHaveBeenCalledTimes(2);
+        expect(routerPushMock).toHaveBeenCalledTimes(1);
     });
 });

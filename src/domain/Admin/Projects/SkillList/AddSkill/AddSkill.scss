@@ -1,0 +1,17 @@
+.admin-skill-list-add-skill {
+    &__add-button {
+        outline: 0 !important;
+        background: transparent;
+        border: none;
+        color: var(--secondary);
+        font-weight: bold;
+        margin-right: 10px;
+        width: 100%;
+        padding: 10px 20px;
+        transition: .3s;
+
+        &:hover {
+            color: var(--white);
+        }
+    }
+}

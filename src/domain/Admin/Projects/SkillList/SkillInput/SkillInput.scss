@@ -1,0 +1,24 @@
+.admin-skill-list-skill-input {
+    &__background {
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--primary);
+        opacity: .6;
+    }
+
+    &__input {
+        position: relative;
+        z-index: 1001;
+        outline: 0 !important;
+        background: var(--black);
+        border: none;
+        padding: 20px;
+        color: var(--white);
+        font-weight: bold;
+        font-size: 18px;
+    }
+}

@@ -7,22 +7,22 @@ const SKILL_MOCK = {
     name: "React JS"
 };
 
-jest.mock("next/link", () => {
-    return ({ children }) => {
-        return children;
-    }
-});
-
-jest.mock("../../../../../../components/ConfirmModal", () => {
+jest.mock("@/components/ConfirmModal", () => {
     return ({ message, onClose }) => {
-        onClose(true);
-        return <span className="modal-message">{message}</span>;
+        return (
+            <div>
+                <span className="modal-message">{message}</span>
+                <button
+                className="modal-close-button"
+                onClick={() => onClose(true)}></button>
+            </div>
+        );
     }
 });
 
 let container;
 
-describe("<SkillActions/> component", () => {
+describe("Domain Projects <SkillActions/> component", () => {
     beforeEach(() => {
         container = document.createElement("div");
         document.body.appendChild(container);
@@ -56,6 +56,26 @@ describe("<SkillActions/> component", () => {
             , container);
         });
 
+        const button = container.querySelector(".modal-close-button");
+        act(() => Simulate.click(button));
+
         expect(deleteSkillMock).toHaveBeenCalledWith(5);
+    });
+
+    it("should call setIsEditing", () => {
+        const setIsEditingMock = jest.fn();
+
+        act(() => {
+            render(
+                <SkillActions
+                skill={SKILL_MOCK}
+                setIsEditing={setIsEditingMock}/>
+            , container);
+        });
+
+        const button = container.querySelector(".custom-table__button--edit");
+        act(() => Simulate.click(button));
+
+        expect(setIsEditingMock).toHaveBeenCalledWith(true);
     });
 });

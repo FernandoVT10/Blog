@@ -21,17 +21,4 @@
         float: right;
         margin-right: 10px;
     }
-
-    &__loader {
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        color: var(--secondary);
-    }
-
-    &__not-found {
-        padding: 10px;
-        color: var(--secondary);
-        font-weight: bold;
-    }
 }

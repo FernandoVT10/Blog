@@ -13,7 +13,7 @@ jest.mock("next/link", () => {
     }
 });
 
-jest.mock("../../../../../../components/ConfirmModal", () => {
+jest.mock("@/components/ConfirmModal", () => {
     return ({ message, onClose }) => {
         onClose(true);
         return <span className="modal-message">{message}</span>;
@@ -22,7 +22,7 @@ jest.mock("../../../../../../components/ConfirmModal", () => {
 
 let container;
 
-describe("<ProjectCard/> component", () => {
+describe("Domain Projects <ProjectCard/> component", () => {
     beforeEach(() => {
         container = document.createElement("div");
         document.body.appendChild(container);
@@ -33,7 +33,7 @@ describe("<ProjectCard/> component", () => {
         container = null;
     });
 
-    it("should the project correclty", () => {
+    it("should set the project correclty", () => {
         act(() => {
             render(
                 <ProjectCard

@@ -40,26 +40,6 @@ describe("Domain Admin <Projects/> component", () => {
         expect(container.querySelector("#add-project-modal")).not.toBeNull();
     });
 
-    it("should render <AddSkill/>", async () => {
-        useRouter.mockImplementation(() => ({
-            query: {
-                options: ["addSkill"]
-            }
-        }));
-
-        fetchMock.mockOnce(JSON.stringify({
-            data: {
-                skills: []
-            }
-        }));
-
-        await act(async () => {
-            render(<Projects/>, container);
-        });
-
-        expect(container.querySelector("#add-skill-modal")).not.toBeNull();
-    });
-
     it("should render <EditProject/>", async () => {
         useRouter.mockImplementation(() => ({
             query: {
@@ -83,26 +63,5 @@ describe("Domain Admin <Projects/> component", () => {
         expect(fetchCall[0]).toBe(WEBSITE_URL + "api/projects/ID");
 
         expect(container.querySelector("#edit-project-modal")).not.toBeNull();
-    });
-
-    it("should render <EditSkill/>", async () => {
-        useRouter.mockImplementation(() => ({
-            query: {
-                options: ["ID", "editSkill"]
-            }
-        }));
-
-        fetchMock
-        .once(JSON.stringify({}))
-        .once(JSON.stringify({}));
-
-        await act(async () => {
-            render(<Projects/>, container);
-        });
-
-        const fetchCall = fetchMock.mock.calls[0];
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/skills/ID");
-
-        expect(container.querySelector("#edit-skill-modal")).not.toBeNull();
     });
 });

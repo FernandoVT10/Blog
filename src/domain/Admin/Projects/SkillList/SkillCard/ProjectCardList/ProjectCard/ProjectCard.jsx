@@ -1,4 +1,4 @@
-import ConfirmModal from "../../../../../../components/ConfirmModal";
+import ConfirmModal from "@/components/ConfirmModal";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 import "./ProjectCard.scss";
 
-export default ({ project, deleteProject }) => {
+const ProjectCard =  ({ project, deleteProject }) => {
     const [confirmModalActive, setConfirmModalActive] = useState(false);
     const router = useRouter();
 
@@ -49,3 +49,5 @@ export default ({ project, deleteProject }) => {
         </div>
     );
 }
+
+export default ProjectCard;

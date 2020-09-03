@@ -1,13 +1,9 @@
-import ConfirmModal from "../../../../../../components/ConfirmModal";
+import ConfirmModal from "@/components/ConfirmModal";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
 
-export default ({ skill, deleteSkill }) => {
+const SkillActions = ({ skill, deleteSkill, setIsEditing }) => {
     const [confirmModalActive, setConfirmModalActive] = useState(false);
-
-    const router = useRouter();
 
     const onClose = confirm => {
         if(confirm) {
@@ -24,15 +20,12 @@ export default ({ skill, deleteSkill }) => {
             message={`Are you sure to delete "${skill.name}"?`}
             prefix={skill._id}
             onClose={onClose} />
-            
-            <Link
-            href={router.pathname}
-            as={`/admin/projects/${skill._id}/editSkill`}>
-                <button
-                className="custom-table__button custom-table__button--edit">
-                    <i className="fas fa-edit" aria-hidden="true"></i>
-                </button>
-            </Link>
+
+            <button
+            className="custom-table__button custom-table__button--edit"
+            onClick={() => setIsEditing(true)}>
+                <i className="fas fa-edit" aria-hidden="true"></i>
+            </button>
 
             <button
             className="custom-table__button custom-table__button--delete"
@@ -42,3 +35,5 @@ export default ({ skill, deleteSkill }) => {
         </div>
     );
 }
+
+export default SkillActions;

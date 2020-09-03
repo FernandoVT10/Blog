@@ -1,4 +1,5 @@
 import SkillCard from "./SkillCard";
+import AddSkill from "./AddSkill";
 
 import ApiController from "../../../../services/ApiController";
 
@@ -7,7 +8,7 @@ import { useRouter } from "next/router";
 
 import "./SkillList.scss";
 
-export default () => {
+const SkillList =  () => {
     const [skills, setSkills] = useState([]);
     const [isActive, setIsActive] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -36,6 +37,21 @@ export default () => {
         });
     }
 
+    const updateSkillName = (skillId, skillName) => {
+        ApiController.put(`skills/${skillId}`, { name: skillName }, true)
+        .then(res => {
+            if(res.data) {
+                setSkills(skills.map(skill => {
+                    if(skill._id === skillId) {
+                        return res.data.updatedSkill;
+                    }
+                    
+                    return skill;
+                }));
+            }
+        });
+    }
+
     const getSkills = () => {
         if(loading) {
             return (
@@ -48,7 +64,7 @@ export default () => {
         if(!skills.length) {
             return (
                 <div className="custom-table__not-found">
-                    Skills Not Found
+                    No skills available.
                 </div>
             );
         }
@@ -57,6 +73,7 @@ export default () => {
             return (
                 <SkillCard
                 deleteSkill={deleteSkill}
+                updateSkillName={updateSkillName}
                 skill={skill}
                 key={skill._id} />
             );
@@ -78,7 +95,7 @@ export default () => {
 
                 <div className="custom-table__header-filter-container">
                     <button
-                    className="admin-skill-list__add-skill-button"
+                    className="admin-skill-list__add-button"
                     onClick={() => setIsActive(!isActive)}>
                         <i className="fas fa-plus"></i>
                     </button>
@@ -90,11 +107,6 @@ export default () => {
                             onClick={() => handleAddNewButton("addProject")}>
                                 Add New Project
                             </span>
-                            <span
-                            className="admin-skill-list__add-new-menu-item"
-                            onClick={() => handleAddNewButton("addSkill")}>
-                                Add New Skill
-                            </span>
                         </div>
                     </div>
                 </div>
@@ -104,9 +116,13 @@ export default () => {
                 <div className="custom-table">
                     <div className="custom-table__body">
                         { getSkills() }
+                        
+                        <AddSkill setSkills={setSkills}/>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+
+export default SkillList;
