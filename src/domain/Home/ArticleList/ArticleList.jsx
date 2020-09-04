@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 
 import "./ArticleList.scss";
 
-export default () => {
+const ArticleList = () => {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        ApiController.get("articles?limit=4")
+        ApiController.get("articles?page=2&limit=4")
         .then(res => {
             if(res.data) {
                 setArticles(res.data.articles);
@@ -62,3 +62,5 @@ export default () => {
         </div>
     );
 }
+
+export default ArticleList;

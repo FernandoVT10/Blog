@@ -2,13 +2,14 @@ import Link from "next/link";
 
 import "./ArticleCard.scss";
 
-export default ({ article }) => {
+const ArticleCard = ({ article }) => {
     return (
         <div className="article-card">
             <img
             src={`/img/articles/${article.cover}`}
             className="article-card__cover"
-            alt={article.title} />
+            alt={article.title}
+            loading="lazy" />
 
             <div className="article-card__details">
                 <h3 className="article-card__title">{ article.title }</h3>
@@ -25,4 +26,6 @@ export default ({ article }) => {
             </div>
         </div>
     );
-};
+}
+
+export default ArticleCard;

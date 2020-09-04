@@ -1,26 +1,56 @@
+import ApiController from "@/services/ApiController";
+
+import { useEffect, useState } from "react";
+
 import "./MainCarousel.scss";
 
-export default () => {
+const MainCarousel = () => {
+    const [articles, setArticles] = useState([]);
+
+    useEffect(() => {
+        ApiController.get("articles?limit=4")
+        .then(res => {
+            if(res.data) {
+                setArticles(res.data.articles);
+            }
+        });
+    }, []);
+
     return (
         <div id="MainCarousel" className="carousel slide" data-ride="carousel">
             <ol className="carousel-indicators">
-                <li data-target="#MainCarousel" data-slide-to="0" className="active"></li>
-                <li data-target="#MainCarousel" data-slide-to="1"></li>
+                {articles.map((_, index) => {
+                    const indicatorClass = index ? "" : "active";
+
+                    return (
+                        <li
+                        data-target="#MainCarousel"
+                        data-slide-to={index}
+                        className={indicatorClass}
+                        key={index}></li>
+                    );
+                })}
             </ol>
 
             <div className="carousel-inner">
-                <div className="carousel-item carousel__item active">
-                    <img
-                    src="/img/carousel/carousel-1.jpg"
-                    className="carousel__image"
-                    alt="Carousel image" />
-                </div>
-                <div className="carousel-item">
-                    <img
-                    src="/img/carousel/carousel-2.jpg"
-                    className="carousel__image"
-                    alt="Carousel image" />
-                </div>
+                {articles.map((article, index) => {
+                    const itemClass = index ? "" : "active";
+
+                    return (
+                        <div
+                        className={`carousel-item carousel__item ${itemClass}`}
+                        key={index}>
+                            <img
+                            src={`/img/articles/${article.cover}`}
+                            className="carousel__image"
+                            alt={article.title}
+                            loading="lazy" />
+                            <div className="carousel-caption d-none d-md-block">
+                                <h5 className="font-weight-bold">{article.title}</h5>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
             
             <a
@@ -42,4 +72,6 @@ export default () => {
             </a>
         </div>
     );
-};
+}
+
+export default MainCarousel;
