@@ -92,6 +92,11 @@ router.get("/:articleId", async (req, res) => {
         const article = await Article.findById(articleId).populate("categories");
 
         if(article) {
+            article.dayViews ++;
+            article.monthViews ++;
+            article.totalViews ++;
+            article.save();
+
             res.json({ data: { article } });
         } else {
             res.json({

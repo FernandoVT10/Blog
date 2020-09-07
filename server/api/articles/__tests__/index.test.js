@@ -202,6 +202,18 @@ describe("articles api", () => {
             });
         });
 
+        it("should add a view", async () => {
+            const article = await Article.findOne({ title: "Test Article 3" });
+
+            await request.get(`/api/articles/${article._id}`);
+
+            const updatedArticle = await Article.findOne({ title: "Test Article 3" });
+
+            expect(updatedArticle.dayViews).toBe(1501);
+            expect(updatedArticle.monthViews).toBe(50001);
+            expect(updatedArticle.totalViews).toBe(300001);
+        });
+
         it("It should get a 404 error", async () => {
             const res = await request.get(`/api/articles/abcefabcefabcefabcefabce`);
 
