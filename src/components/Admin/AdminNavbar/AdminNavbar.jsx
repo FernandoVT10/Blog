@@ -90,7 +90,7 @@ function AdminNavbar() {
                             <span className="admin-navbar__item-icon">
                                 <i className="fas fa-envelope" aria-hidden="true"></i>
 
-                                { pendingMessagesCount &&
+                                { pendingMessagesCount !== 0 &&
                                     <span className="admin-navbar__item-badge">
                                         { pendingMessagesCount }
                                     </span>
