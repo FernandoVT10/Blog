@@ -7,7 +7,6 @@
 
     &__loader {
         padding: 50px 0;
-        // background: var(--primary);
         text-align: center;
     }
 
@@ -16,5 +15,11 @@
         height: 60px;
         border-width: 6px;
         color: var(--secondary);
+    }
+
+    &__not-found {
+        color: var(--secondary);
+        font-weight: bold;
+        text-align: center;
     }
 }

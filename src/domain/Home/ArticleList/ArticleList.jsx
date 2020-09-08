@@ -1,5 +1,5 @@
-import ApiController from "../../../services/ApiController";
-import ArticleCard from "../../../components/Articles/ArticleCard/";
+import ApiController from "@/services/ApiController";
+import ArticleCard from "@/components/Articles/ArticleCard/";
 
 import { useEffect, useState } from "react";
 
@@ -41,7 +41,7 @@ const ArticleList = () => {
 
         return (
             <div className="col-12 mt-4">
-                <h4 className="m-0 font-weight-bold color-secondary">
+                <h4 className="home-article-list__not-found">
                     There is not available articles
                 </h4>
             </div>

@@ -6,6 +6,7 @@ import "./MainCarousel.scss";
 
 const MainCarousel = () => {
     const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         ApiController.get("articles?limit=4")
@@ -13,8 +14,22 @@ const MainCarousel = () => {
             if(res.data) {
                 setArticles(res.data.articles);
             }
+
+            setLoading(false);
         });
     }, []);
+
+    if(loading) {
+        return (
+            <div className="home-main-carousel">
+                <span className="spinner-border home-main-carousel__spinner"></span>
+            </div>
+        );
+    }
+
+    if(!articles.length) {
+        return null;
+    }
 
     return (
         <div id="MainCarousel" className="carousel slide" data-ride="carousel">

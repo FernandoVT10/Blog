@@ -11,11 +11,13 @@ function Index() {
         <Layout>
             <Navbar />
 
-            <ConfirmSubscription/>
+            <div className="body">
+                <ConfirmSubscription/>
 
-            <MainCarousel />
+                <MainCarousel />
 
-            <ArticleList/>
+                <ArticleList/>
+            </div>
 
             <Footer />
         </Layout>
