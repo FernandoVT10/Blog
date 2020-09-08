@@ -35,7 +35,22 @@ router.get("/views/getTotalViews/", jwtAuthentication, async (_, res) => {
             }
         ]);
 
-        res.json({ data: { views: views[0] } });
+        const viewsObject = views[0];
+
+        if(viewsObject.total) {
+            res.json({ data: { views: views[0] } });
+        } else {
+            res.json({
+                data: {
+                    views: {
+                        _id: null,
+                        day: 0,
+                        month: 0,
+                        total: 0
+                    }
+                }
+            });
+        }
     } catch {
         res.json({
             data: {
