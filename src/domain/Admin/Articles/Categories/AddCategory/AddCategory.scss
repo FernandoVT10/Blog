@@ -1,0 +1,14 @@
+.admin-categories-add-category {
+    display: inline-block;
+
+    &__add-button {
+        outline: 0 !important;
+        margin-left: 5px;
+        width: 30px;
+        height: 30px;
+        color: var(--secondary);
+        border: solid 2px var(--secondary);
+        background: transparent;
+        border-radius: 50%;
+    }
+}

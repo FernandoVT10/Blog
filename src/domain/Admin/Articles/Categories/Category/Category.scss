@@ -1,0 +1,35 @@
+.admin-categories-category {
+    display: inline-block;
+    margin: 0 5px;
+
+    &__badge {
+        cursor: pointer;
+        background: var(--black);
+        color: var(--white);
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-size: .8em;
+        transition: .3s;
+
+        &:hover {
+            background: var(--primary);
+        }
+    }
+
+    &__delete-button {
+        outline: 0 !important;
+        z-index: 10;
+        position: relative;
+        color: var(--white);
+        background: transparent;
+        border: none;
+        margin-left: 10px;
+        opacity: .5;
+        transition: .3s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import ArticlesTable from "./ArticlesTable"
 import EditArticle from "./ArticleEditor/EditArticle";
 import AddArticle from "./ArticleEditor/AddArticle";
+import Categories from "./Categories";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -29,5 +30,10 @@ export default () => {
         return <AddArticle setAddArticle={setAddArticle}/>;
     }
 
-    return <ArticlesTable setAddArticle={setAddArticle}/>;
+    return (
+        <div>
+            <Categories/>
+            <ArticlesTable setAddArticle={setAddArticle}/>
+        </div>
+    );
 }

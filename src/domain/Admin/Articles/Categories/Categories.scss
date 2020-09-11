@@ -1,0 +1,24 @@
+.admin-categories {
+    padding: 20px;
+    background: var(--primary);
+    margin-bottom: 20px;
+
+    &__title {
+        margin-bottom: 20px;
+        color: var(--white);
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    &__input {
+        outline: 0 !important;
+        background: var(--black);
+        border: solid 1px var(--secondary);
+        width: 150px;
+        padding: 10px 15px;
+        font-size: .8em;
+        font-weight: bold;
+        color: var(--white);
+        border-radius: 20px;
+    }
+}

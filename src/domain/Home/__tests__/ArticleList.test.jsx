@@ -46,7 +46,7 @@ describe("<ArticleList/> component", () => {
         });
 
         const fetchCall = fetchMock.mock.calls[0];
-        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles?limit=4");
+        expect(fetchCall[0]).toBe(WEBSITE_URL + "api/articles?page=2&limit=4");
 
         const div = document.querySelectorAll("div.row")[1];
         expect(div.children.length).toBe(2);
