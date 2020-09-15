@@ -11,6 +11,7 @@ mongoose.connect(process.env.MONGO_URL, {
     useFindAndModify: false
 });
 
+const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
@@ -20,7 +21,7 @@ nextApp.prepare().then(() => {
         return handle(req, res);
     });
 
-    app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+    app.listen(port, () => console.log("Server running"));
 });
 
 dayTimeOut();
