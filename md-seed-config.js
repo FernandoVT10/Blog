@@ -4,9 +4,12 @@ import Categories from "./seeders/categories.seeder";
 import Articles from "./seeders/articles.seeder";
 import Skills from "./seeders/skills.seeder";
 import Projects from "./seeders/projects.seeder";
-import PermanentViews from "./seeders/permanent-views.seeder"
+import PermanentViews from "./seeders/permanent-views.seeder";
 
-const mongoURL = process.env.MONGO_URL || "mongodb://localhost:27017/fernandoblog";
+import { config } from "dotenv";
+config();
+
+const mongoURL = process.env.MONGO_URL;
 
 /**
  * Seeders List

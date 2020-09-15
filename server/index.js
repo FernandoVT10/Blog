@@ -2,8 +2,10 @@ import next from "next";
 import mongoose from "mongoose";
 import app from "./app";
 import { dayTimeOut } from "./utils/timeOuts";
+import { config } from "dotenv";
+config();
 
-mongoose.connect("mongodb://localhost/fernandoblog", {
+mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
